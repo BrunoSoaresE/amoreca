@@ -1,0 +1,83 @@
+.metrics-section {
+  display: flex; // Flexbox para dividir a seção
+  padding: 40px 20px; // Padding da seção
+  background-color: #f9f9f9; // Fundo levemente cinza
+
+  .metrics-container {
+    display: flex; // Flexbox para o conteúdo interno
+    width: 100%; // Largura total da seção
+
+    .metrics-image {
+      flex: 1; // Ocupa 50% da largura
+      display: flex; // Flexbox para centralizar a imagem
+      align-items: center; // Alinhamento vertical
+      justify-content: center; // Alinhamento horizontal
+      padding-right: 20px; // Espaço à direita da imagem
+
+      img {
+        width: 100%; // Largura da imagem
+        height: auto; // Altura automática para manter a proporção
+        max-width: 400px; // Largura máxima da imagem
+        border-radius: 8px; // Bordas arredondadas
+      }
+    }
+
+    .metrics-info {
+      flex: 1; // Ocupa 50% da largura
+      display: flex; // Flexbox para o conteúdo interno
+      flex-direction: column; // Coloca os elementos em coluna
+      justify-content: flex-start; // Alinhamento no início
+      padding-left: 20px; // Espaço à esquerda do conteúdo
+
+      h2 {
+        font-size: 2rem; // Tamanho do título
+        color: #333; // Cor do título
+        margin-bottom: 10px; // Margem abaixo do título
+        text-align: left; // Alinhamento à esquerda
+      }
+
+      p {
+        font-size: 1rem; // Tamanho do texto descritivo
+        color: #777; // Cor do texto descritivo
+        margin-bottom: 20px; // Margem abaixo do texto
+      }
+
+      button {
+        background-color: #007bff; // Cor do botão
+        color: #fff; // Cor do texto do botão
+        border: none; // Remove a borda
+        border-radius: 4px; // Bordas arredondadas
+        padding: 6px 10px; // Padding do botão
+        cursor: pointer; // Muda o cursor ao passar o mouse
+        transition: background-color 0.3s; // Transição suave para hover
+        align-self: flex-start; // Alinha o botão à esquerda
+
+        &:hover {
+          background-color: #0056b3; // Cor do botão ao passar o mouse
+        }
+      }
+
+      .metrics-numbers {
+        display: flex; // Flexbox para alinhar as métricas
+        justify-content: flex-start; // Alinhamento à esquerda
+        margin-top: 20px; // Espaço acima das métricas
+
+        .metric {
+          text-align: left; // Alinhamento à esquerda
+          margin-right: 20px; // Espaçamento entre as métricas
+
+          h3 {
+            font-size: 2rem; // Tamanho do número
+            color: #333; // Cor do número
+            margin-bottom: 5px; // Margem abaixo do número
+          }
+
+          p {
+            font-size: 0.9rem; // Tamanho do texto abaixo do número
+            color: #555; // Cor do texto abaixo do número
+          }
+        }
+      }
+    }
+  }
+}

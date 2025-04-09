@@ -1,0 +1,56 @@
+.bottom-sidenav {
+  height: 100vh;
+  position: fixed;
+}
+
+
+.componente-filho {
+  height: 100%;
+  width: 100%;
+  //overflow-x: hidden;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+
+
+.close-button {
+  position: absolute;
+  /* Permite que o botão seja posicionado em relação ao seu pai */
+  top: 8px;
+  /* Distância do topo */
+  right: 8px;
+  /* Distância da direita */
+  z-index: 10;
+  /* Para garantir que o botão fique acima de outros conteúdos */
+  background-color: transparent;
+  /* Fundo transparente para um visual limpo */
+  border: none;
+  /* Remove a borda */
+  color: rgba(0, 0, 0, 0.54);
+  /* Cor padrão do Angular Material */
+  transition: color 0.2s;
+  /* Transição suave para a cor */
+  padding: 12px;
+  /* Aumenta o padding para tornar o botão maior */
+  border-radius: 50%;
+  /* Mantém o botão circular */
+
+}
+
+/* Aumenta o tamanho do ícone */
+.close-button mat-icon {
+  font-size: 42px;
+  /* Ajuste o tamanho do ícone conforme necessário */
+  height: 42px;
+  width: 42px;
+}
+
+/* Adiciona um efeito de hover */
+.close-button:hover {
+  color: rgba(0, 0, 0, 0.87);
+  /* Cor mais escura ao passar o mouse */
+  background-color: rgba(0, 0, 0, 0.04);
+  /* Leve fundo cinza ao passar o mouse */
+}

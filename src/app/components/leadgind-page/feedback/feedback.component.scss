@@ -1,0 +1,67 @@
+.feedback {
+  background-color: #f8f9fa; // Fundo levemente cinza
+  padding: 40px 20px; // Padding em cima e embaixo
+  text-align: center; // Centraliza o texto
+
+  .feedback-title {
+    margin-bottom: 40px;
+
+    h2 {
+      color: #333; // Título preto
+      font-size: 2rem; // Tamanho do título
+    }
+
+    p {
+      color: #555; // Texto secundário cinza
+      font-size: 1rem; // Tamanho do texto
+    }
+  }
+
+  .feedback-cards {
+    display: grid; // Grid para os cards
+    grid-template-columns: repeat(3, 1fr); // 3 colunas
+    gap: 20px; // Espaço entre os cards
+    max-width: 1200px; // Largura máxima da seção
+    margin: 0 auto; // Centraliza a seção
+  }
+}
+
+.testimonial-card {
+  background-color: #fff; // Fundo branco
+  border-radius: 10px; // Bordas arredondadas
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Sombra suave
+  padding: 20px; // Padding interno
+  position: relative; // Para o posicionamento do ícone
+
+  .user-info {
+    display: flex; // Flexbox para o layout do usuário
+    align-items: center; // Alinhamento vertical
+    margin-bottom: 15px; // Margem abaixo das informações do usuário
+
+    .avatar {
+      border-radius: 50%; // Avatar arredondado
+      margin-right: 10px; // Espaço à direita do avatar
+      width: 40px; // Largura do avatar
+      height: 40px; // Altura do avatar
+    }
+
+    .user-details {
+      h3 {
+        margin: 0; // Remove margens do título
+        font-size: 1.2rem; // Tamanho do nome
+        color: #333; // Cor do nome
+      }
+
+      span {
+        font-size: 0.9rem; // Tamanho da função
+        color: #777; // Cor da função
+      }
+    }
+  }
+
+  .testimonial-text {
+    font-size: 1rem; // Tamanho do texto do depoimento
+    color: #555; // Cor do texto do depoimento
+    line-height: 1.5; // Altura da linha
+  }
+}

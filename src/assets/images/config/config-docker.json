@@ -1,0 +1,6 @@
+{
+  "ambiente": "${PAMBIENTE}",
+  "api": {
+    "url": "${API_URL}"
+  }
+}

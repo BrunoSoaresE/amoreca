@@ -1,0 +1,76 @@
+.navbar {
+  background-color: #ffffff; // Fundo claro para equilibrar as cores
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0; // Linha sutil no rodapé da navbar
+
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2f80ed; // Azul do hero para dar consistência
+    }
+
+    nav {
+      ul {
+        display: flex;
+        gap: 25px;
+
+        li {
+          list-style: none;
+
+          a {
+            color: #333; // Cor neutra para os links
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+
+            &:hover {
+              color: #2f80ed; // Laranja do botão de CTA no hover
+            }
+          }
+        }
+      }
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 15px;
+
+      a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 10px 20px;
+        border-radius: 50px;
+        transition: background-color 0.3s, color 0.3s;
+
+        &.login {
+          background-color: transparent;
+          color: #2f80ed; // Azul para o login
+          border: 2px solid #2f80ed; // Borda azul
+
+          &:hover {
+            background-color: #2f80ed;
+            color: white; // Inverte as cores no hover
+          }
+        }
+
+        &.signup {
+          background-color: #2f80ed; // Laranja chamativo para o Sign Up
+          color: white;
+          border: none;
+
+          &:hover {
+            background-color: #1a63b0;
+          }
+        }
+      }
+    }
+  }
+}

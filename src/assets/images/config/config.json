@@ -1,0 +1,6 @@
+{
+  "ambiente": "${AMBIENTE}",
+  "api": {
+    "url": "https://localhost:7199/api"
+  }
+}

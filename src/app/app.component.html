@@ -1,0 +1,22 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #bottomSidenav mode="over" position="end" class="bottom-sidenav">
+    <button mat-icon-button class="close-button" (click)="bottomSidenav.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="componente-filho">
+
+      <app-login *ngIf="currentComponent === 'login'"></app-login>
+      <app-prova *ngIf="currentComponent === 'prova'"></app-prova>
+    </div>
+
+  </mat-sidenav>
+
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
+
+
+
+<ngx-spinner bdColor="rgba(0, 5, 35, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+  <p style="color: white;margin-top: -125px;"> {{(mensagemLoader$ | async) ?? 'Carregando...'}} </p>
+</ngx-spinner>

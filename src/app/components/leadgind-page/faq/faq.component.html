@@ -1,0 +1,12 @@
+<section class="faq">
+  <div class="faq-title">
+    <h2>Perguntas Frequentes</h2>
+    <p>Encontre respostas para as perguntas mais comuns sobre nosso sistema.</p>
+  </div>
+  <div class="faq-list">
+    <div *ngFor="let item of faqs" class="faq-item">
+      <h3 class="faq-question" (click)="item.show = !item.show">{{ item.question }}</h3>
+      <p class="faq-answer" *ngIf="item.show">{{ item.answer }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+<div class="login-container">
+  <form [formGroup]="formGroup">
+
+    <mat-card class="login-card">
+      <mat-card-title class="login-title">Login</mat-card-title>
+      <mat-card-content>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email"   formControlName="email">
+            <mat-error >Email é obrigatório!</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Senha</mat-label>
+            <input matInput type="password"  formControlName="senha">
+            <mat-error >Senha é obrigatória!</mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="button" class="login-button" (click)="onSubmit()">Entrar</button>
+      </mat-card-content>
+
+      <mat-card-actions class="social-buttons">
+
+        <button  mat-flat-button class="social-button google">
+          <i class="fab fa-google"></i> Login com Google
+        </button>
+        <button mat-flat-button class="social-button instagram">
+          <i class="fab fa-instagram"></i> Login com Instagram
+        </button>
+        <button mat-flat-button class="social-button twitter">
+          <i class="fab fa-twitter"></i> Login com Twitter
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

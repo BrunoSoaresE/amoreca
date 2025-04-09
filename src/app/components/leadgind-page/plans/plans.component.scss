@@ -1,0 +1,74 @@
+.plans-section {
+  padding: 40px 20px; // Padding da seção
+  text-align: center; // Centraliza o texto
+  background-color: #ffffff; // Fundo branco
+
+  .plans-header {
+    h2 {
+      font-size: 2rem; // Tamanho do título
+      color: #333; // Cor do título
+      margin-bottom: 10px; // Margem abaixo do título
+    }
+
+    p {
+      font-size: 1rem; // Tamanho do texto descritivo
+      color: #777; // Cor do texto descritivo
+      margin-bottom: 40px; // Margem abaixo do texto descritivo
+    }
+  }
+
+  .plans-cards {
+    display: flex; // Flexbox para alinhar os cards
+    flex-wrap: wrap; // Permite que os cards se movam para a linha de baixo
+    justify-content: center; // Centraliza os cards
+    gap: 20px; // Espaçamento entre os cards
+
+    .plan-card {
+      background-color: #f7f7f7; // Fundo do card
+      border: 1px solid #e0e0e0; // Borda do card
+      border-radius: 8px; // Bordas arredondadas
+      padding: 20px; // Padding dentro do card
+      width: 250px; // Largura do card
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Sombra no card
+      transition: transform 0.3s; // Transição suave para hover
+
+      h3 {
+        font-size: 1.5rem; // Tamanho do título do card
+        color: #333; // Cor do título do card
+        margin-bottom: 10px; // Margem abaixo do título do card
+      }
+
+      p {
+        font-size: 0.9rem; // Tamanho do texto no card
+        color: #555; // Cor do texto no card
+        margin-bottom: 15px; // Margem abaixo do texto no card
+      }
+
+      ul {
+        list-style: none; // Remove a lista padrão
+        padding: 0; // Remove padding
+        margin: 10px 0 15px; // Margem ao redor da lista
+
+        li {
+          font-size: 0.9rem; // Tamanho do texto da lista
+          color: #333; // Cor do texto da lista
+          margin-bottom: 5px; // Margem abaixo de cada item da lista
+        }
+      }
+
+      button {
+        background-color: #007bff; // Cor do botão
+        color: #fff; // Cor do texto do botão
+        border: none; // Remove a borda
+        border-radius: 4px; // Bordas arredondadas do botão
+        padding: 10px 15px; // Padding do botão
+        cursor: pointer; // Muda o cursor ao passar o mouse
+        transition: background-color 0.3s; // Transição suave para hover
+
+        &:hover {
+          background-color: #0056b3; // Cor do botão ao passar o mouse
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.prova-section {
+  background-color: #f7f7f7; // Fundo da seção
+  padding: 40px 20px; // Padding na seção
+  text-align: center; // Centralizar o texto
+
+
+
+  img {
+    max-width: 100%; // Imagem responsiva
+    height: auto; // Altura automática para manter a proporção
+    border-radius: 10px; // Bordas arredondadas na imagem
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); // Sombra suave na imagem
+  }
+}

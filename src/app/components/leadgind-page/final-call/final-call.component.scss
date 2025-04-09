@@ -1,0 +1,49 @@
+.final-call {
+  display: flex; // Flexbox para dividir a seção em duas partes
+  background: linear-gradient(135deg, #c9c3fc, #8ec5fc); // Gradiente suave
+  padding: 20px; // Padding reduzido
+  height: 300px; // Altura ajustada
+
+  .left-side {
+    flex: 1; // Ocupa metade da seção
+    color: #333; // Cor do texto
+    padding: 20px; // Padding ajustado
+
+    h2 {
+      font-size: 2rem; // Tamanho do título
+      margin-bottom: 10px; // Margem abaixo do título
+    }
+
+    p {
+      font-size: 1rem; // Tamanho do texto
+      margin-bottom: 15px; // Margem abaixo do texto
+    }
+
+    .cta-button {
+      background-color: white; // Fundo branco
+      color: #007bff; // Texto azul
+      border: none; // Remove bordas
+      padding: 10px 20px; // Ajuste de padding do botão
+      font-size: 1rem; // Tamanho da fonte do botão
+      border-radius: 5px; // Bordas arredondadas
+      cursor: pointer; // Cursor de pointer
+
+      &:hover {
+        background-color: #f0f0f0; // Cor ao passar o mouse
+      }
+    }
+  }
+
+  .right-side {
+    flex: 1; // Ocupa metade da seção
+    display: flex; // Flexbox para centrar a imagem
+    justify-content: center; // Centraliza horizontalmente
+    align-items: center; // Centraliza verticalmente
+    transform: rotate(-2deg); // Levemente torta
+
+    img {
+      max-width: 90%; // Largura máxima da imagem ajustada
+      height: auto; // Mantém a proporção
+    }
+  }
+}

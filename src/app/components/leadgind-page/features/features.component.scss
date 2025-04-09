@@ -1,0 +1,53 @@
+.features-section {
+  padding: 40px 20px; // Padding da seção
+  text-align: center; // Centraliza o texto
+  background-color: #ffffff; // Fundo branco
+
+  .features-header {
+    h2 {
+      font-size: 2rem; // Tamanho do título
+      color: #333; // Cor do título
+      margin-bottom: 10px; // Margem abaixo do título
+    }
+
+    p {
+      font-size: 1rem; // Tamanho do texto descritivo
+      color: #777; // Cor do texto descritivo
+      margin-bottom: 40px; // Margem abaixo do texto descritivo
+    }
+  }
+
+  .features-cards {
+    display: flex; // Flexbox para alinhar os cards
+    flex-wrap: wrap; // Permite que os cards se movam para a linha de baixo
+    justify-content: center; // Centraliza os cards
+    gap: 20px; // Espaçamento entre os cards
+
+    .feature-card {
+      background-color: #f7f7f7; // Fundo do card
+      border: 1px solid #e0e0e0; // Borda do card
+      border-radius: 8px; // Bordas arredondadas
+      padding: 20px; // Padding dentro do card
+      width: 250px; // Largura do card
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Sombra no card
+      transition: transform 0.3s; // Transição suave para hover
+
+      h3 {
+        font-size: 1.5rem; // Tamanho do título do card
+        color: #333; // Cor do título do card
+        margin-bottom: 10px; // Margem abaixo do título do card
+      }
+
+      p {
+        font-size: 0.9rem; // Tamanho do texto no card
+        color: #555; // Cor do texto no card
+      }
+
+      // Efeito de hover no card
+      &:hover {
+        transform: translateY(-5px); // Levanta o card ao passar o mouse
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); // Aumenta a sombra
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened [ngClass]="isSidenavOpen ? 'custom-sidenav-small' : 'custom-sidenav'">
+    <div class="sidenav-header">
+      <img src="path-to-your-icon/logo.png" alt="Logo" class="logo">
+    </div>
+
+    <mat-nav-list>
+      <h3 class="section-title">PROFILE</h3>
+      <a mat-list-item routerLink="/home/dashboard" class="nav-item">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/home/pessoa" class="nav-item">
+        <mat-icon>sports_soccer</mat-icon>
+        <span>Pessoa</span>
+      </a>
+      <a mat-list-item routerLink="/team" class="nav-item">
+        <mat-icon>group</mat-icon>
+        <span>Team</span>
+      </a>
+
+      <h3 class="section-title">ANALYTICS</h3>
+      <a mat-list-item routerLink="/ranking" class="nav-item">
+        <mat-icon>insights</mat-icon>
+        <span>Ranking</span>
+      </a>
+      <a mat-list-item routerLink="/archive" class="nav-item">
+        <mat-icon>archive</mat-icon>
+        <span>Archive</span>
+      </a>
+
+      <h3 class="section-title">MARKETPLACE</h3>
+      <a mat-list-item routerLink="/market" class="nav-item">
+        <mat-icon>store</mat-icon>
+        <span>Market</span>
+      </a>
+      <a mat-list-item routerLink="/wallet" class="nav-item">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <span>Wallet</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      <div class="user-info">
+        <img src="path-to-your-avatar/avatar.png" alt="Avatar" class="avatar">
+        <div class="user-details">
+          <span>Username</span>
+          <span class="user-role">Nicola Web Design</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content [ngClass]="isSidenavOpen ? 'sidenavOpen' : 'sidenavClose'">
+    <button style="float: right;" mat-button (click)="toggleSidenav()">Toggle Menu</button>
+    <button style="float: right;" mat-button (click)="logout()">logout</button>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

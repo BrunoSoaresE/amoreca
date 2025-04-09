@@ -1,0 +1,47 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  min-height: 400px;
+  background-color: #f7f7f7; // Fundo branco levemente cinza
+  color: #000; // Texto principal em preto
+  text-align: center;
+  padding: 0 20px;
+
+  .hero-content {
+    max-width: 600px; // Largura do conteúdo
+    padding: 20px;
+
+    h1 {
+      font-size: 2.5rem; // Tamanho do título
+      font-weight: 600; // Peso da fonte
+      margin-bottom: 20px; // Espaço abaixo do título aumentado
+      text-transform: uppercase; // Maiúsculas
+      line-height: 1.3; // Altura da linha ajustada para melhor espaçamento
+    }
+
+    p {
+      font-size: 1.2rem; // Tamanho do texto secundário
+      color: #7d7d7d; // Texto secundário em cinza
+      margin-bottom: 30px; // Espaço abaixo do texto
+      opacity: 0.85; // Levemente menos opaco
+      line-height: 1.5; // Aumentar altura da linha para melhor legibilidade
+    }
+
+    button {
+      background-color: #2f80ed; // Cor azul do botão
+      color: white; // Texto do botão em branco
+      border: none; // Sem borda
+      padding: 12px 25px; // Padding do botão
+      font-size: 1rem; // Tamanho do texto do botão
+      border-radius: 25px; // Borda arredondada
+      cursor: pointer; // Mão ao passar o mouse
+      transition: background-color 0.3s; // Transição suave
+
+      &:hover {
+        background-color: #1a63b0; // Cor do botão ao passar o mouse (azul mais escuro)
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<!-- <div class="editor-container">
+    <canvas #canvas width="600" height="800"></canvas>
+
+    <div class="controls">
+        <button (click)="addText()">Adicionar Texto</button>
+        <input type="file" (change)="onBackgroundSelected($event)" />
+    </div>
+</div> -->
+
+<div class="container">
+    <div class="canvas-container">
+        <h4 class="subtitulo">{{ subNomeEvento }}</h4>
+        <h1 class="titulo-principal">{{ nomeEvento }}</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#presentes">Lista de Presentes</a></li>
+                <li><a href="#mural">Mural de Recados</a></li>
+                <li><a href="#album">Álbum de Fotos</a></li>
+                <li><a href="#confirmar">Confirmar Presença</a></li>
+                <li><a href="#evento">Evento</a></li>
+            </ul>
+        </nav>
+
+        <div class="foto-capa-container">
+            <div class="foto-wrapper">
+                <img [src]="fotoCapaUrl" alt="Foto de Capa" class="foto-capa" />
+                <div class="contador-overlay">
+                    <p>Faltam {{ diasRestantes }} dias!</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="mensagem-evento">
+            <h2>{{ tituloMensagem }}</h2>
+            <p>{{ textoMensagem }}</p>
+        </section>
+
+        <section class="info-evento">
+            <p><strong>Data:</strong> {{ dataEvento }}</p>
+            <p><strong>Local:</strong> {{ localEvento }}</p>
+            <p><strong>Horário:</strong> {{ horarioEvento }}</p>
+        </section>
+
+        <!-- <div class="carrossel-container">
+            <button class="nav-btn" (click)="anterior()">‹</button>
+
+            <div class="carrossel-slide">
+                <img [src]="backgrounds[imagemAtual].url" [alt]="backgrounds[imagemAtual].name" />
+                <p>{{ backgrounds[imagemAtual].name }}</p>
+            </div>
+
+            <button class="nav-btn" (click)="proximo()">›</button>
+        </div> -->
+
+
+        <footer class="rodape">
+            <p>Com carinho, {{ nomeEvento }}</p>
+        </footer>
+
+    </div>
+</div>

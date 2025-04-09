@@ -1,0 +1,67 @@
+.footer {
+  background-color: #333; // Cor de fundo do footer
+  color: white; // Cor do texto
+  padding: 20px 0; // Padding superior e inferior
+  text-align: center; // Alinhamento centralizado
+
+  .footer-content {
+    display: flex; // Flexbox para as seções do footer
+    justify-content: space-around; // Espaçamento entre os itens
+    align-items: center; // Alinha os itens verticalmente ao centro
+    margin-bottom: 20px; // Margem abaixo das seções
+
+    .footer-links,
+    .social-links {
+      h3 {
+        margin-bottom: 10px; // Margem abaixo do título
+        font-size: 1rem; // Tamanho do título
+      }
+
+      ul {
+        list-style-type: none; // Remove os marcadores da lista
+        padding: 0; // Remove o padding
+
+        li {
+          margin: 5px 0; // Margem entre os itens da lista
+
+          a {
+            color: white; // Cor do texto do link
+            text-decoration: none; // Remove o sublinhado
+            font-size: 0.85rem; // Tamanho do texto menor
+            transition: color 0.3s; // Transição suave na cor
+
+            &:hover {
+              color: #007bff; // Cor ao passar o mouse
+            }
+          }
+        }
+      }
+    }
+
+    .social-links {
+      ul {
+        display: flex; // Flexbox para os ícones
+        justify-content: center; // Centraliza os ícones
+
+        li {
+          margin: 0 10px; // Margem lateral entre os ícones
+
+          a {
+            font-size: 1.5rem; // Tamanho do ícone
+            color: white; // Cor do ícone
+
+            &:hover {
+              color: #007bff; // Cor ao passar o mouse
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #444; // Linha separadora
+    padding-top: 10px; // Padding superior
+    font-size: 0.9rem; // Tamanho da fonte menor
+  }
+}

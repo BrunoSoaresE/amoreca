@@ -1,0 +1,50 @@
+.faq {
+  background-color: #f8f9fa; // Fundo levemente cinza
+  padding: 40px 20px; // Padding em cima e embaixo
+  text-align: center; // Centraliza o texto
+
+  .faq-title {
+    margin-bottom: 40px;
+
+    h2 {
+      color: #333; // Título preto
+      font-size: 2rem; // Tamanho do título
+    }
+
+    p {
+      color: #555; // Texto secundário cinza
+      font-size: 1rem; // Tamanho do texto
+    }
+  }
+
+  .faq-list {
+    max-width: 800px; // Largura máxima da lista de perguntas
+    margin: 0 auto; // Centraliza a lista
+
+    .faq-item {
+      background-color: #fff; // Fundo branco
+      border-radius: 10px; // Bordas arredondadas
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Sombra suave
+      margin-bottom: 15px; // Margem entre os itens
+      padding: 20px; // Padding interno
+      transition: background-color 0.3s; // Transição suave para a cor de fundo
+
+      h3.faq-question {
+        cursor: pointer; // Cursor de pointer para indicar interatividade
+        color: #333; // Cor da pergunta
+        font-size: 1.2rem; // Tamanho da pergunta
+        margin: 0; // Remove margens
+      }
+
+      p.faq-answer {
+        color: #555; // Cor da resposta
+        font-size: 1rem; // Tamanho da resposta
+        margin-top: 10px; // Margem acima da resposta
+      }
+
+      &:hover {
+        background-color: #f1f1f1; // Cor de fundo ao passar o mouse
+      }
+    }
+  }
+}
