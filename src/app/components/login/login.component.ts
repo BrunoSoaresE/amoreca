@@ -8,25 +8,25 @@ import { AuthService } from "../../services/auth.service";
 import { SidenavService } from "../../services/sidenav.service";
 
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent  extends EditBaseComponent  implements OnInit
-{
+export class LoginComponent extends EditBaseComponent implements OnInit {
 
 
-    constructor(
-      protected injector: Injector,
-      protected dateAdapter: DateAdapter<Date>,
-      protected formBuilder: FormBuilder,
-      protected authService: AuthService,
-      private sidenavService: SidenavService,
+  constructor(
+    protected injector: Injector,
+    protected dateAdapter: DateAdapter<Date>,
+    protected formBuilder: FormBuilder,
+    protected authService: AuthService,
+    private sidenavService: SidenavService,
   ) {
-      super(injector);
-      moment.locale('pt-BR');
-      dateAdapter.setLocale('pt-BR');
+    super(injector);
+    moment.locale('pt-BR');
+    dateAdapter.setLocale('pt-BR');
   }
 
 

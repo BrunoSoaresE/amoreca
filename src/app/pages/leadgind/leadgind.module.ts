@@ -14,23 +14,24 @@ import { PlansModule } from "../../components/leadgind-page/plans/plans.module";
 import { ProvaModule } from "../../components/leadgind-page/prova/prova.module";
 
 
+
 @NgModule({
-    imports: [
+  imports: [
     CommonModule
-    ,LeadgindRoutingModule
-    ,FaqModule
-    ,FeaturesModule
-    ,FeedbackModule
-    ,FinalCallModule
-    ,FooterModule
-    ,HeroModule
-    ,MetricsModule
-    ,NavbarModule
-    ,PlansModule
-    ,ProvaModule
+    , LeadgindRoutingModule
+    , FaqModule
+    , FeaturesModule
+    , FeedbackModule
+    , FinalCallModule
+    , FooterModule
+    , HeroModule
+    , MetricsModule
+    , NavbarModule
+    , PlansModule
+    , ProvaModule
 
 
-    ],
+  ],
   declarations: [
     LeadgindComponent
   ],

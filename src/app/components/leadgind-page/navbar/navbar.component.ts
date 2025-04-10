@@ -4,13 +4,13 @@ import { SidenavService } from "../../../services/sidenav.service";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  standalone: false,
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavbarComponent
-{
+export class NavbarComponent {
 
   constructor(private sidenavService: SidenavService) { }
 
@@ -18,11 +18,11 @@ export class NavbarComponent
 
 
   login() {
-      this.sidenavService.open('login');
+    this.sidenavService.open('login');
   }
 
   signup() {
-      this.sidenavService.open('prova');
+    this.sidenavService.open('prova');
   }
 
 }

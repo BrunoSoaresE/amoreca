@@ -16,6 +16,9 @@ import { AuthInterceptor } from './services/interceptor/auth.interceptor';
 import { LoaderInterceptor } from './services/interceptor/loader.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HttpConfigInterceptor } from './services/interceptor/http-config.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -32,15 +35,15 @@ import { HttpConfigInterceptor } from './services/interceptor/http-config.interc
 
 
     , HttpClientModule
-
-    ,NgxSpinnerModule
+    , BrowserAnimationsModule
+    , NgxSpinnerModule
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
 
   ],
   bootstrap: [AppComponent]

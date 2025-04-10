@@ -2,9 +2,10 @@ import { LoaderService } from './shared/services/loader.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SidenavService } from './services/sidenav.service';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-      this.mensagemLoader$ = this.loaderService.mensagemLoader$;
+    this.mensagemLoader$ = this.loaderService.mensagemLoader$;
 
 
     this.sidenavService.currentComponent$.subscribe((componentName) => {

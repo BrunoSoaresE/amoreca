@@ -22,6 +22,13 @@ export class TemaService extends BaseService {
     return retorno;
   }
 
+  uploadTema(file: File, descricao: string): Observable<Tema> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    let retorno = this.post(`${descricao}`, formData);
+    return retorno;
+  }
 }
 
 
