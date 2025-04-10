@@ -1,0 +1,84 @@
+<!-- <div class="containerPrincipal">
+  <div class="header-container">
+    <h1 *ngIf="!habilitarCadastroEdicaoInstrutor">Instrutor</h1>
+    <h1 *ngIf="habilitarCadastroEdicaoInstrutor && instrutorSelecionado">Editar instrutor</h1>
+    <h1 *ngIf="habilitarCadastroEdicaoInstrutor && !instrutorSelecionado">Cadastrar novo instrutor</h1>
+  </div>
+  <div class="adicionar-novo d-flex justify-end">
+    <i class="fa fa-times" style="cursor: pointer;" *ngIf="habilitarCadastroEdicaoInstrutor"
+      (click)="fecharCadastroEdicaoInstrutor()"></i>
+
+    <button *ngIf="!habilitarCadastroEdicaoInstrutor" (click)="limparFiltros()" class="btnEnviarAnaliseSecundario"
+      style="margin-right: 8px;" mat-raised-button type="button">
+      <span class="button-content">
+        <mat-icon>add</mat-icon>
+        Limpar Filtros
+      </span>
+    </button>
+
+    <button *ngIf="!habilitarCadastroEdicaoInstrutor" (click)="abrirCadastroEdicaoInstrutor()" class="btn-salvar"
+      mat-raised-button type="button">
+      <span class="button-content">
+        <mat-icon>add</mat-icon>
+        Adicionar novo Instrutor
+      </span>
+    </button>
+
+  </div>
+  <p-table *ngIf="!habilitarCadastroEdicaoInstrutor && dadosInstrutor" [value]="(dadosInstrutor)">
+
+    <ng-template pTemplate="header">
+      <tr class="header">
+        <th scope="col">Nome </th>
+        <th scope="col">CPF / CNPJ </th>
+        <th scope="col">Telefone </th>
+        <th scope="col">E-mail </th>
+
+
+        <th scope="col">Tipo de Instrutor </th>
+        <th scope="col" class="div-pai">Formações </th>
+        <th scope="col">Status </th>
+        <th scope="col">Ação</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-instrutor>
+      <tr>
+        <td>{{ instrutor.pessoa.nome }}</td>
+        <td>{{ instrutor.pessoa.cpf }}</td>
+        <td>{{ instrutor.telefone }}</td>
+        <td>{{ instrutor.email }}</td>
+        <td>{{ instrutor.tipoInstrutor?.descricao ?? '' }}</td>
+        <td style="max-width: 200px;">
+
+        </td>
+        <td>{{ instrutor.ativo ? 'Ativo' : 'Inativo' }}</td>
+        <td>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="instrutor.ativo" (click)="excluirInstrutor(instrutor)">
+              <mat-icon>delete</mat-icon> Excluir
+            </button>
+            <button mat-menu-item *ngIf="instrutor.ativo" (click)="abrirCadastroEdicaoInstrutor(instrutor)">
+              <mat-icon>edit</mat-icon> Editar
+            </button>
+            <button mat-menu-item *ngIf="!instrutor.ativo" (click)="ativarInstrutor(instrutor)">
+              <mat-icon>refresh</mat-icon>
+              Ativar
+            </button>
+          </mat-menu>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <app-instrutores-dados *ngIf="habilitarCadastroEdicaoInstrutor" [dadosTiposInstrutor]="tiposInstrutor"
+    [dadosTipoFormacao]="tipoFormacao" [instrutor]="instrutorSelecionado"
+    (output_fecharCadastroEdicao)="fecharCadastroEdicaoInstrutor($event.houveAlteracao)">
+  </app-instrutores-dados>
+
+</div> -->

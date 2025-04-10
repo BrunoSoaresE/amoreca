@@ -1,0 +1,64 @@
+<!-- <div class="modal-body">
+  <form [formGroup]="formGroup">
+    <div class="row">
+
+      <div class="col-md-8">
+        <app-pessoa-cpf-cnpj [formGroup]="formGroup" documentoControlName="cpfCnpj"
+          nomeControlName="nome"></app-pessoa-cpf-cnpj>
+      </div>
+
+
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Instrutor</mat-label>
+          <mat-select formControlName="idTipoInstrutor">
+            <mat-option *ngFor="let tipoInstrutor of dadosTiposInstrutor" [value]="tipoInstrutor.id">
+              {{tipoInstrutor.descricao}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>telefone</mat-label>
+          <input formControlName="telefone" mask="(00) 0000-0000||(00) 0 0000-0000" matInput
+            placeholder="Insira o telefone do instrutor" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>email</mat-label>
+          <input formControlName="email" matInput placeholder="Insira o email do instrutor" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-12">
+        <app-autocomplete [formGroup]="formGroup" [listaOption]="dadosTipoFormacao"
+          _formControlName="listIdTipoFormacao" [multiple]="true" labelName="Tipo formações">
+        </app-autocomplete>
+      </div>
+
+      <div class="divButtonsCrud">
+        <button class="btn-cancelar" mat-raised-button type="button" (click)="fecharCadastroEdicao()">
+          <span class="button-content">
+            <mat-icon class="icon erro">close</mat-icon>
+            Cancelar
+          </span>
+        </button>
+
+        <button (click)="salvarInstrutor()" class="btn-salvar" mat-raised-button type="button">
+          <span class="button-content">
+            <mat-icon class="icon sucesso">add</mat-icon>
+            {{instrutor ? 'Atualizar': 'Cadastrar'}}
+          </span>
+        </button>
+      </div>
+
+
+
+
+    </div>
+  </form>
+</div> -->
