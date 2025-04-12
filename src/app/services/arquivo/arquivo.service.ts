@@ -3,29 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EnvironmentService } from '../../environment.service';
 import { BaseService } from '../../shared/services/base.service';
-import { Tema } from '../../models/tema';
+import { Arquivo } from '../../models/arquivo';
 import { Observable } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
-export class TemaService extends BaseService {
+export class ArquivoService extends BaseService {
   protected http: HttpClient;
 
   constructor(protected injector: Injector, protected router: Router,) {
-    super(injector, EnvironmentService.settings.api.url, 'tema');
+    super(injector, EnvironmentService.settings.api.url, 'arquivo');
     this.http = injector.get(HttpClient);
   }
 
-  getTemaById(id: number): Observable<Tema> {
-    let retorno = this.get(`${id}`)
-    return retorno;
-  }
-  getListTema(): Observable<Tema[]> {
-    let retorno = this.get(``)
+
+  getArquivoByCaminho(nomeArmazenado: string): Observable<Blob> {
+    let retorno = this.download(`local/${nomeArmazenado}`)
     return retorno;
   }
 
-  uploadTema(file: File, descricao: string): Observable<Tema> {
+  uploadArquivo(file: File, descricao: string): Observable<Arquivo> {
     const formData = new FormData();
     formData.append('file', file, file.name);
 

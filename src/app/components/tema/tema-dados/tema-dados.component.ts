@@ -78,8 +78,7 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
 
 
 
-  enviar(): void {
-
+  salvar(): void {
 
 
     if (!this.formGroup.valid || !this.arquivo) {
@@ -91,8 +90,9 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
     this.subscription.add(
       this.temaService.uploadTema(this.arquivo, descricao).subscribe({
         next: (response: Tema) => {
-          this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
-          // this.formGroup.reset(response);
+          this.temaSelecionado = response;
+          // this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
+          this.formGroup.reset(response);
           this.toastr.success('Tema salvo com sucesso!');
 
         }

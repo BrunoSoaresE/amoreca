@@ -1,16 +1,13 @@
-<!-- <div class="editor-container">
-    <canvas #canvas width="600" height="800"></canvas>
-
-    <div class="controls">
-        <button (click)="addText()">Adicionar Texto</button>
-        <input type="file" (change)="onBackgroundSelected($event)" />
-    </div>
-</div> -->
-
 <div class="container">
-    <div class="canvas-container">
+
+    <div class="canvas-container" [style.background-image]="backgroundImageUrl">
+
+
         <h4 class="subtitulo">{{ subNomeEvento }}</h4>
         <h1 class="titulo-principal">{{ nomeEvento }}</h1>
+
+
+
         <nav class="navbar">
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -22,9 +19,10 @@
             </ul>
         </nav>
 
+
         <div class="foto-capa-container">
             <div class="foto-wrapper">
-                <img [src]="fotoCapaUrl" alt="Foto de Capa" class="foto-capa" />
+                <img [src]="capaImageUrl" alt="Foto de Capa" (click)="abrirCapaModal()" />
                 <div class="contador-overlay">
                     <p>Faltam {{ diasRestantes }} dias!</p>
                 </div>
@@ -42,21 +40,37 @@
             <p><strong>Horário:</strong> {{ horarioEvento }}</p>
         </section>
 
-        <!-- <div class="carrossel-container">
-            <button class="nav-btn" (click)="anterior()">‹</button>
+        <div class="carrossel-container">
+            <button class="nav-btn" (click)="anterior(null)">‹</button>
 
-            <div class="carrossel-slide">
-                <img [src]="backgrounds[imagemAtual].url" [alt]="backgrounds[imagemAtual].name" />
-                <p>{{ backgrounds[imagemAtual].name }}</p>
+            <div class="carrossel-slide" (click)="abrirModal()">
+                <img [src]="backgrounds[imagemAtual]" />
+
             </div>
 
-            <button class="nav-btn" (click)="proximo()">›</button>
-        </div> -->
+            <button class="nav-btn" (click)="proximo(null)">›</button>
+        </div>
 
 
         <footer class="rodape">
-            <p>Com carinho, {{ nomeEvento }}</p>
+            <p>Com carinho, <span>{{ nomeEvento }}</span></p>
         </footer>
 
     </div>
+</div>
+
+<div class="modal" (click)="fecharModal()" [class.ativo]="modalAberto">
+    <button class="nav-btn-modal left" (click)="anterior($event)">‹</button>
+    <div class="carrossel-slide-modal">
+        <img [src]="backgrounds[imagemAtual]" />
+    </div>
+    <button class="nav-btn-modal right" (click)="proximo($event)">›</button>
+    <button class="fechar-modal" (click)="fecharModal()">×</button>
+</div>
+
+<div class="modal" (click)="fecharModal()" [class.ativo]="modalCapaAberto">
+    <div class="carrossel-slide-modal">
+        <img [src]="capaImageUrl" />
+    </div>
+    <button class="fechar-modal" (click)="fecharModal()">×</button>
 </div>
