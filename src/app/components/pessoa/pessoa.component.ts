@@ -19,7 +19,6 @@ export class PessoaComponent extends EditBaseComponent implements OnInit {
   backgrounds: string[] = [];
   imagemAtual = 0;
 
-
   subNomeEvento = 'Cháversário';
   nomeEvento = 'Cecília';
   diasRestantes = 5;
@@ -68,6 +67,9 @@ Espero ver todos vocês lá! 🥰`;
     );
 
 
+    setInterval(() => {
+      this.proximo(null);
+    }, 10000); // 10000 milissegundos = 10 segundos
 
 
   }
@@ -98,12 +100,14 @@ Espero ver todos vocês lá! 🥰`;
   anterior(event: MouseEvent | null) {
     if (event)
       event.stopPropagation();
+
     this.imagemAtual = (this.imagemAtual - 1 + this.backgrounds.length) % this.backgrounds.length;
   }
 
   proximo(event: MouseEvent | null) {
     if (event)
       event.stopPropagation();
+
     this.imagemAtual = (this.imagemAtual + 1) % this.backgrounds.length;
   }
 
@@ -122,43 +126,3 @@ Espero ver todos vocês lá! 🥰`;
     this.modalCapaAberto = false;
   }
 }
-//   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-//   canvas!: fabric.Canvas;
-
-//   ngOnInit(): void {
-//     this.canvas = new fabric.Canvas(this.canvasRef.nativeElement, {
-//       preserveObjectStacking: true,
-//       backgroundColor: '#fff'
-//     });
-//   }
-
-//   addText(): void {
-//     const text = new fabric.IText('Seu texto aqui', {
-//       left: 50,
-//       top: 50,
-//       fontSize: 24,
-//       fill: '#000',
-//       fontFamily: 'Arial'
-//     });
-
-//     this.canvas.add(text);
-//     this.canvas.setActiveObject(text);
-//   }
-
-//   onBackgroundSelected(event: Event): void {
-//     const input = event.target as HTMLInputElement;
-//     if (input.files && input.files[0]) {
-//       const reader = new FileReader();
-//       reader.onload = () => {
-//         fabric.Image.fromURL(reader.result as string).then((img) => {
-//           img.scaleToWidth(this.canvas.getWidth());
-//           img.scaleToHeight(this.canvas.getHeight());
-
-//           (this.canvas as any).setBackgroundImage(img, this.canvas.renderAll.bind(this.canvas));
-//         });
-//       };
-//       reader.readAsDataURL(input.files[0]);
-//     }
-//   }
-
-// }
