@@ -9,18 +9,20 @@ import { Tema } from '../../../models/tema';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from '../../../shared/shared.module';
+import { ConsultaAuxiliaresService } from '../../../services/consulta-auxiliares.service';
 
 @Component({
     standalone: true,
     selector: 'app-tema-lista',
     imports: [CommonModule, TemaDadosComponent, MatTableModule
-        , MatMenuModule, MatButtonModule, MatIconModule
+        , MatMenuModule, MatButtonModule, MatIconModule, SharedModule
     ],
     templateUrl: './tema-lista.component.html',
     styleUrls: ['./tema-lista.component.scss']
 })
 export class TemaListaComponent extends EditBaseComponent implements OnInit {
-    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'cores', 'acao'];
+    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'categoria', 'cores', 'acao',];
     temaSelecionado?: Tema;
     habilitarCadastroEdicao: boolean = false;
     listTemas = signal<Tema[]>([]);;
@@ -63,4 +65,11 @@ export class TemaListaComponent extends EditBaseComponent implements OnInit {
         }
         this.cdRef.detectChanges();
     }
+
+    getCategoriaArray(tema: Tema): string[] {
+        return (tema.temaCategoria ?? [])
+            .map(ctf => ctf.categoria?.descricao || '')
+            .filter(descricao => descricao !== '');
+    }
+
 }

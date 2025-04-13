@@ -35,6 +35,17 @@
       <td mat-cell *matCellDef="let tema"> {{ tema.arquivo?.nomeOriginal }} </td>
     </ng-container>
 
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef> Categoria </th>
+      <td mat-cell *matCellDef="let tema">
+        <ul>
+          <ng-container *ngFor="let descricao of getCategoriaArray(tema)">
+            <li>{{ descricao }}</li>
+          </ng-container>
+        </ul>
+      </td>
+    </ng-container>
+
     <!-- Cores -->
     <ng-container matColumnDef="cores">
       <th mat-header-cell *matHeaderCellDef> Cores </th>
@@ -44,6 +55,8 @@
         <span class="cor-preview" [style.background]="tema.corTerciaria"></span>
       </td>
     </ng-container>
+
+
 
 
     <ng-container matColumnDef="acao">

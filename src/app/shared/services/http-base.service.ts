@@ -1,10 +1,10 @@
-import {Injector} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { Injector } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import {BehaviorSubject, Observable} from 'rxjs';
-import {finalize, map} from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 
-import {prepare} from '../functions/util';
+import { prepare } from '../functions/util';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +24,9 @@ export abstract class HttpBaseService {
   }
 
   baseGet(url: string, params?: HttpParams): Observable<any> {
-    return this.httpClient.get<any>(url, {params}).pipe(
+    console.log("🚀 ~ HttpBaseService ~ baseGet ~ url:", url)
+
+    return this.httpClient.get<any>(url, { params }).pipe(
       prepare(() => this.isLoadingSubject.next(true)),
       finalize(() => this.isLoadingSubject.next(false)),
     );
@@ -63,7 +65,7 @@ export abstract class HttpBaseService {
   }
 
   baseDownload(url: string, params: any) {
-    return this.httpClient.get(url, { params , responseType: 'blob' });
+    return this.httpClient.get(url, { params, responseType: 'blob' });
   }
 
 

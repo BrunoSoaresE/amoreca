@@ -4,9 +4,12 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { TemaService } from '../../../services/tema/tema.service';
 import { EditBaseComponent } from '../../../shared/components/edit-base.component';
-import { Tema } from '../../../models/tema';
+import { Tema, TemaCadastro } from '../../../models/tema';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../../../shared/shared.module';
+import { Categoria } from '../../../models/categoria';
+import { ConsultaAuxiliaresService } from '../../../services/consulta-auxiliares.service';
+import { combineLatest } from 'rxjs';
 
 
 @Component({
@@ -19,13 +22,14 @@ import { SharedModule } from '../../../shared/shared.module';
 export class TemaDadosComponent extends EditBaseComponent implements OnInit {
   @Input() temaSelecionado?: Tema;
   @Output() output_fecharCadastroEdicao = new EventEmitter<{ houveAlteracao: boolean }>();
+  categorias?: Categoria[];
 
   arquivo?: File;
 
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
-
+    private consultaAuxiliaresService: ConsultaAuxiliaresService,
     private temaService: TemaService
   ) {
     super(injector);
@@ -38,11 +42,16 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
       corPrimaria: new FormControl({ value: null, disabled: this.isVisualizacao },),
       corSecundaria: new FormControl({ value: null, disabled: this.isVisualizacao },),
       corTerciaria: new FormControl({ value: null, disabled: this.isVisualizacao },),
+      listIdCategoria: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
     });
+
+
 
     this.controlarObrigatoriedadeCampos();
     if (this.temaSelecionado)
       this.formGroup.patchValue(this.temaSelecionado);
+
+    this.getConsultaAuxiliares();
   }
 
   controlarObrigatoriedadeCampos() {
@@ -81,14 +90,18 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
   salvar(): void {
 
 
-    if (!this.formGroup.valid || !this.arquivo) {
+    if (!this.formGroup.valid) {
       this.onInvalidForm();
       return;
     }
 
-    var descricao = this.formGroup.get('descricao')?.value;
+    let temaCadastro = this.formGroup.getRawValue() as TemaCadastro;
+    console.log("🚀 ~ TemaDadosComponent ~ salvar ~ temaCadastro:", temaCadastro)
+    temaCadastro.file = this.arquivo;
+
+
     this.subscription.add(
-      this.temaService.uploadTema(this.arquivo, descricao).subscribe({
+      this.temaService.salvarTema(temaCadastro).subscribe({
         next: (response: Tema) => {
           this.temaSelecionado = response;
           // this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
@@ -99,6 +112,16 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
       }),
     );
 
+  }
+
+  getConsultaAuxiliares() {
+    const getCategoria = this.consultaAuxiliaresService.categoria$;
+
+
+    combineLatest([getCategoria]).subscribe(([listCategoria]) => {
+      this.categorias = listCategoria;
+
+    });
   }
 
 }

@@ -7,8 +7,10 @@
 
   <div class="upload-wrapper">
     <label for="arquivo" class="upload-label">
-      <span *ngIf="!arquivo">📁 Selecione um arquivo</span>
-      <span *ngIf="arquivo">📁{{arquivo.name}}</span>
+      <span *ngIf="!arquivo && !temaSelecionado?.arquivo">📁 Selecione um arquivo</span>
+      <span *ngIf="arquivo && !temaSelecionado?.arquivo">📁{{arquivo.name}}</span>
+      <span *ngIf="temaSelecionado?.arquivo">📁Click para alterar :
+        <b>{{temaSelecionado?.arquivo?.nomeOriginal}}</b></span>
       <input id="arquivo" type="file" (change)="selecionarArquivo($event)" />
     </label>
   </div>
@@ -19,6 +21,12 @@
         <mat-label>Nome do tema</mat-label>
         <input matInput type="text" formControlName="descricao" />
       </mat-form-field>
+    </div>
+    <div class="col-12" *ngIf="categorias">
+      <app-autocomplete [formGroup]="formGroup" [listaOption]="categorias" labelName="Categorias" [multiple]="true"
+        _formControlName="listIdCategoria"></app-autocomplete>
+
+
     </div>
 
     <div class="col-4" *ngIf="temaSelecionado?.id">

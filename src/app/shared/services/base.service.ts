@@ -1,5 +1,5 @@
-import {Injector} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Injector } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HttpBaseService } from './http-base.service';
 
 
@@ -34,6 +34,7 @@ export abstract class BaseService extends HttpBaseService {
   }
 
   get(url: string, params?: any): Observable<any> {
+
     return this.baseGet(this.getQuerieUrl(url), params);
   }
 

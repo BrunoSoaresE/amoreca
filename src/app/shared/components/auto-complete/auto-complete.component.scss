@@ -1,0 +1,6 @@
+.sticky-search-option {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: white; /* importante para evitar que o fundo fique transparente */
+  }

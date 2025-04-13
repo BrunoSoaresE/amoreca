@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { ToastrModule } from 'ngx-toastr';
+import { AutoCompleteModule } from './components/auto-complete/auto-complete.module';
 
 @NgModule({
   imports: [
@@ -10,7 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatNativeDateModule,
     FormsModule,
     ReactiveFormsModule
-
+    , AutoCompleteModule
 
   ],
   declarations: [
@@ -18,8 +18,9 @@ import { ToastrModule } from 'ngx-toastr';
   exports: [
     ToastrModule,
     MatNativeDateModule
-    ,FormsModule
+    , FormsModule
     , ReactiveFormsModule
+    , AutoCompleteModule
 
   ]
 })

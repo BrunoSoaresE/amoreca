@@ -9,16 +9,19 @@ import { isBrowser } from '../shared/functions/util';
 
 
 @Injectable({ providedIn: 'root' })
-export class AuthService extends BaseService
-{
+export class AuthService extends BaseService {
   protected http: HttpClient;
   protected bearerTokenSubject$ = new BehaviorSubject<string | undefined>(undefined);
   bearerToken$ = this.bearerTokenSubject$.asObservable();
 
 
-  constructor(protected injector: Injector,protected router: Router, ) {
+  constructor(protected injector: Injector, protected router: Router,) {
     super(injector, EnvironmentService.settings.api.url, 'auth');
-      this.http = injector.get(HttpClient);
+    this.http = injector.get(HttpClient);
+
+    if (isBrowser() && sessionStorage.getItem('bearerToken'))
+      this.setBearerToken(sessionStorage.getItem('bearerToken') ?? undefined);
+
   }
 
   setBearerToken(bearToken: string | undefined) {
@@ -26,10 +29,10 @@ export class AuthService extends BaseService
 
     if (bearToken === undefined) {
       this.router.navigate(['/']).then();
-      if(isBrowser())
+      if (isBrowser())
         sessionStorage.removeItem('bearerToken');
     } else {
-      if(isBrowser())
+      if (isBrowser())
         sessionStorage.setItem('bearerToken', bearToken);
     }
   }

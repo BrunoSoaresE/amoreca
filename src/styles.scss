@@ -8,3 +8,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --cor-secundaria: #000000;
     --cor-terciaria: #000000;
   }
+
+  mat-form-field {
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+  
+  body .mat-select-panel .mat-optgroup-label,
+  body .mat-select-panel .mat-option {
+    width: initial !important;
+  }
+  
+  .mat-select-panel {
+    min-width: 60vw !important;
+  }
+  
