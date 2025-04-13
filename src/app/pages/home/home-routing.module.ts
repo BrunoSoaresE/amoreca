@@ -26,9 +26,11 @@ const routes: Routes = [
       },
       {
         path: 'tema',
-        // component: TemaListaComponent,
-
         loadComponent: () => import('../../components/tema/tema-lista/tema-lista.component').then(m => m.TemaListaComponent)
+      },
+      {
+        path: 'evento',
+        loadComponent: () => import('../../components/evento/evento-lista/evento-lista.component').then(m => m.EventoListaComponent)
       },
     ]
   }

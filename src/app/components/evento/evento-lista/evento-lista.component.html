@@ -1,0 +1,83 @@
+<div class="containerPrincipal">
+  <div class="header-container">
+    <h1 *ngIf="!habilitarCadastroEdicao">Eventos</h1>
+    <h1 *ngIf="habilitarCadastroEdicao && eventoSelecionado">Editar evento</h1>
+    <h1 *ngIf="habilitarCadastroEdicao && !eventoSelecionado">Cadastrar novo evento</h1>
+  </div>
+  <div class="adicionar-novo d-flex justify-end">
+    <i class="fa fa-times" style="cursor: pointer;" *ngIf="habilitarCadastroEdicao"
+      (click)="fecharCadastroEdicao()"></i>
+
+
+
+    <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" class="btn-salvar" mat-raised-button
+      type="button">
+      <span class="button-content">
+        <mat-icon>add</mat-icon>
+        Adicionar novo evento
+      </span>
+    </button>
+
+  </div>
+
+
+  <table *ngIf="!habilitarCadastroEdicao" mat-table [dataSource]="listEventos()" class="mat-elevation-z8">
+
+    <!-- Nome do descricao -->
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef> Descricao </th>
+      <td mat-cell *matCellDef="let evento"> {{ evento.descricao }} </td>
+    </ng-container>
+
+    <!-- Nome do Arquivo -->
+    <ng-container matColumnDef="nomeArquivo">
+      <th mat-header-cell *matHeaderCellDef> Arquivo </th>
+      <td mat-cell *matCellDef="let evento"> {{ evento.arquivo?.nomeOriginal }} </td>
+    </ng-container>
+
+
+    <!-- Cores -->
+    <ng-container matColumnDef="cores">
+      <th mat-header-cell *matHeaderCellDef> Cores </th>
+      <td mat-cell *matCellDef="let evento">
+        <span class="cor-preview" [style.background]="evento.corPrimaria"></span>
+        <span class="cor-preview" [style.background]="evento.corSecundaria"></span>
+        <span class="cor-preview" [style.background]="evento.corTerciaria"></span>
+      </td>
+    </ng-container>
+
+
+
+
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef> Ação </th>
+      <td mat-cell *matCellDef="let evento">
+        <mat-menu #menu="matMenu">
+          <!-- <button mat-menu-item *ngIf="instrutor.ativo" (click)="excluirInstrutor(instrutor)">
+          <mat-icon>delete</mat-icon> Excluir
+        </button> -->
+          <button mat-menu-item (click)="abrirCadastroEdicao(evento)">
+            <mat-icon>edit</mat-icon> Editar
+          </button>
+          <!-- <button mat-menu-item *ngIf="!instrutor.ativo" (click)="ativarInstrutor(instrutor)">
+          <mat-icon>refresh</mat-icon>
+          Ativar
+        </button> -->
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+  <app-evento-dados *ngIf="habilitarCadastroEdicao" [eventoSelecionado]="eventoSelecionado"
+    (output_fecharCadastroEdicao)="fecharCadastroEdicao($event)"></app-evento-dados>
+
+</div>
