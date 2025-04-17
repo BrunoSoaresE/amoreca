@@ -1,24 +1,26 @@
 <form [formGroup]="formGroup" *ngIf="formGroup">
 
   <mat-form-field appearance="outline">
-    <mat-select [formControlName]="_formControlName" [placeholder]="labelName" [multiple]="multiple"
-      disableOptionCentering #multiSelect>
-      <mat-option class="sticky-search-option">
-        <ngx-mat-select-search [placeholderLabel]="labelName_find" [formControlName]="control_formControlName"
-          noEntriesFoundLabel="Nenhuma opção encontrada" [showToggleAllCheckbox]="multiple"
-          [hideClearSearchButton]="false" (toggleAll)="toggleAll($event)"></ngx-mat-select-search>
+    <mat-label>{{labelName}}</mat-label>
+    <mat-select [formControlName]="_formControlName" [placeholder]="labelName" [multiple]="multiple">
+
+
+      <ngx-mat-select-search [placeholderLabel]="labelName_find" [formControlName]="control_formControlName"
+        noEntriesFoundLabel="Nenhuma opção encontrada" [showToggleAllCheckbox]="multiple"
+        [hideClearSearchButton]="false" (toggleAll)="toggleAll($event)"></ngx-mat-select-search>
+
+
+
+      <mat-option *ngFor="let option of listaOptionFiltrado" [value]="option[nomeCampoId]">
+
+        <img *ngIf="option.foto && this.nomeCampoFoto" [src]="option.foto.base64" height="100px" width="75px"
+          alt="Image facilitador" mat-card-md-image style="margin-right: 8px;margin-bottom: 8px;" />
+
+        {{getNestedValue(option, nomeCampoDescricao)}}
+        <span *ngIf="nomeCampoDescricaoSecundario"> | {{getNestedValue(option, nomeCampoDescricaoSecundario)}}</span>
       </mat-option>
 
-      <div>
-        <mat-option *ngFor="let option of listaOptionFiltrado" [value]="option[nomeCampoId]">
 
-
-
-          {{getNestedValue(option, nomeCampoDescricao)}}
-          <span *ngIf="nomeCampoDescricaoSecundario"> | {{getNestedValue(option, nomeCampoDescricaoSecundario)}}</span>
-        </mat-option>
-
-      </div>
     </mat-select>
   </mat-form-field>
 

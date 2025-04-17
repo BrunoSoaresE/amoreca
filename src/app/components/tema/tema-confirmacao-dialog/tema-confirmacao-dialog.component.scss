@@ -1,0 +1,76 @@
+.tema-card {
+    flex: 0 0 auto;
+    width: 200px;
+    border: 2px solid rgba(0, 0, 0, 0.329);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #fff;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start;
+    margin: auto;
+    
+  }
+
+  .tema-img {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: contain;
+    transition: object-fit 0.3s ease, height 0.3s ease;
+  }
+  .cores {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .cor {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 4px;
+    margin-left: 4px;
+  }
+  h4{
+    margin-left: 4px;
+  }
+
+  p{
+    padding-top: 4px;
+    padding-left: 16px;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    gap: 12px;
+  }
+  
+  button[mat-button] {
+    background-color: transparent;
+    // border: 1px solid rgba(255, 0, 0, 0.548);
+    color: #555;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    padding: 6px 16px;
+  }
+  
+  button[mat-button]:hover {
+    background-color: rgba(255, 238, 0, 0.747);
+    color: #000;
+  }
+  
+  button[mat-flat-button] {
+    background-color: rgba(0, 0, 255, 0.548);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 8px 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[mat-flat-button]:hover {
+    background-color: rgba(0, 0, 255, 0.747);
+  }
+  

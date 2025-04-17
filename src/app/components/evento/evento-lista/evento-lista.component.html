@@ -1,15 +1,12 @@
 <div class="containerPrincipal">
-  <div class="header-container">
+
+  <div class="header-container" *ngIf="habilitarCadastroEdicao">
     <h1 *ngIf="!habilitarCadastroEdicao">Eventos</h1>
-    <h1 *ngIf="habilitarCadastroEdicao && eventoSelecionado">Editar evento</h1>
-    <h1 *ngIf="habilitarCadastroEdicao && !eventoSelecionado">Cadastrar novo evento</h1>
+
   </div>
   <div class="adicionar-novo d-flex justify-end">
-    <i class="fa fa-times" style="cursor: pointer;" *ngIf="habilitarCadastroEdicao"
-      (click)="fecharCadastroEdicao()"></i>
-
-
-
+    <i class="fa fa-times" style="cursor: pointer;" (click)="fecharCadastroEdicao()"
+      *ngIf="habilitarCadastroEdicao"></i>
     <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" class="btn-salvar" mat-raised-button
       type="button">
       <span class="button-content">

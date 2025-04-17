@@ -1,4 +1,4 @@
-import { Arquivo } from "./arquivo";
+import { Arquivo, ArquivoBase64 } from "./arquivo";
 import { Categoria } from "./categoria";
 
 export interface Tema {
@@ -9,6 +9,7 @@ export interface Tema {
   corSecundaria?: string;
   corTerciaria?: string;
   arquivo?: Arquivo;
+  arquivoBase64?: ArquivoBase64;
 
   temaCategoria?: TemaCategoria[];
   listIdCategoria?: number[];

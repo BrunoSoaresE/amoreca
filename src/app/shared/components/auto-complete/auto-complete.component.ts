@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter, Subscription } from 'rxjs';
 import { removerCaracteresEspeciais } from '../../../services/util';
+import { ArquivoService } from '../../../services/arquivo/arquivo.service';
+import { ArquivoBase64 } from '../../../models/arquivo';
 
 @Component({
   standalone: false,
@@ -25,6 +27,7 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
   @Input() listaOption: any[] | undefined;
   @Input() multiple: boolean = false;
   listaOptionFiltrado: any[] | undefined;
+  opcaoSelecionada?: any;
 
   labelName_find: string = `Buscar ${this.labelName}`;
   control_formControlName: string = `control_${this._formControlName}`;
@@ -32,7 +35,7 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    // protected colaboradorDocumentoService: ColaboradorDocumentoService,
+    protected arquivoService: ArquivoService,
     protected cdRef: ChangeDetectorRef,
   ) {
   }
@@ -42,7 +45,20 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     this.listaOptionFiltrado = this.listaOption;
+    if (this.nomeCampoFoto) {
+      this.downloadBase64Foto()
+    }
+  }
+
+  getSelectedOption(): any {
+
+    const value = this.formGroup?.get(this._formControlName)?.value;
+    if (!this.listaOption) return null;
+
+    return this.listaOption.find(option => option[this.nomeCampoId] === value);
+
   }
 
   ngOnInit(): void {
@@ -50,7 +66,7 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
     this.control_formControlName = `control_${this._formControlName}`;
     this.listaOptionFiltrado = this.listaOption;
     if (this.nomeCampoFoto) {
-      // this.downloadBase64Foto()
+      this.downloadBase64Foto()
     }
 
 
@@ -73,6 +89,8 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
       distinctUntilChanged(), // Evita requisições desnecessárias
       filter(value => value && value.length >= 4), // Só busca após 4 caracteres
     ).subscribe(novoValor => {
+
+      this.opcaoSelecionada = this.getSelectedOption();
       this.valorDigitado.emit(novoValor)
     });
 
@@ -102,33 +120,29 @@ export class AutoCompleteComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  // downloadBase64Foto() {
+  downloadBase64Foto() {
 
-  //   this.listaOption?.forEach((item) => {
-  //     if (this.nomeCampoFoto) {
+    this.listaOption?.forEach((item) => {
+      if (this.nomeCampoFoto && !item.foto) {
+        var campo = this.getNestedValue(item, this.nomeCampoFoto);
+        if (campo) {
+          this.subscription.add(
+            this.arquivoService.getArquivoBase64ByCaminho(campo).subscribe({
+              next: (response: ArquivoBase64) => {
+                item.foto = response;
+                this.cdRef.detectChanges();
+              }
+            }),
+          );
+        }
+      }
 
-
-  //       var campo = this.getNestedValue(item, this.nomeCampoFoto);
-
-  //       if (campo) {
-  //         this.subscription.add(
-  //           this.colaboradorDocumentoService.downloadFile_Base64(campo, campo).subscribe({
-  //             next: (response: Anexo) => {
-  //               item.foto = response;
-  //               this.cdRef.detectChanges();
-  //             }
-  //           }),
-  //         );
-  //       }
-  //     }
-
-
-  //   });
+    });
 
 
 
 
-  // }
+  }
 
 
 

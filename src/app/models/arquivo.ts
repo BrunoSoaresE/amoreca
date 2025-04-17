@@ -7,3 +7,7 @@ export interface Arquivo {
   tamanhoEmBytes: number;
   dataUpload: Date;
 }
+
+export interface ArquivoBase64 {
+  base64: string;
+}

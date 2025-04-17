@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Confirmar Tema</h2>
+
+
+<div class="tema-card">
+  <img [src]="data.tema.arquivoBase64?.base64" class="tema-img" alt="Imagem do tema" />
+  <div class="tema-info">
+    <h4>{{ data.tema.descricao }}</h4>
+    <div class="cores">
+      <div class="cor" [style.backgroundColor]="data.tema.corPrimaria"></div>
+      <div class="cor" [style.backgroundColor]="data.tema.corSecundaria"></div>
+      <div class="cor" [style.backgroundColor]="data.tema.corTerciaria"></div>
+    </div>
+  </div>
+</div>
+
+<p><strong>Você deseja usar este tema ?</strong> pode ser alterado a qualquer momento</p>
+
+<button mat-button (click)="onCancelar()">Escolher outro</button>
+<button mat-flat-button color="primary" (click)="onConfirmar()">Confirmar</button>

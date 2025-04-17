@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EnvironmentService } from '../../environment.service';
 import { BaseService } from '../../shared/services/base.service';
-import { Arquivo } from '../../models/arquivo';
+import { Arquivo, ArquivoBase64 } from '../../models/arquivo';
 import { Observable } from 'rxjs';
 
 
@@ -21,6 +21,11 @@ export class ArquivoService extends BaseService {
     let retorno = this.download(`local/${nomeArmazenado}`)
     return retorno;
   }
+  getArquivoBase64ByCaminho(nomeArmazenado: string): Observable<ArquivoBase64> {
+    let retorno = this.downloadBase64(`local-base64/${nomeArmazenado}`)
+    return retorno;
+  }
+
 
   uploadArquivo(file: File, descricao: string): Observable<Arquivo> {
     const formData = new FormData();
