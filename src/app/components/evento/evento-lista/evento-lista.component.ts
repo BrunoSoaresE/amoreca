@@ -20,7 +20,7 @@ import { EventoService } from '../../../services/evento/evento.service';
     styleUrls: ['./evento-lista.component.scss']
 })
 export class EventoListaComponent extends EditBaseComponent implements OnInit {
-    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'cores', 'acao',];
+    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'data', 'cores', 'acao',];
     eventoSelecionado?: Evento;
     habilitarCadastroEdicao: boolean = false;
     listEventos = signal<Evento[]>([]);;
