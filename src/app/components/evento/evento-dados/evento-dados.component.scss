@@ -100,14 +100,13 @@
 
 
   .rodape {
-    background: rgba(255, 255, 255, 0.65); /* fundo claro com leve transparência */
-    backdrop-filter: blur(6px); /* efeito glass */
-    padding: 16px 24px;
- 
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    // background: rgba(255, 255, 255, 0.4); /* efeito glass */
+    // backdrop-filter: blur(3px);  
+    // border-top: 1px solid rgba(0, 0, 0, 0.05);
+    // border-radius: 12px 12px 0 0;
+    // box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
     
+    padding: 16px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -121,12 +120,7 @@
     font-style: italic  !important;
   }
 
-  .rodape-text-titulo {
-    color: var(--cor-primaria)  !important;
-    font-weight: bold;
-    white-space: nowrap;
-    margin-top: 24px;
-  }
+
   
 
   ::ng-deep  .mdc-text-field--filled{

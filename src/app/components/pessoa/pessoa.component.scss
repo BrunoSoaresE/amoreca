@@ -234,16 +234,16 @@
 
 
   .rodape {
-    background: rgba(255, 255, 255, 0.65); /* fundo claro com leve transparência */
-    backdrop-filter: blur(6px); /* efeito glass */
-    padding: 16px 24px;
+    // background: rgba(255, 255, 255, 0.4); /* efeito glass */
+    // backdrop-filter: blur(3px);
+    // border-top: 1px solid rgba(0, 0, 0, 0.05);
+    // border-radius: 12px 12px 0 0;
+    // box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    padding: 16px;
     text-align: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
     margin-top: 40px;
     font-size: 1rem;
     color: var(--cor-terciaria)  !important;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
     width: 100%;
 
     span {

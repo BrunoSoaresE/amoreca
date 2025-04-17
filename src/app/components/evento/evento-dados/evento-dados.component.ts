@@ -90,6 +90,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
     if (this.eventoSelecionado) {
       this.formGroup.patchValue(this.eventoSelecionado);
+      this.formGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
+      this.formGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
 
 
 
@@ -129,6 +131,50 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
   }
 
+  unificarCampoDataHora(dataControl: string, horaControl: string): Date | undefined {
+    const data = this.formGroup.get(dataControl)?.value;
+    const hora = this.formGroup.get(horaControl)?.value;
+
+    if (!data || !hora) return undefined;
+
+    try {
+      const dataHoraUnificada = new Date(data);
+
+      let horas: number;
+      let minutos: number;
+
+      if (typeof hora === 'string') {
+        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", hora)
+        // Hora no formato string, exemplo: "08:30"
+
+        const horaDate = new Date(hora);
+        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", horaDate)
+        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", horaDate.getHours())
+
+        if (isNaN(horaDate.getTime())) return undefined;
+
+        horas = horaDate.getHours();
+        minutos = horaDate.getMinutes();
+      } else
+
+        if (hora instanceof Date) {
+          console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora date:", hora)
+
+          // Hora é um objeto Date
+          horas = hora.getHours();
+          minutos = hora.getMinutes();
+        } else {
+          return undefined;
+        }
+
+      dataHoraUnificada.setUTCHours(horas, minutos, 0);
+
+      return dataHoraUnificada;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
 
   salvar(): void {
 
@@ -139,6 +185,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     }
 
     let eventoCadastro = this.formGroup.getRawValue() as EventoCadastro;
+    eventoCadastro.dataEvento = this.unificarCampoDataHora('dataEvento', 'horaEvento');
+    eventoCadastro.dataFimEvento = this.unificarCampoDataHora('dataFimEvento', 'horaFimEvento');
 
 
     this.subscription.add(
@@ -146,7 +194,9 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
         next: (response: Evento) => {
           this.eventoSelecionado = response;
           // this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
-          this.formGroup.reset(response);
+          this.formGroup.reset(this.eventoSelecionado);
+          this.formGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
+          this.formGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
           this.toastr.success('Evento salvo com sucesso!');
 
         }

@@ -8,8 +8,7 @@ import { Subscription } from "rxjs";
 
 
 @Injectable()
-export abstract class EditBaseComponent implements  OnDestroy
-{
+export abstract class EditBaseComponent implements OnDestroy {
   protected router: Router;
   protected toastr: ToastrService
   protected cdRef: ChangeDetectorRef;
@@ -28,8 +27,8 @@ export abstract class EditBaseComponent implements  OnDestroy
     this.toastr = injector.get(ToastrService);
     this.cdRef = injector.get(ChangeDetectorRef);
     this.elementRef = injector.get(ElementRef);
-   // this.loaderService = injector.get(LoaderService);
-  //  this.mensagemLoader = this.loaderService.getMensagem();
+    // this.loaderService = injector.get(LoaderService);
+    //  this.mensagemLoader = this.loaderService.getMensagem();
 
 
 
@@ -111,7 +110,7 @@ export abstract class EditBaseComponent implements  OnDestroy
   scrollToInvalidControl() {
     let controlName = this.getFirstInvalidControl();
     const invalidControlElement = this.elementRef.nativeElement.querySelector(`[formControlName="${controlName}"]`) ?? this.elementRef.nativeElement.querySelector(`.${controlName}`);
-    const containerPrincipalElement =  this.elementRef.nativeElement.querySelector(`.containerPrincipal`);
+    const containerPrincipalElement = this.elementRef.nativeElement.querySelector(`.containerPrincipal`);
 
 
     if (invalidControlElement) {
@@ -119,26 +118,26 @@ export abstract class EditBaseComponent implements  OnDestroy
 
 
       containerPrincipalElement.scrollTo({
-          top: (containerPrincipalElement.scrollTop + elementPosition) -140,
-          behavior: 'smooth'
+        top: (containerPrincipalElement.scrollTop + elementPosition) - 140,
+        behavior: 'smooth'
 
       });
     }
   }
 
-  onInvalidForm(mensagem?: string){
-     this.formGroup.markAllAsTouched();
-     this.updateValueAndValidityControl();
-     this.scrollToInvalidControl();
+  onInvalidForm(mensagem?: string) {
+    this.formGroup.markAllAsTouched();
+    this.updateValueAndValidityControl();
+    this.scrollToInvalidControl();
 
-     this.toastr.warning(mensagem ? mensagem : 'Favor preencher todos os campos obrigatórios!');
+    this.toastr.warning(mensagem ? mensagem : 'Favor preencher todos os campos obrigatórios!');
   }
 
 
 
 
 
-  alterarDataElement(e:any, name:string) {
+  alterarDataElement(e: any, name: string) {
     this.alterarData(e.targetElement.value, name);
   }
 
@@ -146,9 +145,9 @@ export abstract class EditBaseComponent implements  OnDestroy
     const convertDate = moment(valueString, format);
 
     if (convertDate.isValid()) {
-      this.formGroup?.get(name)?.setValue(convertDate.toDate(), {onlySelf: false,emitEvent: false});
+      this.formGroup?.get(name)?.setValue(convertDate.toDate(), { onlySelf: false, emitEvent: false });
     } else {
-      this.formGroup?.get(name)?.setValue(null, {onlySelf: false,emitEvent: false});
+      this.formGroup?.get(name)?.setValue(null, { onlySelf: false, emitEvent: false });
     }
   }
 
@@ -165,10 +164,24 @@ export abstract class EditBaseComponent implements  OnDestroy
       return "";
     }
   }
+  alterarDataHoraGrid(valueString: any) {
+    if (!valueString) {
+      return "";
+    }
+    const convertDate = moment(valueString, moment.ISO_8601).format("DD/MM/YYYY HH:mm");
+
+    if (convertDate && convertDate !== 'Invalid date' && convertDate !== 'Data inválida') {
+
+      return convertDate;
+    } else {
+      return "";
+    }
+  }
+
 
 
   isSmall() {
-    return  window.innerWidth < 600;
+    return window.innerWidth < 600;
   }
 
 

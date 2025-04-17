@@ -34,6 +34,13 @@ export class PessoaComponent extends EditBaseComponent implements OnInit {
   ) {
     super(injector);
   }
+
+  getEndereco() {
+    return `${this.evento?.bairro ? this.evento.bairro : ''}
+   ${this.evento?.rua ? ', ' + this.evento.rua : ''}
+   ${this.evento?.numero ? ', ' + this.evento.numero : ''}
+   ${this.evento?.complemento ? ' - ' + this.evento.complemento : ''}`
+  }
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
 

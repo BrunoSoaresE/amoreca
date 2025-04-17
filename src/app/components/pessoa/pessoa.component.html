@@ -33,15 +33,15 @@
             <p>{{ evento.texto }}</p>
         </section>
 
-        <section class="info-evento">
-            <p><strong>Data:</strong> {{ evento.dataEvento }}</p>
-            <p><strong>Horário:</strong> {{ evento.dataEvento }}</p>
-            <p><strong>Local:</strong> {{ evento.bairro ? evento.bairro : '' }}
-                {{ evento.rua ? ', ' + evento.rua : '' }}
-                {{ evento.numero ? ', ' + evento.numero : '' }}
-                {{ evento.complemento ? ' - ' + evento.complemento : '' }}</p>
+        <section class="info-evento"
+            *ngIf="evento.dataEvento || evento.dataFimEvento || getEndereco() || evento.infoEvento">
 
-            <p><strong>Informações:</strong> {{ evento.infoEvento }}</p>
+            <p *ngIf="evento.dataEvento"><strong>Data:</strong> {{ alterarDataHoraGrid(evento.dataEvento) }}</p>
+            <p *ngIf="evento.dataFimEvento"><strong>Data final:</strong> {{ alterarDataHoraGrid(evento.dataFimEvento) }}
+            </p>
+            <p *ngIf="getEndereco()"><strong>Local:</strong> {{getEndereco()}}</p>
+
+            <p *ngIf="evento.infoEvento"><strong>Informações:</strong> {{ evento.infoEvento }}</p>
 
 
         </section>
@@ -59,7 +59,7 @@
 
 
         <footer class="rodape">
-            <p>{{ evento.textoRodape }} <span>{{ evento.nomeEvento }}</span></p>
+            <p>{{ evento.textoRodape }}</p>
         </footer>
 
     </div>

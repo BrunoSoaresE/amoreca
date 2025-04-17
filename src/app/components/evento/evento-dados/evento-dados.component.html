@@ -80,59 +80,62 @@
         <section class="info-evento">
 
           <div class="row">
-            <div class="col-2">
+            <div class="col-3">
               <p><strong>Data:</strong> </p>
             </div>
             <div class="col-5">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Data do Evento</mat-label>
 
-                <input matInput [matDatepicker]="picker1" formControlName="dataEvento" />
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+                <input matInput [matDatepicker]="pickerDataEvento" formControlName="dataEvento" />
+                <mat-datepicker-toggle matSuffix [for]="pickerDataEvento"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDataEvento></mat-datepicker>
               </mat-form-field>
             </div>
+
+            <div class="col-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Horário</mat-label>
+                <input matInput [matTimepicker]="pickerHoraEvento" formControlName="horaEvento">
+                <mat-timepicker-toggle matIconSuffix [for]="pickerHoraEvento" />
+                <mat-timepicker #pickerHoraEvento />
+              </mat-form-field>
+            </div>
+
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-3">
+              <p><strong>Data final:</strong> </p>
+            </div>
+
             <div class="col-5">
               <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Data do Evento</mat-label>
+                <mat-label>Data final do Evento</mat-label>
 
-                <input matInput [matDatepicker]="picker1" formControlName="dataFimEvento" />
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
+                <input matInput [matDatepicker]="pickerDataFimEvento" formControlName="dataFimEvento" />
+                <mat-datepicker-toggle matSuffix [for]="pickerDataFimEvento"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDataFimEvento></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="col-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Horário final</mat-label>
+                <input matInput [matTimepicker]="pickerHoraFimEvento" formControlName="horaFimEvento">
+                <mat-timepicker-toggle matIconSuffix [for]="pickerHoraFimEvento" />
+                <mat-timepicker #pickerHoraFimEvento />
               </mat-form-field>
             </div>
           </div>
 
           <div class="row">
-
-            <div class="col-2">
-              <p><strong>Horário:</strong> </p>
-            </div>
-
-            <div class="col-5">
-              <mat-form-field appearance="outline">
-                <mat-label>Horário</mat-label>
-                <input matInput [matTimepicker]="picker" formControlName="horaEvento">
-                <mat-timepicker-toggle matIconSuffix [for]="picker" />
-                <mat-timepicker #picker />
-              </mat-form-field>
-            </div>
-
-            <div class="col-5">
-              <mat-form-field appearance="outline">
-                <mat-label>Horário</mat-label>
-                <input matInput [matTimepicker]="picker" formControlName="horaFimEvento">
-                <mat-timepicker-toggle matIconSuffix [for]="picker" />
-                <mat-timepicker #picker />
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-2">
+            <div class="col-3">
               <p><strong>Local:</strong> </p>
             </div>
-            <div class="col-5">
+            <div class="col-9">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Bairro</mat-label>
                 <input matInput type="text" formControlName="bairro" />
@@ -140,7 +143,7 @@
             </div>
 
             <!-- rua -->
-            <div class="col-5">
+            <div class="col-6">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Rua</mat-label>
                 <input matInput type="text" formControlName="rua" />
@@ -148,7 +151,7 @@
             </div>
 
             <!-- numero -->
-            <div class="col-4">
+            <div class="col-2">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Número</mat-label>
                 <input matInput type="text" formControlName="numero" />
@@ -165,13 +168,17 @@
 
           </div>
 
-
-          <!-- infoEvento -->
-          <div class="col-12">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Informações do Evento</mat-label>
-              <textarea matInput formControlName="infoEvento"></textarea>
-            </mat-form-field>
+          <div class="row">
+            <div class="col-3">
+              <p><strong>Informações:</strong> </p>
+            </div>
+            <!-- infoEvento -->
+            <div class="col-9">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Informações do Evento</mat-label>
+                <textarea matInput formControlName="infoEvento"></textarea>
+              </mat-form-field>
+            </div>
           </div>
 
         </section>
@@ -243,8 +250,7 @@
             <input matInput type="text" formControlName="textoRodape" class="rodape-text" />
           </mat-form-field>
 
-          <p class="rodape-text-titulo">, {{ formGroup.get('nomeEvento')?.value }}
-          </p>
+
 
 
         </div>
