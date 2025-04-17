@@ -1,10 +1,10 @@
 <div class="container">
 
-    <div class="canvas-container" [style.background-image]="backgroundImageUrl">
+    <div class="canvas-container" [style.background-image]="backgroundImageUrl" *ngIf="evento">
 
 
-        <h4 class="subtitulo">{{ subNomeEvento }}</h4>
-        <h1 class="titulo-principal">{{ nomeEvento }}</h1>
+        <h4 class="subtitulo">{{ evento.subNomeEvento }}</h4>
+        <h1 class="titulo-principal">{{ evento.nomeEvento }}</h1>
 
 
 
@@ -15,7 +15,6 @@
                 <li><a href="#mural">Mural de Recados</a></li>
                 <li><a href="#album">Álbum de Fotos</a></li>
                 <li><a href="#confirmar">Confirmar Presença</a></li>
-                <li><a href="#evento">Evento</a></li>
             </ul>
         </nav>
 
@@ -24,20 +23,27 @@
             <div class="foto-wrapper">
                 <img [src]="capaImageUrl" alt="Foto de Capa" (click)="abrirCapaModal()" />
                 <div class="contador-overlay">
-                    <p>Faltam {{ diasRestantes }} dias!</p>
+                    <p>Faltam {{ 10 }} dias!</p>
                 </div>
             </div>
         </div>
 
         <section class="mensagem-evento">
-            <h2>{{ tituloMensagem }}</h2>
-            <p>{{ textoMensagem }}</p>
+            <h2>{{ evento.titulo }}</h2>
+            <p>{{ evento.texto }}</p>
         </section>
 
         <section class="info-evento">
-            <p><strong>Data:</strong> {{ dataEvento }}</p>
-            <p><strong>Horário:</strong> {{ horarioEvento }}</p>
-            <p><strong>Local:</strong> {{ localEvento }}</p>
+            <p><strong>Data:</strong> {{ evento.dataEvento }}</p>
+            <p><strong>Horário:</strong> {{ evento.dataEvento }}</p>
+            <p><strong>Local:</strong> {{ evento.bairro ? evento.bairro : '' }}
+                {{ evento.rua ? ', ' + evento.rua : '' }}
+                {{ evento.numero ? ', ' + evento.numero : '' }}
+                {{ evento.complemento ? ' - ' + evento.complemento : '' }}</p>
+
+            <p><strong>Informações:</strong> {{ evento.infoEvento }}</p>
+
+
         </section>
 
         <div class="carrossel-container">
@@ -53,7 +59,7 @@
 
 
         <footer class="rodape">
-            <p>Com carinho, <span>{{ nomeEvento }}</span></p>
+            <p>{{ evento.textoRodape }} <span>{{ evento.nomeEvento }}</span></p>
         </footer>
 
     </div>

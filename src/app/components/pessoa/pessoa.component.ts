@@ -4,6 +4,8 @@ import { Tema } from "../../models/tema";
 import { TemaService } from "../../services/tema/tema.service";
 import { EditBaseComponent } from "../../shared/components/edit-base.component";
 import { ArquivoService } from "../../services/arquivo/arquivo.service";
+import { EventoService } from "../../services/evento/evento.service";
+import { Evento } from "../../models/evento";
 
 @Component({
   standalone: false,
@@ -13,28 +15,12 @@ import { ArquivoService } from "../../services/arquivo/arquivo.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PessoaComponent extends EditBaseComponent implements OnInit {
-  temaSelecionado?: Tema;
+  evento?: Evento;
   backgroundImageUrl: string = '';
   capaImageUrl: string = '';
   backgrounds: string[] = [];
   imagemAtual = 0;
 
-  subNomeEvento = 'Cháversário';
-  nomeEvento = 'Cecília';
-  diasRestantes = 5;
-  tituloMensagem = 'Comemoração em dose dupla!!!';
-  textoMensagem = `É com muita alegria que convido todos para celebrarmos juntos dois momentos especiais: o chá de bebê da nossa Cecília e o aniversário da mamãe de 29 anos!
-
-Vamos nos reunir para um almoço com bebidas e música animada para tornar a celebração ainda mais divertida. Será um momento cheio de alegria e carinho!
-
-Para presentear a Cecília é só acessar a lista de presentes, mas, caso prefiram, podem fazer um PIX CPF: 018.538.896-52. Fiquem à vontade para escolher a forma que for mais conveniente.
-
-Deixe sua mensagem no nosso mural de recados. Vamos adorar ler cada uma delas!
-
-Espero ver todos vocês lá! 🥰`;
-  dataEvento = '07/04/2025';
-  localEvento = 'Rua Frederico Cornélio, 48  / Salão de Festa';
-  horarioEvento = '12:30h';
 
 
 
@@ -43,7 +29,7 @@ Espero ver todos vocês lá! 🥰`;
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
 
-    private temaService: TemaService,
+    private eventoService: EventoService,
     private arquivoService: ArquivoService
   ) {
     super(injector);
@@ -53,14 +39,29 @@ Espero ver todos vocês lá! 🥰`;
 
     });
 
+    // this.subscription.add(
+    //   this.temaService.getTemaById(13).subscribe({
+    //     next: (response: Tema) => {
+    //       this.temaSelecionado = response;
+    //       const el = this.elementRef.nativeElement;
+    //       el.style.setProperty('--cor-primaria', this.temaSelecionado?.corPrimaria || '#fff');
+    //       el.style.setProperty('--cor-secundaria', this.temaSelecionado?.corSecundaria || '#000');
+    //       el.style.setProperty('--cor-terciaria', this.temaSelecionado?.corTerciaria || '#ccc');
+    //       this.baixarArquivo();
+    //     }
+    //   }),
+    // );
+
+
     this.subscription.add(
-      this.temaService.getTemaById(13).subscribe({
-        next: (response: Tema) => {
-          this.temaSelecionado = response;
+      this.eventoService.getEventoById(2).subscribe({
+        next: (response: Evento) => {
+          this.evento = response;
+          console.log("🚀 ~ PessoaComponent ~ this.eventoService.getEventoById ~ this.evento:", this.evento)
           const el = this.elementRef.nativeElement;
-          el.style.setProperty('--cor-primaria', this.temaSelecionado?.corPrimaria || '#fff');
-          el.style.setProperty('--cor-secundaria', this.temaSelecionado?.corSecundaria || '#000');
-          el.style.setProperty('--cor-terciaria', this.temaSelecionado?.corTerciaria || '#ccc');
+          el.style.setProperty('--cor-primaria', this.evento.tema?.corPrimaria || '#fff');
+          el.style.setProperty('--cor-secundaria', this.evento.tema?.corSecundaria || '#000');
+          el.style.setProperty('--cor-terciaria', this.evento.tema?.corTerciaria || '#ccc');
           this.baixarArquivo();
         }
       }),
@@ -75,9 +76,9 @@ Espero ver todos vocês lá! 🥰`;
   }
 
   baixarArquivo() {
-    if (this.temaSelecionado?.arquivo?.caminhoFisico)
+    if (this.evento?.tema?.arquivo?.nomeArmazenado)
       this.subscription.add(
-        this.arquivoService.getArquivoByCaminho(this.temaSelecionado?.arquivo?.nomeArmazenado).subscribe({
+        this.arquivoService.getArquivoByCaminho(this.evento.tema?.arquivo?.nomeArmazenado).subscribe({
           next: (response: Blob) => {
             console.log("🚀 ~ PessoaComponent ~ this.arquivoService.getArquivoByCaminho ~ response:", response)
             const blobUrl = URL.createObjectURL(response);

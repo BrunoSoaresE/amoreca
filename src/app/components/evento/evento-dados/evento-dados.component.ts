@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output, } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, QueryList, ViewChildren, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -29,14 +29,15 @@ import { format } from 'path';
       provide: MAT_TIMEPICKER_CONFIG,
       useValue: { interval: '15 minutes', format: '24' },
     }
-
   ]
-
 })
-export class EventoDadosComponent extends EditBaseComponent implements OnInit {
+export class EventoDadosComponent extends EditBaseComponent implements OnInit, AfterViewInit {
   @Input() eventoSelecionado?: Evento;
   @Output() output_fecharCadastroEdicao = new EventEmitter<{ houveAlteracao: boolean }>();
   temas?: Tema[];
+
+  @ViewChildren('textarea') textAreas: QueryList<ElementRef<HTMLTextAreaElement>> | undefined;
+
 
 
   temaSelecionado?: Tema;
@@ -100,12 +101,26 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit {
       distinctUntilChanged(), // Evita requisições desnecessárias
     ).subscribe(novoValor => {
       this.downloadBase64Foto_TemaSelecionado();
+      this.definirTamanhoCampos();
+      this.controlarHeigthCampo();
     });
 
+
+    this.formGroup?.get('texto')?.valueChanges.pipe(
+      distinctUntilChanged(),
+    ).subscribe(novoValor => {
+      this.controlarHeigthCampo();
+    });
+
+
+
     this.getConsultaAuxiliares();
+  }
 
+  calcularTamanhoInput(formControlName: string, fontSize: number, minSize: number): number {
+    var result = this.formGroup.get(formControlName)?.value?.length * fontSize || minSize;
 
-
+    return result < minSize ? minSize : result;
   }
 
   onTemaSelecionado(tema: Tema) {
@@ -159,6 +174,12 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit {
 
 
     if (novoTemaSelecionado?.arquivo && novoTemaSelecionado.id != this.temaSelecionado?.id) {
+
+      const el = this.elementRef.nativeElement;
+      el.style.setProperty('--cor-primaria', novoTemaSelecionado?.corPrimaria || '#fff');
+      el.style.setProperty('--cor-secundaria', novoTemaSelecionado?.corSecundaria || '#000');
+      el.style.setProperty('--cor-terciaria', novoTemaSelecionado?.corTerciaria || '#ccc');
+
       this.arquivoService.getArquivoBase64ByCaminho(novoTemaSelecionado.arquivo?.nomeArmazenado).subscribe({
         next: (response: ArquivoBase64) => {
           novoTemaSelecionado.arquivoBase64 = response;
@@ -191,4 +212,46 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit {
     // });
 
   }
+
+
+  definirTamanhoCampos() {
+    setTimeout(() => {
+
+      if (this.textAreas) {
+        this.textAreas.forEach(textArea => {
+          this.adjustHeight(textArea.nativeElement);
+        });
+      }
+
+      this.formGroup?.updateValueAndValidity();
+
+
+    }, 0);
+
+
+  }
+
+  adjustHeight(textarea: HTMLTextAreaElement): void {
+    textarea.style.height = 'auto'; // Reseta a altura para calcular a nova altura
+    textarea.style.height = `${textarea.scrollHeight}px`; // Ajusta a altura para o scrollHeight
+  }
+
+  ngAfterViewInit(): void {
+    this.controlarHeigthCampo();
+  }
+
+  controlarHeigthCampo() {
+    if (this.textAreas) {
+      this.textAreas.forEach(textArea => {
+        textArea.nativeElement.addEventListener('input', () => this.adjustHeight(textArea.nativeElement));
+        this.adjustHeight(textArea.nativeElement); // Ajusta altura inicial
+        textArea.nativeElement.dispatchEvent(new Event('input')); // Força a chamada do evento 'input'
+      });
+    }
+  }
+
+
+
+
+
 }

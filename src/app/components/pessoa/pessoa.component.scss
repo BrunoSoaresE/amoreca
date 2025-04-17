@@ -21,6 +21,10 @@
 
     border: solid black 1px;
 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+
   }
 
   .subtitulo {
@@ -51,7 +55,7 @@
     display: flex;
     justify-content: center;
     margin: 1rem 0;
-    
+    width: 95%;
   }
   
   .navbar ul {
@@ -87,6 +91,10 @@
     color: #000;
   }
  
+
+
+
+
 
   .foto-capa-container {
     display: flex;
@@ -236,6 +244,7 @@
     color: var(--cor-terciaria)  !important;
     border-radius: 12px 12px 0 0;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
 
     span {
       color: var(--cor-primaria)  !important;
