@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { TemaService } from '../../../services/tema/tema.service';
 import { EditBaseComponent } from '../../../shared/components/edit-base.component';
 import { Tema, TemaCadastro } from '../../../models/tema';
-import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../../../shared/shared.module';
 import { Categoria } from '../../../models/categoria';
 import { ConsultaAuxiliaresService } from '../../../services/consulta-auxiliares.service';
@@ -15,7 +14,7 @@ import { combineLatest } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-tema-dados',
-  imports: [CommonModule, SharedModule, MatInputModule, MatIconModule,],
+  imports: [CommonModule, SharedModule, MatInputModule,],
   templateUrl: './tema-dados.component.html',
   styleUrls: ['./tema-dados.component.scss']
 })

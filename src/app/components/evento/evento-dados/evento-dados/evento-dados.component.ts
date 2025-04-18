@@ -3,15 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
-import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../../../../shared/shared.module';
 import { Evento, EventoCadastro, } from '../../../../models/evento';
 import { EventoService } from '../../../../services/evento/evento.service';
 import { Tema } from '../../../../models/tema';
 import { TemaService } from '../../../../services/tema/tema.service';
 import { ArquivoService } from '../../../../services/arquivo/arquivo.service';
-import { MAT_TIMEPICKER_CONFIG } from '@angular/material/timepicker';
-import { format } from 'path';
 import { EventoDadosSiteComponent } from '../evento-dados-site/evento-dados-site.component';
 import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { TemaListaSelecionarComponent } from '../../../tema/tema-lista-selecionar/tema-lista-selecionar.component';
@@ -24,8 +21,8 @@ import { EventoArquivoCadastro } from '../../../../models/evento-arquivo';
 @Component({
   standalone: true,
   selector: 'app-evento-dados',
-  imports: [CommonModule, SharedModule, MatInputModule, MatIconModule, EventoDadosSiteComponent, MatStepperModule, TemaListaSelecionarComponent
-    , EventoDadosFotoComponent
+  imports: [CommonModule, SharedModule, MatInputModule, EventoDadosSiteComponent, MatStepperModule, TemaListaSelecionarComponent
+    , EventoDadosFotoComponent,
   ],
   templateUrl: './evento-dados.component.html',
   styleUrls: ['./evento-dados.component.scss'],
@@ -126,11 +123,16 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     ).subscribe(novoValor => {
       this.downloadBase64Foto_TemaSelecionado();
 
-      if (this.stepper.selectedIndex === 0 && novoValor) {
-        setTimeout(() => {
+      setTimeout(() => {
+        if (!this.firstFormGroup.valid) {
+          this.stepper.selectedIndex = 0;
+        } else if (!this.secondFormGroup.valid) {
           this.stepper.selectedIndex = 1;
-        }, 10);
-      }
+        } else if (!this.eventoDadosSite_FormGroup.valid) {
+          this.stepper.selectedIndex = 2;
+        }
+      }, 10);
+
 
     });
 

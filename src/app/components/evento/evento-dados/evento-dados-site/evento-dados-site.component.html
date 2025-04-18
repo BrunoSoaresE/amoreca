@@ -1,15 +1,11 @@
 <form [formGroup]="formGroup" *ngIf="backgroundImageUrl">
 
-  <!-- <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado" *ngIf="habilitarSelecaoTema"
-    (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
-  <button mat-flat-button color="primary" (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
-    {{ temaSelecionado ? 'Editar Tema' : 'Selecionar Tema' }}
-  </button> -->
 
 
   <div class="container">
     <div class="canvas-container" [style.background-image]="backgroundImageUrl">
-      <div class="row" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <div class="row"
+        style="width: 100% !important;display: flex; flex-direction: column; align-items: center; justify-content: center;">
 
 
         <!-- subNomeEvento -->

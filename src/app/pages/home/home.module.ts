@@ -4,14 +4,14 @@ import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
 import { LoginModule } from "../../components/login/login.module";
 import { RouterOutlet } from "@angular/router";
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from "@angular/material/input";
-import { MatIconModule } from "@angular/material/icon";
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
-    imports: [
+  imports: [
     CommonModule
     , HomeRoutingModule
     , LoginModule
@@ -19,8 +19,8 @@ import { MatIconModule } from "@angular/material/icon";
     , MatSidenavModule
     , MatListModule
     , MatInputModule
-    , MatIconModule
-    ],
+    , SharedModule
+  ],
   declarations: [
     HomeComponent
   ],

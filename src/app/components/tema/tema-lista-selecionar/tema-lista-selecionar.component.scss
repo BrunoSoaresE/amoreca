@@ -3,13 +3,13 @@
   overflow-x: auto;
   gap: 12px;
   scroll-snap-type: x mandatory;
-  padding: 30px;
+  padding: 50px 8px;
 }
 
 .tema-card {
   flex: 0 0 auto;
   width: 200px;
-  border: 2px solid transparent;
+  border: 1px solid black;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -20,7 +20,7 @@
 
 .tema-card:hover {
   transform: scale(1.05);
-  border-color: #2196f3;
+  border: 2px solid #2196f3;
 }
 
 .tema-card.selected {
@@ -34,6 +34,7 @@
   transform: scale(1.1);
   transition: all 0.4s ease;
   border-radius: 16px;
+  margin: 8px;
 }
 
 /* Proporção 9:16 para parecer uma miniatura de celular */
@@ -74,4 +75,14 @@
   height: 20px;
   border-radius: 4px;
   border: 1px solid #ccc;
+}
+
+
+h3{
+  font-size: 1.5rem;
+  font-weight: bold;
+  span {
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
 }

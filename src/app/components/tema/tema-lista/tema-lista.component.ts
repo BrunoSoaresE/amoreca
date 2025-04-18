@@ -2,21 +2,18 @@ import { Component, Injector, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TemaDadosComponent } from '../tema-dados/tema-dados.component';
 import { MatTableModule } from '@angular/material/table';
-import { FormGroup } from '@angular/forms';
 import { TemaService } from '../../../services/tema/tema.service';
 import { EditBaseComponent } from '../../../shared/components/edit-base.component';
 import { Tema } from '../../../models/tema';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '../../../shared/shared.module';
-import { ConsultaAuxiliaresService } from '../../../services/consulta-auxiliares.service';
 
 @Component({
     standalone: true,
     selector: 'app-tema-lista',
     imports: [CommonModule, TemaDadosComponent, MatTableModule
-        , MatMenuModule, MatButtonModule, MatIconModule, SharedModule
+        , MatMenuModule, MatButtonModule, SharedModule
     ],
     templateUrl: './tema-lista.component.html',
     styleUrls: ['./tema-lista.component.scss']

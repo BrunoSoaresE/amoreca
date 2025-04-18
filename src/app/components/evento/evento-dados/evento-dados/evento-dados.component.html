@@ -7,9 +7,7 @@
       <h1 *ngIf="!eventoSelecionado">Cadastrar novo evento</h1>
     </div>
 
-    <!-- <app-evento-dados-site [eventoSelecionado]="eventoSelecionado"></app-evento-dados-site> -->
 
-    <!-- <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button> -->
 
 
 
@@ -23,9 +21,16 @@
           <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado"
             *ngIf="habilitarSelecaoTema || !temaSelecionado"
             (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
-          <button mat-flat-button color="primary" (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
-            {{ eventoSelecionado?.tema ? 'Editar Tema' : 'Selecionar Tema' }}
-          </button>
+          <div class="botao-centralizado" style="padding-top: 0;">
+
+            <button mat-raised-button color="primary" *ngIf="!habilitarSelecaoTema"
+              (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
+              <mat-icon>palette</mat-icon>
+              {{ eventoSelecionado?.tema ? 'Editar Tema' : 'Selecionar Tema' }}
+            </button>
+
+
+          </div>
 
           <div class="tema-card" *ngIf="temaSelecionado && !habilitarSelecaoTema">
             <img [src]="temaSelecionado.arquivoBase64?.base64" class="tema-img" alt="Imagem do tema" />
@@ -39,44 +44,50 @@
             </div>
           </div>
           <div>
-            <button mat-button matStepperNext>Next</button>
-            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+            <div class="botao-centralizado">
+              <button mat-button matStepperNext>Próximo</button>
+              <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
 
+            </div>
           </div>
         </form>
       </mat-step>
+
       <mat-step [stepControl]="secondFormGroup" [editable]="true">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Fotos e configurações</ng-template>
-          <mat-form-field>
-            <mat-label>Link do site para visitantes</mat-label>
-            <input matInput formControlName="linkSite" placeholder="Ex. 1 Main St, New York, NY">
+          <mat-form-field appearance="outline" style="margin-top: 8px;">
+            <mat-label>Link/Url do site para visitantes</mat-label>
+            <input matInput formControlName="linkSite" placeholder="Link/Url do site para visitantes">
           </mat-form-field>
           <app-evento-dados-foto (output_arquivos)="processArquivosCadastro($event)"
             (output_removeArquivos)="processRemoverArquivos($event)"
             [eventoSelecionado]="eventoSelecionado"></app-evento-dados-foto>
 
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+            <div class="botao-centralizado">
+              <button mat-button matStepperPrevious>Voltar</button>
+              <button mat-button matStepperNext>Próximo</button>
+              <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+            </div>
+
 
           </div>
         </form>
       </mat-step>
 
 
-      <mat-step [stepControl]="eventoDadosSite_FormGroup">
+      <mat-step [stepControl]="eventoDadosSite_FormGroup" [editable]="true">
         <ng-template matStepLabel>Customize seu site</ng-template>
         <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
           [temaSelecionado]="temaSelecionado" [formGroup]="eventoDadosSite_FormGroup"></app-evento-dados-site>
 
 
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-
-          <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+          <div class="botao-centralizado">
+            <button mat-button matStepperPrevious>Voltar</button>
+            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+          </div>
 
         </div>
       </mat-step>

@@ -51,7 +51,6 @@ export class EventoDadosFotoComponent extends EditBaseComponent implements OnIni
   formatarArquivos() {
     this.arquivos = [];
     let possuiArquivoNaoBaixado = false
-    alert('a')
 
     if (this.eventoSelecionado?.eventoArquivo)
       this.eventoSelecionado.eventoArquivo.forEach(element => {
@@ -98,6 +97,7 @@ export class EventoDadosFotoComponent extends EditBaseComponent implements OnIni
           capa: false
         }
         this.arquivos.push(novoArquivo);
+        this.toastr.success('Arquivo adicionado com sucesso')
         this.cdRef.detectChanges();
       };
       reader.readAsDataURL(file);

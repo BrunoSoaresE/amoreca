@@ -1,26 +1,20 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, AfterViewInit, Input, Output, ViewChildren, QueryList, ElementRef, Injector, SimpleChanges, OnChanges } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit, Input, ViewChildren, QueryList, ElementRef, Injector, SimpleChanges, OnChanges } from "@angular/core";
+import { FormBuilder, FormGroup, } from "@angular/forms";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatTimepickerModule, MAT_TIMEPICKER_CONFIG } from "@angular/material/timepicker";
-import EventEmitter from "events";
-import { distinctUntilChanged, combineLatest } from "rxjs";
-import { ArquivoBase64 } from "../../../../models/arquivo";
-import { Evento, EventoCadastro } from "../../../../models/evento";
+import { distinctUntilChanged } from "rxjs";
+import { Evento } from "../../../../models/evento";
 import { Tema } from "../../../../models/tema";
-import { ArquivoService } from "../../../../services/arquivo/arquivo.service";
 import { EventoService } from "../../../../services/evento/evento.service";
-import { TemaService } from "../../../../services/tema/tema.service";
 import { EditBaseComponent } from "../../../../shared/components/edit-base.component";
 import { SharedModule } from "../../../../shared/shared.module";
-import { TemaListaSelecionarComponent } from "../../../tema/tema-lista-selecionar/tema-lista-selecionar.component";
 
 @Component({
   standalone: true,
   selector: 'app-evento-dados-site',
-  imports: [CommonModule, SharedModule, MatInputModule, MatIconModule, MatDatepickerModule, TemaListaSelecionarComponent, MatTimepickerModule],
+  imports: [CommonModule, SharedModule, MatInputModule, MatDatepickerModule, MatTimepickerModule],
   templateUrl: './evento-dados-site.component.html',
   styleUrls: ['./evento-dados-site.component.scss'],
   providers: [
@@ -83,7 +77,8 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
       this.formGroup?.updateValueAndValidity();
       this.controlarHeigthCampo();
 
-    }, 100);
+    }, 300);
+
 
 
   }

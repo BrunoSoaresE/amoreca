@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { ProvaModule } from './components/leadgind-page/prova/prova.module';
@@ -32,7 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProvaModule,
     LoginModule,
 
-    RouterOutlet, CommonModule, MatSidenavModule, MatIconModule
+    RouterOutlet, CommonModule, MatSidenavModule
 
 
     , HttpClientModule

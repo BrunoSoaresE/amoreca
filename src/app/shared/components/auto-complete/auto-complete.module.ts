@@ -7,7 +7,6 @@ import { MatInputModule } from '@angular/material/input';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatSelectModule } from '@angular/material/select';
 import { AutoCompleteComponent } from './auto-complete.component';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatSelectModule,
 
 
-    MatIconModule,
     MatSlideToggleModule
   ],
   declarations: [

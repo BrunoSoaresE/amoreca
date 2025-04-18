@@ -1,5 +1,11 @@
 <div class="upload-container">
-    <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" />
+    <input type="file" #fileInput (change)="onFileSelected($event)" multiple accept="image/*" hidden />
+    <div class="botao-centralizado">
+        <button mat-raised-button color="primary" (click)="fileInput.click()">
+            <mat-icon>upload</mat-icon>
+            Adicionar Imagens
+        </button>
+    </div>
 
     <div class="lista-arquivos">
         <div class="item-arquivo" *ngFor="let arquivo of arquivos; let i = index" [class.capa]="arquivo.capa">
