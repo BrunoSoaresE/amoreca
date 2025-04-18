@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, AfterViewInit, Input, Output, ViewChildren, QueryList, ElementRef, Injector } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { Component, OnInit, AfterViewInit, Input, Output, ViewChildren, QueryList, ElementRef, Injector, SimpleChanges, OnChanges } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
@@ -30,10 +30,11 @@ import { TemaListaSelecionarComponent } from "../../../tema/tema-lista-seleciona
     }
   ]
 })
-export class EventoDadosSiteComponent extends EditBaseComponent implements OnInit, AfterViewInit {
+export class EventoDadosSiteComponent extends EditBaseComponent implements OnInit, OnChanges {
   @Input() eventoSelecionado?: Evento;
   @Input() temaSelecionado?: Tema;
   @Input() backgroundImageUrl?: string;
+  @Input() override formGroup: FormGroup = {} as FormGroup;
 
   @ViewChildren('textarea') textAreas: QueryList<ElementRef<HTMLTextAreaElement>> | undefined;
 
@@ -41,65 +42,25 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
-    private arquivoService: ArquivoService,
-    private temaService: TemaService,
     private eventoService: EventoService
   ) {
     super(injector);
 
   }
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
-      id: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      idTema: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-
-      // Identificação
-      subNomeEvento: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-      nomeEvento: new FormControl({ value: '', disabled: this.isVisualizacao }, Validators.required),
-
-      // Informações gerais
-      titulo: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-      texto: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-
-      // Capa e contagem
-      dataEvento: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      dataFimEvento: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      horaEvento: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      horaFimEvento: new FormControl({ value: null, disabled: this.isVisualizacao }),
-
-
-      infoEvento: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-
-      // Endereço detalhado
-      cep: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      estado: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      cidade: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      bairro: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      rua: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      numero: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      complemento: new FormControl({ value: null, disabled: this.isVisualizacao }),
-      // Rodapé
-      textoRodape: new FormControl({ value: null, disabled: this.isVisualizacao }),
-    });
-
-    if (this.eventoSelecionado) {
-      this.formGroup.patchValue(this.eventoSelecionado);
-      this.formGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
-      this.formGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['backgroundImageUrl']) {
+      this.definirTamanhoCampos();
 
     }
-
-
-
+  }
+  ngOnInit(): void {
 
     this.formGroup?.get('texto')?.valueChanges.pipe(
       distinctUntilChanged(),
     ).subscribe(novoValor => {
-      this.controlarHeigthCampo();
+      this.definirTamanhoCampos();
     });
-
-
-
+    this.definirTamanhoCampos();
   }
 
   calcularTamanhoInput(formControlName: string, fontSize: number, minSize: number): number {
@@ -110,86 +71,9 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
 
 
 
-  unificarCampoDataHora(dataControl: string, horaControl: string): Date | undefined {
-    const data = this.formGroup.get(dataControl)?.value;
-    const hora = this.formGroup.get(horaControl)?.value;
-
-    if (!data || !hora) return undefined;
-
-    try {
-      const dataHoraUnificada = new Date(data);
-
-      let horas: number;
-      let minutos: number;
-
-      if (typeof hora === 'string') {
-        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", hora)
-        // Hora no formato string, exemplo: "08:30"
-
-        const horaDate = new Date(hora);
-        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", horaDate)
-        console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora str:", horaDate.getHours())
-
-        if (isNaN(horaDate.getTime())) return undefined;
-
-        horas = horaDate.getHours();
-        minutos = horaDate.getMinutes();
-      } else
-
-        if (hora instanceof Date) {
-          console.log("🚀 ~ EventoDadosComponent ~ unificarCampoDataHora ~ hora date:", hora)
-
-          // Hora é um objeto Date
-          horas = hora.getHours();
-          minutos = hora.getMinutes();
-        } else {
-          return undefined;
-        }
-
-      dataHoraUnificada.setUTCHours(horas, minutos, 0);
-
-      return dataHoraUnificada;
-    } catch (error) {
-      return undefined;
-    }
-  }
-
-
-  salvar(): void {
-
-
-    if (!this.formGroup.valid) {
-      this.onInvalidForm();
-      return;
-    }
-
-    let eventoCadastro = this.formGroup.getRawValue() as EventoCadastro;
-    eventoCadastro.dataEvento = this.unificarCampoDataHora('dataEvento', 'horaEvento');
-    eventoCadastro.dataFimEvento = this.unificarCampoDataHora('dataFimEvento', 'horaFimEvento');
-
-
-    this.subscription.add(
-      this.eventoService.salvarEvento(eventoCadastro).subscribe({
-        next: (response: Evento) => {
-          this.eventoSelecionado = response;
-          // this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
-          this.formGroup.reset(this.eventoSelecionado);
-          this.formGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
-          this.formGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
-          this.toastr.success('Evento salvo com sucesso!');
-
-        }
-      }),
-    );
-
-  }
-
-
-
 
   definirTamanhoCampos() {
     setTimeout(() => {
-
       if (this.textAreas) {
         this.textAreas.forEach(textArea => {
           this.adjustHeight(textArea.nativeElement);
@@ -197,9 +81,9 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
       }
 
       this.formGroup?.updateValueAndValidity();
+      this.controlarHeigthCampo();
 
-
-    }, 0);
+    }, 100);
 
 
   }
@@ -209,10 +93,6 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
     textarea.style.height = `${textarea.scrollHeight}px`; // Ajusta a altura para o scrollHeight
   }
 
-  ngAfterViewInit(): void {
-    this.controlarHeigthCampo();
-
-  }
 
   controlarHeigthCampo() {
     if (this.textAreas) {
@@ -220,6 +100,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
         textArea.nativeElement.addEventListener('input', () => this.adjustHeight(textArea.nativeElement));
         this.adjustHeight(textArea.nativeElement); // Ajusta altura inicial
         textArea.nativeElement.dispatchEvent(new Event('input')); // Força a chamada do evento 'input'
+        this.cdRef.detectChanges();
       });
     }
   }

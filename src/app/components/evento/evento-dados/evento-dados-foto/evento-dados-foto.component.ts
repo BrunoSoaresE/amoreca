@@ -1,29 +1,12 @@
-import { CommonModule } from "@angular/common";
-import { Component, OnInit, AfterViewInit, Input, Output, ViewChildren, QueryList, ElementRef, Injector } from "@angular/core";
-import { FormBuilder, FormControl, Validators } from "@angular/forms";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatTimepickerModule, MAT_TIMEPICKER_CONFIG } from "@angular/material/timepicker";
-import EventEmitter from "events";
-import { distinctUntilChanged, combineLatest } from "rxjs";
-import { Arquivo, ArquivoBase64 } from "../../../../models/arquivo";
-import { Evento, EventoCadastro } from "../../../../models/evento";
-import { Tema } from "../../../../models/tema";
-import { ArquivoService } from "../../../../services/arquivo/arquivo.service";
-import { EventoService } from "../../../../services/evento/evento.service";
-import { TemaService } from "../../../../services/tema/tema.service";
-import { EditBaseComponent } from "../../../../shared/components/edit-base.component";
-import { SharedModule } from "../../../../shared/shared.module";
-import { TemaListaSelecionarComponent } from "../../../tema/tema-lista-selecionar/tema-lista-selecionar.component";
-
-
-interface ArquivoItem {
-  file: File;
-  preview: string;
-  isCapa: boolean;
-}
-
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { Evento } from '../../../../models/evento';
+import { EventoArquivoCadastro } from '../../../../models/evento-arquivo';
+import { SharedModule } from '../../../../shared/shared.module';
+import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
+import { ArquivoService } from '../../../../services/arquivo/arquivo.service';
+import { ArquivoBase64 } from '../../../../models/arquivo';
 
 @Component({
   standalone: true,
@@ -34,46 +17,112 @@ interface ArquivoItem {
 })
 export class EventoDadosFotoComponent extends EditBaseComponent implements OnInit {
   @Input() eventoSelecionado?: Evento;
-  arquivos: ArquivoItem[] = [];
+  @Output() output_arquivos = new EventEmitter<EventoArquivoCadastro[]>();
+  @Output() output_removeArquivos = new EventEmitter<number[]>();
+
+  arquivos: EventoArquivoCadastro[] = [];
+  removeArquivos: number[] = [];
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
+    protected arquivoService: ArquivoService,
   ) {
     super(injector);
 
   }
   ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({      // Rodapé
-      textoRodape: new FormControl({ value: null, disabled: this.isVisualizacao }),
+
+    this.formatarArquivos();
+    this.formGroup = this.formBuilder.group({
+      //   textoRodape: new FormControl({ value: null, disabled: this.isVisualizacao }),
     });
   }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['eventoSelecionado']) {
+
+  //     setTimeout(() => {
+  //       this.formatarArquivos();
+
+  //     }, 500);
+
+  //   }
+  // }
+
+  formatarArquivos() {
+    this.arquivos = [];
+    let possuiArquivoNaoBaixado = false
+    alert('a')
+
+    if (this.eventoSelecionado?.eventoArquivo)
+      this.eventoSelecionado.eventoArquivo.forEach(element => {
+
+        var novoArquivo: EventoArquivoCadastro = {
+          id: element.id,
+          file: undefined,
+          base64: element.base64,
+          capa: element.capa,
+          arquivo: element.arquivo
+        }
+
+        if (!element.base64)
+          possuiArquivoNaoBaixado = true
+
+        this.arquivos.push(novoArquivo);
+      });
+
+
+    if (possuiArquivoNaoBaixado) {
+      setTimeout(() => {
+        this.formatarArquivos();
+      }, 10);
+    }
+
+    this.cdRef.detectChanges();
+  }
+
+
+
+
+
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
-
     Array.from(input.files).forEach(file => {
       const reader = new FileReader();
       reader.onload = () => {
-        this.arquivos.push({
+
+        var novoArquivo: EventoArquivoCadastro = {
           file,
-          preview: reader.result as string,
-          isCapa: false
-        });
+          base64: reader.result as string,
+          capa: false
+        }
+        this.arquivos.push(novoArquivo);
         this.cdRef.detectChanges();
       };
       reader.readAsDataURL(file);
+      this.cdRef.detectChanges();
     });
 
-    // limpa input para permitir reenvio do mesmo arquivo
+    this.output_arquivos.emit(this.arquivos);
     input.value = '';
   }
 
   definirComoCapa(index: number): void {
-    this.arquivos.forEach((arquivo, i) => arquivo.isCapa = i === index);
+    this.arquivos.forEach((arquivo, i) => arquivo.capa = i === index);
   }
 
   removerArquivo(index: number): void {
+    console.log("🚀 ~ EventoDadosFotoComponent ~ removerArquivo ~ removerArquivo:")
+
+    if (this.arquivos[index].id) {
+      console.log("🚀 ~ EventoDadosFotoComponent ~ removerArquivo ~ removerArquivo:")
+      this.removeArquivos.push(this.arquivos[index].id);
+      this.output_removeArquivos.emit(this.removeArquivos);
+
+    }
     this.arquivos.splice(index, 1);
+
 
 
     // const temCapa = this.arquivos.some(a => a.isCapa);

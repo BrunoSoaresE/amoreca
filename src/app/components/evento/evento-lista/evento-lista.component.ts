@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventoDadosComponent } from '../evento-dados/evento-dados.component';
+import { EventoDadosComponent } from '../evento-dados/evento-dados/evento-dados.component';
 import { MatTableModule } from '@angular/material/table';
 import { EditBaseComponent } from '../../../shared/components/edit-base.component';
 import { MatButtonModule } from '@angular/material/button';

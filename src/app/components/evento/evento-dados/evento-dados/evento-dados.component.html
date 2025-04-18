@@ -40,6 +40,8 @@
           </div>
           <div>
             <button mat-button matStepperNext>Next</button>
+            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+
           </div>
         </form>
       </mat-step>
@@ -48,27 +50,34 @@
           <ng-template matStepLabel>Fotos e configurações</ng-template>
           <mat-form-field>
             <mat-label>Link do site para visitantes</mat-label>
-            <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+            <input matInput formControlName="linkSite" placeholder="Ex. 1 Main St, New York, NY">
           </mat-form-field>
-          <app-evento-dados-foto [eventoSelecionado]="eventoSelecionado"></app-evento-dados-foto>
+          <app-evento-dados-foto (output_arquivos)="processArquivosCadastro($event)"
+            (output_removeArquivos)="processRemoverArquivos($event)"
+            [eventoSelecionado]="eventoSelecionado"></app-evento-dados-foto>
 
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button matStepperNext>Next</button>
+            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+
           </div>
         </form>
       </mat-step>
 
 
-      <mat-step>
+      <mat-step [stepControl]="eventoDadosSite_FormGroup">
         <ng-template matStepLabel>Customize seu site</ng-template>
         <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
-          [temaSelecionado]="temaSelecionado"></app-evento-dados-site>
+          [temaSelecionado]="temaSelecionado" [formGroup]="eventoDadosSite_FormGroup"></app-evento-dados-site>
 
 
         <div>
           <button mat-button matStepperPrevious>Back</button>
           <button mat-button (click)="stepper.reset()">Reset</button>
+
+          <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+
         </div>
       </mat-step>
     </mat-stepper>

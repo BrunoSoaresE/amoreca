@@ -1,3 +1,4 @@
+import { EventoArquivo, EventoArquivoCadastro } from "./evento-arquivo";
 import { Tema } from "./tema";
 
 export interface Evento {
@@ -20,12 +21,15 @@ export interface Evento {
   numero?: string;
   complemento?: string;
   textoRodape?: string;
+  linkSite?: string;
 
   criadoEm: Date;
   atualizadoEm: Date;
 
   // Relacionamentos
   tema?: Tema;
+  eventoArquivo?: EventoArquivo[];
+
 }
 
 
@@ -37,6 +41,7 @@ export interface EventoCadastro {
   idTema: number;
   subNomeEvento?: string;
   nomeEvento: string;
+  linkSite?: string;
   titulo?: string;
   texto?: string;
   dataEvento?: Date;
@@ -50,6 +55,9 @@ export interface EventoCadastro {
   numero?: string;
   complemento?: string;
   textoRodape?: string;
+
+  eventoArquivo?: EventoArquivoCadastro[];
+  removerArquivos?: number[];
 }
 
 

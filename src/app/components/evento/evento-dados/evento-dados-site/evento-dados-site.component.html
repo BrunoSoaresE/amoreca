@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup">
+<form [formGroup]="formGroup" *ngIf="backgroundImageUrl">
 
   <!-- <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado" *ngIf="habilitarSelecaoTema"
     (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
@@ -198,7 +198,6 @@
 
       </footer>
     </div>
-    <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
 
   </div>
 
