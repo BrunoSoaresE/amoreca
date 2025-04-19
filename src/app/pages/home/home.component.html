@@ -1,59 +1,43 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened [ngClass]="isSidenavOpen ? 'custom-sidenav-small' : 'custom-sidenav'">
-    <div class="sidenav-header">
-      <img src="path-to-your-icon/logo.png" alt="Logo" class="logo">
-    </div>
+<mat-sidenav-container class="sidenav-container" style="background: rgb(255, 255, 255); height: 100vh; width: 100vw;">
+  <mat-sidenav #drawer mode="side" class="sidenav" fixedInViewport [opened]="true"
+    [@sidenavWidth]="isSmallScreen ? 'small' : 'large'"
+    style="background: rgba(84, 57, 236, 0.445);padding: 0 !important; margin: 0 !important;">
 
     <mat-nav-list>
-      <h3 class="section-title">PROFILE</h3>
+      <div [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : 'nav-icon-wrapper-end'">
+
+        <button mat-icon-button (click)="toggleMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+      </div>
+      <h3 class="section-title" *ngIf="!isSmallScreen">PROFILE</h3>
+
       <a mat-list-item routerLink="/home/dashboard" class="nav-item">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
+        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">dashboard</mat-icon>
+        <span *ngIf="!isSmallScreen">Dashboard</span>
       </a>
       <a mat-list-item routerLink="/home/pessoa" class="nav-item">
-        <mat-icon>sports_soccer</mat-icon>
-        <span>Pessoa</span>
+        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">sports_soccer</mat-icon>
+        <span *ngIf="!isSmallScreen">Pessoa</span>
       </a>
       <a mat-list-item routerLink="/home/tema" class="nav-item">
-        <mat-icon>group</mat-icon>
-        <span>Tema</span>
+        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
+        <span *ngIf="!isSmallScreen">Tema</span>
       </a>
 
-      <h3 class="section-title">ANALYTICS</h3>
+      <h3 class="section-title" *ngIf="!isSmallScreen">ANALYTICS</h3>
       <a mat-list-item routerLink="/home/evento" class="nav-item">
-        <mat-icon>insights</mat-icon>
-        <span>Evento</span>
-      </a>
-      <a mat-list-item routerLink="/archive" class="nav-item">
-        <mat-icon>archive</mat-icon>
-        <span>Archive</span>
+        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">insights</mat-icon>
+        <span *ngIf="!isSmallScreen">Evento</span>
       </a>
 
-      <h3 class="section-title">MARKETPLACE</h3>
-      <a mat-list-item routerLink="/market" class="nav-item">
-        <mat-icon>store</mat-icon>
-        <span>Market</span>
-      </a>
-      <a mat-list-item routerLink="/wallet" class="nav-item">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <span>Wallet</span>
-      </a>
+      <button style="float: right;" mat-button (click)="logout()">logout</button>
     </mat-nav-list>
-
-    <div class="sidenav-footer">
-      <div class="user-info">
-        <img src="path-to-your-avatar/avatar.png" alt="Avatar" class="avatar">
-        <div class="user-details">
-          <span>Username</span>
-          <span class="user-role">Nicola Web Design</span>
-        </div>
-      </div>
-    </div>
   </mat-sidenav>
+  <mat-sidenav-content class="main-content" [style.width]="isSmallScreen ? 'calc(100vw - 75px)' : 'calc(100vw - 250px)'"
+    [style.margin-left]="isSmallScreen ? '75px' : '250px'">
 
-  <mat-sidenav-content [ngClass]="isSidenavOpen ? 'sidenavOpen' : 'sidenavClose'">
-    <button style="float: right;" mat-button (click)="toggleSidenav()">Toggle Menu</button>
-    <button style="float: right;" mat-button (click)="logout()">logout</button>
 
     <router-outlet></router-outlet>
   </mat-sidenav-content>

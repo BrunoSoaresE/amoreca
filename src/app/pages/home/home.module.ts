@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from "@angular/material/input";
 import { SharedModule } from "../../shared/shared.module";
+import { MatToolbarModule } from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SharedModule } from "../../shared/shared.module";
     , MatListModule
     , MatInputModule
     , SharedModule
+    , MatToolbarModule
   ],
   declarations: [
     HomeComponent

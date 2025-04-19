@@ -1,13 +1,11 @@
-
 .container {
-    width: 100%;
-    height: 90vh;  
-    border: solid black 1px;
+
+  color: var(--cor-secundaria)  !important;
+
+}
 
 
-    padding: 16px;
-    color: var(--cor-secundaria)  !important;
-  }
+  
   .canvas-container {
     max-height: 100%;
     overflow: auto;
@@ -19,7 +17,6 @@
     background-size: cover;
 
 
-    border: solid black 1px;
 
     display: flex; 
     flex-direction: column; 
@@ -257,47 +254,7 @@
     font-style: italic;
   }
   
-
-
-  // @media (max-width: 768px) {
-  //   .foto-wrapper {
-  //     max-width: 100%;
-  //     padding: 0 16px;
-  //   }
-  
-  //   .carrossel-slide img {
-  //     width: 90%;
-  //   }
-  
-  //   .navbar ul {
-  //     gap: 8px;
-  //     padding: 0.5rem 1rem;
-  //   }
-  // }
-  
-
-
-
-
-  // .modal {
-  //   position: fixed;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100vw;
-  //   height: 100vh;
-  //   background: rgba(0, 0, 0, 0.95);
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   z-index: 1000;
-  // }
-  
-  // .modal-img {
-  //   max-width: 90vw;
-  //   max-height: 90vh;
-  //   object-fit: contain;
-  //   cursor: zoom-out;
-  // }
+e
   .modal {
     position: fixed;
     top: 0;

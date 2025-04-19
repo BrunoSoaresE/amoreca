@@ -1,27 +1,51 @@
-import { ChangeDetectionStrategy, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { EditBaseComponent } from '../../shared/components/edit-base.component';
-import { MatSidenavContainer } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   standalone: false,
   selector: 'app-component',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('sidenavWidth', [
+      state('small', style({
+        width: '75px',
+      })),
+      state('large', style({
+        width: '250px',
+      })),
+      transition('small <=> large', [
+        animate('0.2s ease-in-out')
+      ]),
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.4s 0.2s ease-out', style({ opacity: 1 }))
+      ]),
+    ]),
+  ]
 })
 export class HomeComponent {
-  isSidenavOpen = false;
+  isSmallScreen: boolean = window.innerWidth <= 768;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isSmallScreen = window.innerWidth <= 768;
+  }
+
   constructor(
     protected authService: AuthService,
   ) {
   }
 
-  toggleSidenav() {
-    this.isSidenavOpen = !this.isSidenavOpen;
+  toggleMenu() {
+    this.isSmallScreen = !this.isSmallScreen;
 
   }
+
 
   logout() {
     this.authService.setBearerToken(undefined);
