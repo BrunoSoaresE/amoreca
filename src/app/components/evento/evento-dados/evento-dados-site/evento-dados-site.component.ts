@@ -30,11 +30,12 @@ import { animate, style, transition, trigger, } from '@angular/animations';
   animations: [
     trigger('fadeImage', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('40000ms ease-in', style({ opacity: 1 }))
+        style({ opacity: 0 }),  // Iniciar com opacidade 0
+        animate('0.3s 0.2s ease-in', style({ opacity: 1 }))  // Animação para aparecer
       ]),
       transition(':leave', [
-        animate('40000ms ease-out', style({ opacity: 0 }))
+        style({ opacity: 1 }),  // Iniciar com opacidade 1
+        animate('0.3s ease-out', style({ opacity: 0 }))  // Animação para desaparecer
       ])
     ])
   ]
@@ -77,9 +78,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
     this.definirTamanhoCampos();
 
 
-    setInterval(() => {
-      this.proximo_ImagemCarrossel(null);
-    }, 8000); // 10000 milissegundos = 10 segundos
+    this.startCarrossel();
 
   }
 
@@ -134,7 +133,26 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
 
 
 
+  intervalId: any; // ID do intervalo
+  tempoCarrossel = 8000; // 8 segundos
 
+  startCarrossel() {
+    // Iniciar o intervalo automático
+    this.intervalId = setInterval(() => {
+      this.proximo_ImagemCarrossel(null);
+    }, this.tempoCarrossel);
+  }
+  stopCarrossel() {
+    // Parar o intervalo automático
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  resetInterval() {
+    // Limpar e reiniciar o intervalo sempre que o usuário interagir
+    this.stopCarrossel();
+    this.startCarrossel();
+  }
 
 
   imagemAtualCarrossel = 0;
@@ -143,6 +161,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
       event.stopPropagation();
     this.imagemAtualCarrossel = (this.imagemAtualCarrossel - 1 + this.listaImgs.length) % this.listaImgs.length;
     this.cdRef.detectChanges();
+    this.resetInterval(); // Reiniciar o intervalo após interação
   }
 
   proximo_ImagemCarrossel(event: MouseEvent | null) {
@@ -150,6 +169,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
       event.stopPropagation();
     this.imagemAtualCarrossel = (this.imagemAtualCarrossel + 1) % this.listaImgs.length;
     this.cdRef.detectChanges();
+    this.resetInterval(); // Reiniciar o intervalo após interação
 
   }
 
