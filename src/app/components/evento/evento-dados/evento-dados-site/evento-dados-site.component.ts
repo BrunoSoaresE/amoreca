@@ -10,11 +10,15 @@ import { Tema } from "../../../../models/tema";
 import { EventoService } from "../../../../services/evento/evento.service";
 import { EditBaseComponent } from "../../../../shared/components/edit-base.component";
 import { SharedModule } from "../../../../shared/shared.module";
-
+import { EventoArquivo } from "../../../../models/evento-arquivo";
+//import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { animate, style, transition, trigger, } from '@angular/animations';
 @Component({
   standalone: true,
   selector: 'app-evento-dados-site',
-  imports: [CommonModule, SharedModule, MatInputModule, MatDatepickerModule, MatTimepickerModule],
+  imports: [CommonModule, SharedModule, MatInputModule, MatDatepickerModule, MatTimepickerModule//, BrowserAnimationsModule
+
+  ],
   templateUrl: './evento-dados-site.component.html',
   styleUrls: ['./evento-dados-site.component.scss'],
   providers: [
@@ -22,6 +26,17 @@ import { SharedModule } from "../../../../shared/shared.module";
       provide: MAT_TIMEPICKER_CONFIG,
       useValue: { interval: '15 minutes', format: '24' },
     }
+  ],
+  animations: [
+    trigger('fadeImage', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('40000ms ease-in', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('40000ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
   ]
 })
 export class EventoDadosSiteComponent extends EditBaseComponent implements OnInit, OnChanges {
@@ -31,6 +46,9 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
   @Input() override formGroup: FormGroup = {} as FormGroup;
 
   @ViewChildren('textarea') textAreas: QueryList<ElementRef<HTMLTextAreaElement>> | undefined;
+
+
+  listaImgs: string[] = [];
 
 
 
@@ -44,10 +62,12 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['backgroundImageUrl']) {
       this.definirTamanhoCampos();
+      this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
 
     }
   }
   ngOnInit(): void {
+    this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
 
     this.formGroup?.get('texto')?.valueChanges.pipe(
       distinctUntilChanged(),
@@ -55,6 +75,12 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
       this.definirTamanhoCampos();
     });
     this.definirTamanhoCampos();
+
+
+    setInterval(() => {
+      this.proximo_ImagemCarrossel(null);
+    }, 8000); // 10000 milissegundos = 10 segundos
+
   }
 
   calcularTamanhoInput(formControlName: string, fontSize: number, minSize: number): number {
@@ -67,6 +93,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
 
 
   definirTamanhoCampos() {
+
     setTimeout(() => {
       if (this.textAreas) {
         this.textAreas.forEach(textArea => {
@@ -101,7 +128,34 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
   }
 
 
+  getCapa(): EventoArquivo | undefined {
+    return this.eventoSelecionado?.eventoArquivo?.find(x => x.capa)
+  }
+
+
+
+
+
+
+  imagemAtualCarrossel = 0;
+  anterior_ImagemCarrossel(event: MouseEvent | null) {
+    if (event)
+      event.stopPropagation();
+    this.imagemAtualCarrossel = (this.imagemAtualCarrossel - 1 + this.listaImgs.length) % this.listaImgs.length;
+    this.cdRef.detectChanges();
+  }
+
+  proximo_ImagemCarrossel(event: MouseEvent | null) {
+    if (event)
+      event.stopPropagation();
+    this.imagemAtualCarrossel = (this.imagemAtualCarrossel + 1) % this.listaImgs.length;
+    this.cdRef.detectChanges();
+
+  }
+
 
 
 
 }
+
+

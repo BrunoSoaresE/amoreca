@@ -216,14 +216,13 @@
     height: auto;
     object-fit: contain;
   }
-  
-
 
   
   .nav-btn {
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    color: var(--cor-primaria)  !important;
+    font-size: 3rem;
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
   }
