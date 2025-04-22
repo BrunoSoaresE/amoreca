@@ -153,7 +153,7 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
 
   intervalId: any; // ID do intervalo
-  tempoCarrossel = 2000; // 8 segundos
+  tempoCarrossel = 8000; // 8 segundos
 
   startCarrossel() {
     // Iniciar o intervalo automático

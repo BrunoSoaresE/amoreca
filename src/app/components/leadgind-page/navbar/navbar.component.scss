@@ -21,9 +21,11 @@
       ul {
         display: flex;
         gap: 25px;
+        margin-top: none !important;
 
         li {
           list-style: none;
+          
 
           a {
             color: #333; // Cor neutra para os links
@@ -41,7 +43,8 @@
 
     .auth-buttons {
       display: flex;
-      gap: 15px;
+      margin-left: 16px;
+      gap: 8px;
 
       a {
         text-decoration: none;

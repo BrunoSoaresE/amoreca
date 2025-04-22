@@ -213,7 +213,7 @@
   
   .carrossel-slide {
     position: relative;
-    width: 40vw;
+    width: 60vw;
     height: 70vh; /* ou ajuste conforme seu layout */
     display: flex;
     justify-content: center;
@@ -310,8 +310,8 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 70%;
-    height: 80vh; 
+    width: 70vw !important;
+    height: 90vh !important; 
   }
 
 
@@ -334,8 +334,8 @@
      z-index: 10000;
      background-color: transparent;
      border: none;
-    padding-left: 40px;
-    padding-right: 40px;
+    //padding-left: 40px;
+    //padding-right: 40px;
   }
   
 

@@ -1,12 +1,14 @@
 <header class="navbar">
   <div class="navbar-container">
-    <div class="logo" >Amoreca</div>
+    <div class="logo">
+      <a href="#hero">Amoreca</a>
+    </div>
     <nav>
       <ul>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Customers</a></li>
-        <li><a href="#">Pricing</a></li>
-        <li><a href="#">Learn</a></li>
+        <li><a (click)="scrollToElement($event, 'servicos')">Serviços</a></li>
+        <li><a (click)="scrollToElement($event, 'depoimentos')">Depoimentos</a></li>
+        <li><a (click)="scrollToElement($event, 'planos')">Planos</a></li>
+        <li><a (click)="scrollToElement($event, 'faq')">Dúvidas Frequentes</a></li>
       </ul>
     </nav>
     <div class="auth-buttons">

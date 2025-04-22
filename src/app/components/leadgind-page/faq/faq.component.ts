@@ -10,11 +10,31 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
 export class FaqComponent {
 
   faqs = [
-    { question: 'Como posso me inscrever?', answer: 'Você pode se inscrever diretamente em nosso site clicando no botão "Experimente gratuitamente" na parte superior.', show: false },
-    { question: 'O que está incluído no plano gratuito?', answer: 'O plano gratuito inclui acesso a funcionalidades básicas, permitindo amorecar até 5 compromissos por mês.', show: false },
-    { question: 'Posso cancelar a assinatura a qualquer momento?', answer: 'Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais.', show: false },
-    { question: 'O suporte é oferecido aos usuários gratuitos?', answer: 'Sim, todos os usuários têm acesso ao nosso suporte via chat e email, independentemente do plano.', show: false },
-    { question: 'Como posso entrar em contato com o suporte?', answer: 'Você pode entrar em contato com o suporte através do nosso formulário de contato disponível no site.', show: false },
+    {
+      question: 'Como faço para criar meu primeiro evento?',
+      answer: 'É só clicar no botão "Começar Grátis", criar sua conta e seguir o passo a passo para montar seu primeiro Amoreca!',
+      show: false,
+    },
+    {
+      question: 'O que está incluso no plano gratuito?',
+      answer: 'Você pode criar 1 evento ativo com até 5 fotos. Depois que o evento acabar, ele será removido automaticamente.',
+      show: false,
+    },
+    {
+      question: 'E se eu quiser manter meu evento como recordação?',
+      answer: 'Com qualquer plano de assinatura, seus eventos ficam salvos como lembranças e você pode acessar sempre que quiser.',
+      show: false,
+    },
+    {
+      question: 'Posso cancelar a qualquer momento?',
+      answer: 'Claro! Você pode cancelar sua assinatura quando quiser, sem multa nem complicações.',
+      show: false,
+    },
+    {
+      question: 'Como falo com o suporte?',
+      answer: 'Você pode nos chamar pelo WhatsApp ou enviar uma mensagem pelo nosso formulário de contato aqui no site.',
+      show: false,
+    },
   ];
 
 
