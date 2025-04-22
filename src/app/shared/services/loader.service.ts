@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoaderService {
 
-  private mensagemLoaderSubject = new BehaviorSubject<string>('');
+  private mensagemLoaderSubject = new BehaviorSubject<string | undefined>(undefined);
   mensagemLoader$ = this.mensagemLoaderSubject.asObservable();
 
   setMensagem(origem: string) {

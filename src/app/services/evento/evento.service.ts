@@ -16,6 +16,11 @@ export class EventoService extends BaseService {
     this.http = injector.get(HttpClient);
   }
 
+  getModelByLinkSite(linkEvento: string): Observable<Evento> {
+    let retorno = this.get(`link-site/${linkEvento}`)
+    return retorno;
+  }
+
   getEventoById(id: number): Observable<Evento> {
     let retorno = this.get(`${id}`)
     return retorno;
