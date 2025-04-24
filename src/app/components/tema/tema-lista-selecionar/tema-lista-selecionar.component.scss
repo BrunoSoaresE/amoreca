@@ -3,14 +3,14 @@
   overflow-x: auto;
   gap: 12px;
   scroll-snap-type: x mandatory;
-  padding: 50px 8px;
+  padding: 8px 8px;
 }
 
 .tema-card {
   flex: 0 0 auto;
-  width: 200px;
+  width: 150px;
   border: 1px solid black;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
   background-color: #fff;
@@ -27,14 +27,11 @@
   border-color: transparent;
   background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(156, 39, 176, 0.2));
   box-shadow:
-    0 0 10px rgba(33, 150, 243, 0.4),
-    0 0 20px rgba(156, 39, 176, 0.3),
-    0 0 30px rgba(103, 58, 183, 0.3);
+    0 0 4px rgba(33, 150, 243, 0.4);
   backdrop-filter: blur(6px);
-  transform: scale(1.1);
+  // transform: scale(1.1);
   transition: all 0.4s ease;
   border-radius: 16px;
-  margin: 8px;
 }
 
 /* Proporção 9:16 para parecer uma miniatura de celular */

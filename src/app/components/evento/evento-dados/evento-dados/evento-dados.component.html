@@ -21,8 +21,8 @@
           <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado"
             *ngIf="habilitarSelecaoTema || !temaSelecionado"
             (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
-          <div class="botao-centralizado" style="padding-top: 0;">
 
+          <div class="botao-centralizado" style="padding-top: 0 !important;margin: 0 !important;">
             <button mat-raised-button color="primary" *ngIf="!habilitarSelecaoTema"
               (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
               <mat-icon>palette</mat-icon>

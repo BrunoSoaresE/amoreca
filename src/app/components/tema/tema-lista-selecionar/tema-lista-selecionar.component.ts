@@ -79,7 +79,9 @@ export class TemaListaSelecionarComponent extends EditBaseComponent implements O
   selecionarTema(tema: Tema) {
     // 
     const dialogRef = this.dialog.open(TemaConfirmacaoDialogComponent, {
-      width: '400px',
+      width: '500px',
+      maxHeight: '90vh', // garante que nunca ultrapasse a viewport
+      panelClass: 'no-scroll-dialog',
       data: { tema }
     });
 
