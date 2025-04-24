@@ -1,59 +1,56 @@
-<div class="container">
-    Dashboard
+<div class="dashboard-container">
+    <mat-card class="dashboard-card" *ngIf="data">
+        <mat-card-title>Resumo Geral</mat-card-title>
+        <div class="dashboard-grid">
 
-    <ul>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-        <li>Dashboard</li>
-    </ul>
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">event</mat-icon>
+                <div>
+                    <div class="label">Eventos</div>
+                    <div class="value">{{ data.quantidadeEventos }}</div>
+                </div>
+            </div>
+
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">event_available</mat-icon>
+                <div>
+                    <div class="label">Eventos Ativos</div>
+                    <div class="value">{{ data.quantidadeEventosAtivos }}</div>
+                </div>
+            </div>
+
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">people</mat-icon>
+                <div>
+                    <div class="label">Pessoas Confirmadas</div>
+                    <div class="value">{{ data.quantidadePessoasConfirmadas }}</div>
+                </div>
+            </div>
+
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">groups</mat-icon>
+                <div>
+                    <div class="label">Média por Evento</div>
+                    <div class="value">{{ data.mediaPessoasConfirmadasPorEvento }}</div>
+                </div>
+            </div>
+
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">attach_money</mat-icon>
+                <div>
+                    <div class="label">Total Arrecadado</div>
+                    <div class="value">{{ data.totalArrecadado }}</div>
+                </div>
+            </div>
+
+            <div class="dashboard-item">
+                <mat-icon class="dashboard-icon">bar_chart</mat-icon>
+                <div>
+                    <div class="label">Média Arrecadada</div>
+                    <div class="value">{{ data.mediaArrecadadaPorEvento }}</div>
+                </div>
+            </div>
+
+        </div>
+    </mat-card>
 </div>

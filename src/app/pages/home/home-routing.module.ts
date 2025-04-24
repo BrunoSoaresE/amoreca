@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'pessoa',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
       {

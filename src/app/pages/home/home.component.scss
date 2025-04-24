@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 48px; // ou o mesmo que mat-list-item usa
+    height: 48px !important; // ou o mesmo que mat-list-item usa
   }
 
   .nav-icon-wrapper-end {
@@ -13,19 +13,52 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    height: 48px; // ou o mesmo que mat-list-item usa
+    height: 48px !important; // ou o mesmo que mat-list-item usa
   }
 
- 
-  .sidenav{
-    padding: 0 !important;
-     margin: 0 !important;
-  }
+
+
+
   mat-nav-list{
-    width: 99% !important;
+    width: 95% !important;
     margin: auto;
-    
+    height: 100%;
+    position: relative;
+
+    .button-logout {
+      font-size: 1em;
+      position: absolute;
+        bottom: 0;  /* Coloca o botão na parte inferior da div */
+        margin-bottom: 16px;
+
+        .big-icon{
+          font-size: 28px;
+          width: 32px;      /* Garante espaço lateral */
+          height: 32px;     /* Garante espaço vertical */
+          line-height: 1;   /* Tira espaçamento vertical extra */
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+       
+    }
   }
+
   mat-sidenav-content {
     padding: 8px 16px !important;
   }
+
+
+
+  .nav-text {
+    font-size: 16px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Alinha o texto centralmente com o ícone */
+    margin-left: 4px;    
+    position: relative;
+    top: -6px;
+
+  }
+  

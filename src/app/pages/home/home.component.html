@@ -5,31 +5,44 @@
     <mat-nav-list>
       <div [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : 'nav-icon-wrapper-end'">
 
+
         <button mat-icon-button (click)="toggleMenu()">
-          <mat-icon>menu</mat-icon>
+          <mat-icon>{{ isSmallScreen ? 'read_more' : 'menu_open' }}</mat-icon>
         </button>
+
+
 
       </div>
       <h3 class="section-title" *ngIf="!isSmallScreen">PROFILE</h3>
 
-      <a mat-list-item routerLink="/home/dashboard" class="nav-item">
+      <a mat-list-item routerLink="/home/dashboard" class="nav-item" title="Dashboard">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">dashboard</mat-icon>
-        <span *ngIf="!isSmallScreen">Dashboard</span>
+        <span *ngIf="!isSmallScreen" class="nav-text">Dashboard</span>
       </a>
 
-      <a mat-list-item routerLink="/home/tema" class="nav-item">
+      <a mat-list-item routerLink="/home/tema" class="nav-item" title="Tema">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
-        <span *ngIf="!isSmallScreen">Tema</span>
+        <span *ngIf="!isSmallScreen" class="nav-text">Tema</span>
       </a>
 
       <h3 class="section-title" *ngIf="!isSmallScreen">ANALYTICS</h3>
-      <a mat-list-item routerLink="/home/evento" class="nav-item">
+      <a mat-list-item routerLink="/home/evento" class="nav-item" title="Meus eventos">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">insights</mat-icon>
-        <span *ngIf="!isSmallScreen">Evento</span>
+        <span *ngIf="!isSmallScreen" class="nav-text">Meus eventos</span>
       </a>
 
-      <button style="float: right;" mat-button (click)="logout()">logout</button>
+
+
+      <a mat-list-item class="nav-item" title="Sair / Logout" class="button-logout " (click)="logout()">
+        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper big-icon' : ''">exit_to_app</mat-icon>
+        <span *ngIf="!isSmallScreen" class="nav-text">Sair / Logout</span>
+      </a>
+
+
+
+
     </mat-nav-list>
+
   </mat-sidenav>
 
 

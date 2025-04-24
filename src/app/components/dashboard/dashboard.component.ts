@@ -3,6 +3,8 @@ import { Component, ChangeDetectionStrategy, Injector, OnInit } from "@angular/c
 import { EditBaseComponent } from "../../shared/components/edit-base.component";
 import { DateAdapter } from "@angular/material/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { DashboardService } from "../../services/dashboard/dashboard.service";
+import { Dashboard } from "../../models/dashboard";
 
 @Component({
   standalone: false,
@@ -13,11 +15,14 @@ import { FormBuilder, FormControl, Validators } from "@angular/forms";
 })
 export class DashboardComponent extends EditBaseComponent implements OnInit {
 
+  data?: Dashboard;
 
   constructor(
     protected injector: Injector,
     protected dateAdapter: DateAdapter<Date>,
     protected formBuilder: FormBuilder,
+    protected dashboardService: DashboardService,
+
   ) {
     super(injector);
     moment.locale('pt-BR');
@@ -29,9 +34,19 @@ export class DashboardComponent extends EditBaseComponent implements OnInit {
     //this.onLoadForm();
 
     this.formGroup = this.formBuilder.group({
-      email: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
-      senha: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
+      // email: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
+      // senha: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
     });
+
+    this.subscription.add(
+      this.dashboardService.getDashboard().subscribe({
+        next: (response: Dashboard) => {
+          this.data = response;
+          this.cdRef.detectChanges();
+        }
+      }),
+    );
+
   }
 
   onSubmit(): void {
@@ -43,16 +58,7 @@ export class DashboardComponent extends EditBaseComponent implements OnInit {
     //let dashboard = this.formGroup.getRawValue() as Dashboard;
 
 
-    // this.subscription.add(
-    //   this.authService.dashboard(dashboard).subscribe({
-    //     next: (response: DashboardDashboard) => {
-    //       this.authService.setBearerToken(response?.bearer);
-    //       this.sidenavService.close();
-    //       this.toastr.success('Dashboard realizado com sucesso!');
-    //       this.router.navigate([`/home`]);
-    //     }
-    //   }),
-    // );
+
 
   }
 
