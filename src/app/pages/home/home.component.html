@@ -1,7 +1,6 @@
-<mat-sidenav-container class="sidenav-container" style="background: rgb(255, 255, 255); height: 100vh; width: 100vw;">
+<mat-sidenav-container class="sidenav-container" style="background: rgb(255, 255, 255); height: 100%; width: 100%;">
   <mat-sidenav #drawer mode="side" class="sidenav" fixedInViewport [opened]="true"
-    [@sidenavWidth]="isSmallScreen ? 'small' : 'large'"
-    style="background: rgba(84, 57, 236, 0.445);padding: 0 !important; margin: 0 !important;">
+    [@sidenavWidth]="isSmallScreen ? 'small' : 'large'">
 
     <mat-nav-list>
       <div [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : 'nav-icon-wrapper-end'">
@@ -17,10 +16,7 @@
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">dashboard</mat-icon>
         <span *ngIf="!isSmallScreen">Dashboard</span>
       </a>
-      <a mat-list-item routerLink="/home/pessoa" class="nav-item">
-        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">sports_soccer</mat-icon>
-        <span *ngIf="!isSmallScreen">Pessoa</span>
-      </a>
+
       <a mat-list-item routerLink="/home/tema" class="nav-item">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
         <span *ngIf="!isSmallScreen">Tema</span>
@@ -35,6 +31,8 @@
       <button style="float: right;" mat-button (click)="logout()">logout</button>
     </mat-nav-list>
   </mat-sidenav>
+
+
   <mat-sidenav-content class="main-content" [style.width]="isSmallScreen ? 'calc(100vw - 75px)' : 'calc(100vw - 250px)'"
     [style.margin-left]="isSmallScreen ? '75px' : '250px'">
 

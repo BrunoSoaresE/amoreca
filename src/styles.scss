@@ -23,13 +23,63 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     min-width: 60vw !important;
   }
   
-
-
   
 .container {
    width: 100% !important;
    max-width: none;
-    padding: 0 !important;
-    margin: 0 !important;
- 
+  padding: 0 !important;
+  margin: 0 !important; 
+  }
+
+
+  .btn-verde {
+    background-color: #51a351 !important;
+    color: white !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-verde-secundario {
+    background-color: white !important;
+    color: #51a351 !important;
+    border: 1px solid #51a351 !important;
+    margin: 0px 4px !important;
+  }
+
+  .btn-azul {
+    background-color: #004bcb !important;
+    color: white !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-azul-secundario {
+    background-color: white !important;
+    color: #004bcb !important;
+    border: 1px solid #004bcb !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-amarelo {
+    background-color: #f89406 !important;
+    color: white !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-amarelo-secundario {
+    background-color: white !important;
+    color: #f89406 !important;
+    border: 1px solid #f89406 !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-vermelho {
+    background-color: #bd362f !important;
+    color: white !important;
+    margin: 0px 4px !important;
+  }
+  
+  .btn-vermelho-secundario {
+    background-color: white !important;
+    color: #bd362f !important;
+    border: 1px solid #bd362f !important;
+    margin: 0px 4px !important;
   }

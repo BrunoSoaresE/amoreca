@@ -19,7 +19,7 @@
     </nav>
 
 
-    <div class="foto-capa-container">
+    <div class="foto-capa-container" *ngIf="getCapa()?.base64">
       <div class="foto-wrapper">
         <img [src]="getCapa()?.base64" alt="Foto de Capa" (click)="abrirCapaModal()" />
         <div class="contador-overlay">
@@ -46,7 +46,7 @@
 
     </section>
 
-    <div class="carrossel-container">
+    <div class="carrossel-container" *ngIf="listaImgs && listaImgs.length > 0">
       <button class="nav-btn" (click)="anterior_ImagemCarrossel(null)">‹</button>
 
       <div class="carrossel-slide">

@@ -63,6 +63,10 @@ export class EventoListaComponent extends EditBaseComponent implements OnInit {
         this.cdRef.detectChanges();
     }
 
-
-
+    preVisualizar(evento: Evento) {
+        if (evento.linkSite)
+            window.open(evento.linkSite, '_blank');
+        else
+            this.toastr.warning("Link não configurado!")
+    }
 }

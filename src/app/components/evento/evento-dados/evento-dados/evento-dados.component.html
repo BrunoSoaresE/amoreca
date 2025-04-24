@@ -45,8 +45,21 @@
           </div>
           <div>
             <div class="botao-centralizado">
-              <button mat-button matStepperNext>Próximo</button>
-              <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+              <button mat-raised-button class="btn-vermelho-secundario" type="button"
+                (click)="output_fecharCadastroEdicao.emit()">
+                <mat-icon>close</mat-icon>
+                Cancelar edição
+              </button>
+
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+                <mat-icon>arrow_forward</mat-icon>
+                Próximo
+              </button>
+
+              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+                <mat-icon>add</mat-icon>
+                Salvar
+              </button>
 
             </div>
           </div>
@@ -66,9 +79,25 @@
 
           <div>
             <div class="botao-centralizado">
-              <button mat-button matStepperPrevious>Voltar</button>
-              <button mat-button matStepperNext>Próximo</button>
-              <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+              <button mat-raised-button class="btn-vermelho-secundario" type="button"
+                (click)="output_fecharCadastroEdicao.emit()">
+                <mat-icon>close</mat-icon>
+                Cancelar edição
+              </button>
+
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Voltar
+              </button>
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+                <mat-icon>arrow_forward</mat-icon>
+                Próximo
+              </button>
+
+              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+                <mat-icon>add</mat-icon>
+                Salvar
+              </button>
             </div>
 
 
@@ -85,8 +114,23 @@
 
         <div>
           <div class="botao-centralizado">
-            <button mat-button matStepperPrevious>Voltar</button>
-            <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+
+
+            <button mat-raised-button class="btn-vermelho-secundario" type="button"
+              (click)="output_fecharCadastroEdicao.emit()">
+              <mat-icon>close</mat-icon>
+              Cancelar edição
+            </button>
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Voltar
+            </button>
+
+            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+              <mat-icon>add</mat-icon>
+              Salvar
+            </button>
+
           </div>
 
         </div>

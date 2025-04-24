@@ -51,5 +51,27 @@
     </div>
   </div>
 
-  <button mat-raised-button color="primary" type="button" (click)="salvar()">Salvar</button>
+  <div class="d-flex justify-content-end">
+
+    <button mat-raised-button class="btn-vermelho-secundario" type="button"
+      (click)="output_fecharCadastroEdicao.emit()">
+      <mat-icon>close</mat-icon>
+      Cancelar edição
+    </button>
+
+    <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+      <mat-icon>add</mat-icon>
+      Salvar
+    </button>
+  </div>
+
+
+  <!-- <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" class="btn-salvar" mat-raised-button
+    type="button">
+    <span class="button-content">
+      <mat-icon>add</mat-icon>
+      Adicionar novo tema
+    </span>
+  </button> -->
+
 </form>

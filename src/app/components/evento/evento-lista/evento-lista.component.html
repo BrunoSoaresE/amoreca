@@ -5,15 +5,18 @@
     <h1 *ngIf="!habilitarCadastroEdicao">Eventos</h1>
 
   </div>
-  <div class="adicionar-novo d-flex justify-end">
-    <i class="fa fa-times" style="cursor: pointer;" (click)="fecharCadastroEdicao()"
-      *ngIf="habilitarCadastroEdicao"></i>
-    <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" class="btn-salvar" mat-raised-button
-      type="button">
-      <span class="button-content">
-        <mat-icon>add</mat-icon>
-        Adicionar novo evento
-      </span>
+  <div class="d-flex justify-content-end mb-4">
+
+
+    <mat-icon style="cursor: pointer;" *ngIf="habilitarCadastroEdicao" (click)="fecharCadastroEdicao()">
+      close
+    </mat-icon>
+
+
+    <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" class="btn-azul-secundario"
+      mat-raised-button type="button">
+      <mat-icon>add</mat-icon>
+      Adicionar novo evento
     </button>
 
   </div>
@@ -52,17 +55,18 @@
     <ng-container matColumnDef="acao">
       <th mat-header-cell *matHeaderCellDef> Ação </th>
       <td mat-cell *matCellDef="let evento">
+
+
         <mat-menu #menu="matMenu">
-          <!-- <button mat-menu-item *ngIf="instrutor.ativo" (click)="excluirInstrutor(instrutor)">
-          <mat-icon>delete</mat-icon> Excluir
-        </button> -->
+
           <button mat-menu-item (click)="abrirCadastroEdicao(evento)">
             <mat-icon>edit</mat-icon> Editar
           </button>
-          <!-- <button mat-menu-item *ngIf="!instrutor.ativo" (click)="ativarInstrutor(instrutor)">
-          <mat-icon>refresh</mat-icon>
-          Ativar
-        </button> -->
+
+          <button mat-menu-item (click)="preVisualizar(evento)">
+            <mat-icon>visibility</mat-icon> Pré-visualizar
+          </button>
+
         </mat-menu>
 
         <button mat-icon-button [matMenuTriggerFor]="menu">
