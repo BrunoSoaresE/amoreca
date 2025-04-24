@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
@@ -28,8 +28,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ]),
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   isSmallScreen: boolean = window.innerWidth <= 768;
+  isAdmin: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -39,6 +40,15 @@ export class HomeComponent {
   constructor(
     protected authService: AuthService,
   ) {
+  }
+  ngOnInit(): void {
+
+    this.authService.bearerToken$.subscribe((tokem) => {
+      if (tokem) {
+        this.isAdmin = this.authService.isAdmin();
+      }
+    });
+
   }
 
   toggleMenu() {

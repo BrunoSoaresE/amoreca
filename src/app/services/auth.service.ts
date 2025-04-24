@@ -6,7 +6,15 @@ import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../environment.service';
 import { Router } from '@angular/router';
 import { isBrowser } from '../shared/functions/util';
+import { jwtDecode } from 'jwt-decode';
 
+interface JwtPayload {
+  id: string;
+  Nome: string;
+  Documento: string;
+  Email: string;
+  AdmSistema: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends BaseService {
@@ -36,8 +44,26 @@ export class AuthService extends BaseService {
         sessionStorage.setItem('bearerToken', bearToken);
     }
   }
+
   getBearerToken() {
     return this.bearerTokenSubject$.value || (isBrowser() && sessionStorage?.getItem('bearerToken'));
+  }
+
+  _getDecodedToken(): JwtPayload | null {
+    const token = this.getBearerToken();
+    if (!token) return null;
+
+    try {
+      return jwtDecode<JwtPayload>(token);
+    } catch (error) {
+      console.error('Erro ao decodificar o token JWT:', error);
+      return null;
+    }
+  }
+
+  isAdmin(): boolean {
+    const decoded = this._getDecodedToken();
+    return decoded?.AdmSistema?.toLowerCase() === 'true';
   }
 
 

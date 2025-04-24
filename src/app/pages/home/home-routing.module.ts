@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from '../../components/dashboard/dashboard.component';
 import { Routes, RouterModule } from '@angular/router';
+import { PerfilRouterGuard } from '../../shared/perfil-router.guard';
 
 const routes: Routes = [
   {
@@ -20,7 +21,9 @@ const routes: Routes = [
 
       {
         path: 'tema',
-        loadComponent: () => import('../../components/tema/tema-lista/tema-lista.component').then(m => m.TemaListaComponent)
+        loadComponent: () => import('../../components/tema/tema-lista/tema-lista.component').then(m => m.TemaListaComponent),
+        canActivate: [PerfilRouterGuard],
+        data: { roles: ['adm_sistema'] },
       },
       {
         path: 'evento',

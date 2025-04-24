@@ -20,7 +20,7 @@
         <span *ngIf="!isSmallScreen" class="nav-text">Dashboard</span>
       </a>
 
-      <a mat-list-item routerLink="/home/tema" class="nav-item" title="Tema">
+      <a mat-list-item routerLink="/home/tema" class="nav-item" title="Tema" *ngIf="isAdmin">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
         <span *ngIf="!isSmallScreen" class="nav-text">Tema</span>
       </a>
