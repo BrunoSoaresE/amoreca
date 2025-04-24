@@ -1,8 +1,8 @@
 <div class="container">
   <div class="header-container">
-    <h1 *ngIf="!habilitarCadastroEdicao">Temas</h1>
-    <h1 *ngIf="habilitarCadastroEdicao && temaSelecionado">Editar tema</h1>
-    <h1 *ngIf="habilitarCadastroEdicao && !temaSelecionado">Cadastrar novo tema</h1>
+    <h1 *ngIf="!habilitarCadastroEdicao">Presentes</h1>
+    <h1 *ngIf="habilitarCadastroEdicao && presenteSelecionado">Editar presente</h1>
+    <h1 *ngIf="habilitarCadastroEdicao && !presenteSelecionado">Cadastrar novo presente</h1>
   </div>
   <div class="d-flex justify-content-end mb-4">
 
@@ -14,66 +14,56 @@
 
     <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicao()" mat-raised-button type="button">
       <mat-icon>add</mat-icon>
-      Adicionar novo tema
+      Adicionar novo presente
     </button>
 
   </div>
 
 
-  <table *ngIf="!habilitarCadastroEdicao" mat-table [dataSource]="listTemas()" class="mat-elevation-z8">
+  <table *ngIf="!habilitarCadastroEdicao && listPresentes" mat-table [dataSource]="listPresentes"
+    class="mat-elevation-z8">
 
     <!-- Nome do descricao -->
     <ng-container matColumnDef="descricao">
       <th mat-header-cell *matHeaderCellDef> Descricao </th>
-      <td mat-cell *matCellDef="let tema"> {{ tema.descricao }} </td>
+      <td mat-cell *matCellDef="let presente"> {{ presente.descricao }} </td>
     </ng-container>
 
     <!-- Nome do Arquivo -->
     <ng-container matColumnDef="nomeArquivo">
       <th mat-header-cell *matHeaderCellDef style="text-align: center;"> Arquivo </th>
-      <td mat-cell *matCellDef="let tema">
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <img *ngIf="tema.arquivoBase64?.base64" [src]="tema.arquivoBase64.base64" alt="preview" class="preview-img"
-            height="130px" />
-          <p style="text-align: center; margin-top: 8px;">{{ tema.arquivo?.nomeOriginal }}</p>
+      <td mat-cell *matCellDef="let presente">
+        <div *ngIf="presente?.base64"
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <img [src]="presente?.base64" alt="preview" class="preview-img" height="130px" />
+          <p style="text-align: center; margin-top: 8px;">{{ presente.arquivo?.nomeOriginal }}</p>
         </div>
       </td>
     </ng-container>
 
-
-
     <ng-container matColumnDef="categoria">
       <th mat-header-cell *matHeaderCellDef> Categoria </th>
-      <td mat-cell *matCellDef="let tema">
+      <td mat-cell *matCellDef="let presente">
         <ul>
-          <ng-container *ngFor="let descricao of getCategoriaArray(tema)">
+          <ng-container *ngFor="let descricao of getCategoriaArray(presente)">
             <li>{{ descricao }}</li>
           </ng-container>
         </ul>
       </td>
     </ng-container>
 
-    <!-- Cores -->
-    <ng-container matColumnDef="cores">
-      <th mat-header-cell *matHeaderCellDef> Cores </th>
-      <td mat-cell *matCellDef="let tema">
-        <span class="cor-preview" [style.background]="tema.corPrimaria"></span>
-        <span class="cor-preview" [style.background]="tema.corSecundaria"></span>
-        <span class="cor-preview" [style.background]="tema.corTerciaria"></span>
-      </td>
-    </ng-container>
 
 
 
 
     <ng-container matColumnDef="acao">
       <th mat-header-cell *matHeaderCellDef> Ação </th>
-      <td mat-cell *matCellDef="let tema">
+      <td mat-cell *matCellDef="let presente">
         <mat-menu #menu="matMenu">
           <!-- <button mat-menu-item *ngIf="instrutor.ativo" (click)="excluirInstrutor(instrutor)">
           <mat-icon>delete</mat-icon> Excluir
         </button> -->
-          <button mat-menu-item (click)="abrirCadastroEdicao(tema)">
+          <button mat-menu-item (click)="abrirCadastroEdicao(presente)">
             <mat-icon>edit</mat-icon> Editar
           </button>
           <!-- <button mat-menu-item *ngIf="!instrutor.ativo" (click)="ativarInstrutor(instrutor)">
@@ -94,7 +84,7 @@
   </table>
 
 
-  <app-tema-dados *ngIf="habilitarCadastroEdicao" [temaSelecionado]="temaSelecionado"
-    (output_fecharCadastroEdicao)="fecharCadastroEdicao($event)"></app-tema-dados>
+  <app-presente-dados *ngIf="habilitarCadastroEdicao" [presenteSelecionado]="presenteSelecionado"
+    (output_fecharCadastroEdicao)="fecharCadastroEdicao($event)"></app-presente-dados>
 
 </div>

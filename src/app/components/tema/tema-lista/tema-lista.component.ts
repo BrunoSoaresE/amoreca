@@ -8,6 +8,8 @@ import { Tema } from '../../../models/tema';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '../../../shared/shared.module';
+import { ArquivoService } from '../../../services/arquivo/arquivo.service';
+import { ArquivoBase64 } from '../../../models/arquivo';
 
 @Component({
     standalone: true,
@@ -25,7 +27,8 @@ export class TemaListaComponent extends EditBaseComponent implements OnInit {
     listTemas = signal<Tema[]>([]);;
 
     constructor(protected injector: Injector,
-        private temaService: TemaService
+        private temaService: TemaService,
+        private arquivoService: ArquivoService
     ) {
         super(injector);
     }
@@ -40,6 +43,7 @@ export class TemaListaComponent extends EditBaseComponent implements OnInit {
             this.temaService.getListTema().subscribe({
                 next: (response: Tema[]) => {
                     this.listTemas.set(response);
+                    this.downloadBase64Foto();
                 }
             }),
         );
@@ -67,6 +71,23 @@ export class TemaListaComponent extends EditBaseComponent implements OnInit {
         return (tema.temaCategoria ?? [])
             .map(ctf => ctf.categoria?.descricao || '')
             .filter(descricao => descricao !== '');
+    }
+
+    downloadBase64Foto() {
+
+        if (this.listTemas().length != 0)
+            this.listTemas().forEach(eventoArquivo => {
+                if (eventoArquivo?.arquivo?.nomeArmazenado && !eventoArquivo?.arquivoBase64?.base64) {
+
+                    this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
+                        next: (response: ArquivoBase64) => {
+                            eventoArquivo.arquivoBase64 = response;
+                            this.cdRef.detectChanges();
+                        }
+                    });
+                }
+            });
+
     }
 
 }

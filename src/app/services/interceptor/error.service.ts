@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
-import {of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of } from 'rxjs';
 
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ErrorService {
   constructor(protected toastrService: ToastrService,
-              protected router: Router) {
+    protected router: Router) {
   }
 
   set(errorResponse: HttpErrorResponse) {
@@ -27,32 +27,33 @@ export class ErrorService {
       case 400:
 
 
-          if (errorResponse.error && errorResponse.error.title) {
-            this.toastrService.error(errorResponse.error.title);
+        if (errorResponse.error && errorResponse.error.title) {
+          this.toastrService.error(errorResponse.error.title);
 
 
 
-          } else {
-            this.toastrService.warning('Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.');
-          }
+        } else {
+          this.toastrService.warning('Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.');
+        }
 
 
-          break;
+        break;
       case 404:
         this.toastrService.warning(errorResponse.error);
         break;
       case 422:
-          if (errorResponse.error && errorResponse.error.split) {
-            mensagemAmigavel = errorResponse.error.split('\r\n')[0];
-          } else {
-            mensagemAmigavel = 'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.';
-          }
+        if (errorResponse.error && errorResponse.error.split) {
+          mensagemAmigavel = errorResponse.error.split('\r\n')[0];
+        } else {
+          mensagemAmigavel = 'Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.';
+        }
 
-          this.toastrService.warning(mensagemAmigavel);
+        this.toastrService.warning(mensagemAmigavel);
 
         break;
       case 401:
         this.toastrService.warning('Esta requisição requer autenticação. Por favor realize o login para continuar!');
+        this.router.navigate(['/']).then();
         break;
       default:
         this.toastrService.error(

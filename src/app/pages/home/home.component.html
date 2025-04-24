@@ -19,17 +19,23 @@
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">dashboard</mat-icon>
         <span *ngIf="!isSmallScreen" class="nav-text">Dashboard</span>
       </a>
-
-      <a mat-list-item routerLink="/home/tema" class="nav-item" title="Tema" *ngIf="isAdmin">
-        <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
-        <span *ngIf="!isSmallScreen" class="nav-text">Tema</span>
-      </a>
-
-      <h3 class="section-title" *ngIf="!isSmallScreen">ANALYTICS</h3>
       <a mat-list-item routerLink="/home/evento" class="nav-item" title="Meus eventos">
         <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">insights</mat-icon>
         <span *ngIf="!isSmallScreen" class="nav-text">Meus eventos</span>
       </a>
+
+      <ng-container *ngIf="isAdmin">
+        <h3 class="section-title" *ngIf="!isSmallScreen">Administração</h3>
+        <a mat-list-item routerLink="/home/tema" class="nav-item" title="Tema">
+          <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">group</mat-icon>
+          <span *ngIf="!isSmallScreen" class="nav-text">Tema</span>
+        </a>
+        <a mat-list-item routerLink="/home/presente" class="nav-item" title="Presentes">
+          <mat-icon [ngClass]="isSmallScreen ? 'nav-icon-wrapper' : ''">card_giftcard</mat-icon>
+          <span *ngIf="!isSmallScreen" class="nav-text">Presentes</span>
+        </a>
+
+      </ng-container>
 
 
 

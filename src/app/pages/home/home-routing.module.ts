@@ -26,6 +26,12 @@ const routes: Routes = [
         data: { roles: ['adm_sistema'] },
       },
       {
+        path: 'presente',
+        loadComponent: () => import('../../components/presente/presente-lista/presente-lista.component').then(m => m.PresenteListaComponent),
+        canActivate: [PerfilRouterGuard],
+        data: { roles: ['adm_sistema'] },
+      },
+      {
         path: 'evento',
         loadComponent: () => import('../../components/evento/evento-lista/evento-lista.component').then(m => m.EventoListaComponent)
       },

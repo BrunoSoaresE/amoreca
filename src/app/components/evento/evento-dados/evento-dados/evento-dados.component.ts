@@ -241,14 +241,14 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     eventoCadastro.eventoArquivo = this.eventoArquivoCadastro?.filter(x => x.file);
     eventoCadastro.removerArquivos = this.removerArquivos;
 
-    console.log("🚀 ~ EventoService ~ evento.eventoArquivo.forEach ~ arquivo.file0:", eventoCadastro.eventoArquivo)
-    console.log("🚀 ~ EventoService ~ evento.eventoArquivo.forEach ~ arquivo.file0:", this.eventoArquivoCadastro)
 
     this.subscription.add(
       this.eventoService.salvarEvento(eventoCadastro).subscribe({
         next: (response: Evento) => {
           this.eventoSelecionado = response;
-          this._setFornsControl();
+          // this._setFornsControl();
+          this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
+
           this.toastr.success('Evento salvo com sucesso!');
 
         }
