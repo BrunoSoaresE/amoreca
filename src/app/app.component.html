@@ -1,10 +1,11 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #bottomSidenav mode="over" position="end" class="bottom-sidenav">
     <button mat-icon-button class="close-button" (click)="bottomSidenav.close()">
-      <mat-icon>close</mat-icon>
+      <mat-icon style="top: -1px;    left: 0px;
+    position: absolute;">close</mat-icon>
     </button>
 
-    <div class="componente-filho">
+    <div class="componente-filho" style="border: solid black 1px;">
 
       <app-login *ngIf="currentComponent === 'login'"></app-login>
       <app-prova *ngIf="currentComponent === 'prova'"></app-prova>

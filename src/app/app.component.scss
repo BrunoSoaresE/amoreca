@@ -7,7 +7,7 @@
 .componente-filho {
   height: 100%;
   width: 100%;
-  //overflow-x: hidden;
+  overflow-x: hidden;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -24,7 +24,7 @@
   /* Distância da direita */
   z-index: 10;
   /* Para garantir que o botão fique acima de outros conteúdos */
-  background-color: transparent;
+  background-color: whitesmoke;
   /* Fundo transparente para um visual limpo */
   border: none;
   /* Remove a borda */
