@@ -8,7 +8,8 @@
     <label for="arquivo" class="upload-label">
 
 
-      <img *ngIf="arquivoBase64" [src]="arquivoBase64" alt="preview" class="preview-img" />
+      <img *ngIf="arquivoBase64" [src]="arquivoBase64" alt="preview" class="preview-img"
+        style="max-height: 150px !important;" />
       <br>
 
       <span *ngIf="!arquivo && !presenteSelecionado?.arquivo">📁 Selecione um arquivo</span>

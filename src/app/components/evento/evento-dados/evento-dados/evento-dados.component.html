@@ -105,6 +105,42 @@
         </form>
       </mat-step>
 
+      <mat-step [stepControl]="presentesFormGroup" [editable]="true">
+        <form [formGroup]="presentesFormGroup">
+          <ng-template matStepLabel>Lista de presentes</ng-template>
+
+          <app-evento-dados-presente *ngIf="listPresentes?.length && presenteisReady" [listPresentes]="listPresentes"
+            [formGroup]="presentesFormGroup"></app-evento-dados-presente>
+
+
+
+          <div>
+            <div class="botao-centralizado">
+              <button mat-raised-button class="btn-vermelho-secundario" type="button"
+                (click)="output_fecharCadastroEdicao.emit()">
+                <mat-icon>close</mat-icon>
+                Cancelar edição
+              </button>
+
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Voltar
+              </button>
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+                <mat-icon>arrow_forward</mat-icon>
+                Próximo
+              </button>
+
+              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+                <mat-icon>add</mat-icon>
+                Salvar
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+
+
 
       <mat-step [stepControl]="eventoDadosSite_FormGroup" [editable]="true">
         <ng-template matStepLabel>Customize seu site</ng-template>

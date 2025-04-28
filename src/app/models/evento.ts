@@ -1,4 +1,5 @@
 import { EventoArquivo, EventoArquivoCadastro } from "./evento-arquivo";
+import { EventoPresente } from "./evento-presente";
 import { Tema } from "./tema";
 
 export interface Evento {
@@ -29,6 +30,7 @@ export interface Evento {
   // Relacionamentos
   tema?: Tema;
   eventoArquivo?: EventoArquivo[];
+  eventoPresente?: EventoPresente[];
 
 }
 

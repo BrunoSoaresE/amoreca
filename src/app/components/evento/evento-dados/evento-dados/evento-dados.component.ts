@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, inject, Injector, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -16,13 +16,17 @@ import { combineLatest, distinctUntilChanged, timeout } from 'rxjs';
 import { ArquivoBase64 } from '../../../../models/arquivo';
 import { EventoDadosFotoComponent } from '../evento-dados-foto/evento-dados-foto.component';
 import { EventoArquivoCadastro } from '../../../../models/evento-arquivo';
+import { EventoDadosPresenteComponent } from '../evento-dados-presente/evento-dados-presente.component';
+import { Presente } from '../../../../models/presente';
+import { PresenteService } from '../../../../services/presente/presente.service';
+import { EventoPresente } from '../../../../models/evento-presente';
 
 
 @Component({
   standalone: true,
   selector: 'app-evento-dados',
   imports: [CommonModule, SharedModule, MatInputModule, EventoDadosSiteComponent, MatStepperModule, TemaListaSelecionarComponent
-    , EventoDadosFotoComponent,
+    , EventoDadosFotoComponent, EventoDadosPresenteComponent
   ],
   templateUrl: './evento-dados.component.html',
   styleUrls: ['./evento-dados.component.scss'],
@@ -40,11 +44,16 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   eventoArquivoCadastro?: EventoArquivoCadastro[];
   removerArquivos?: number[]
 
+
+  listPresentes?: Presente[];
+  presenteisReady: boolean = false;
+
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
     private arquivoService: ArquivoService,
     private temaService: TemaService,
-    private eventoService: EventoService
+    private eventoService: EventoService,
+    private presenteService: PresenteService
   ) {
     super(injector);
 
@@ -60,6 +69,10 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   });
   secondFormGroup = this._formBuilder.group({
     linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
+  });
+
+  presentesFormGroup = this._formBuilder.group({
+    presentes: this._formBuilder.array([])
   });
 
   eventoDadosSite_FormGroup = this._formBuilder.group({
@@ -87,6 +100,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     textoRodape: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
   });
 
+
   _setFornsControl() {
     if (this.eventoSelecionado) {
       this.formGroup.patchValue(this.eventoSelecionado);
@@ -112,6 +126,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   }
 
   ngOnInit(): void {
+    this.buscarListaPresentes();
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
@@ -128,8 +143,10 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
           this.stepper.selectedIndex = 0;
         } else if (!this.secondFormGroup.valid) {
           this.stepper.selectedIndex = 1;
-        } else if (!this.eventoDadosSite_FormGroup.valid) {
+        } else if (!this.presentesFormGroup.valid) {
           this.stepper.selectedIndex = 2;
+        } else if (!this.eventoDadosSite_FormGroup.valid) {
+          this.stepper.selectedIndex = 3;
         }
       }, 10);
 
@@ -205,23 +222,27 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
 
   salvar(): void {
-
     if (!this.formGroup.valid ||
       !this.firstFormGroup.valid ||
       !this.secondFormGroup.valid ||
-      !this.eventoDadosSite_FormGroup.valid
+      !this.presentesFormGroup.valid
+      || !(this.presentesFormGroup.get('presentes') as FormArray).valid
     ) {
+
 
       if (!this.firstFormGroup.valid) {
         this.stepper.selectedIndex = 0;
       } else if (!this.secondFormGroup.valid) {
         this.stepper.selectedIndex = 1;
-      } else if (!this.eventoDadosSite_FormGroup.valid) {
+      } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
         this.stepper.selectedIndex = 2;
+      } else if (!this.eventoDadosSite_FormGroup.valid) {
+        this.stepper.selectedIndex = 3;
       }
 
       this.firstFormGroup.markAllAsTouched();
       this.secondFormGroup.markAllAsTouched();
+      this.presentesFormGroup.markAllAsTouched();
       this.eventoDadosSite_FormGroup.markAllAsTouched();
 
 
@@ -233,6 +254,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       ...this.formGroup.value,
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
+      ...this.presentesFormGroup.value,
       ...this.eventoDadosSite_FormGroup.value
     } as EventoCadastro;
 
@@ -305,6 +327,77 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
   processRemoverArquivos(removerArquivos: number[]) {
     this.removerArquivos = removerArquivos;
+
+  }
+
+  getFormArray(): FormArray {
+    return this.presentesFormGroup.get('presentes') as FormArray;
+  }
+  buscarListaPresentes(): void {
+    if (!this.listPresentes) {
+      this.subscription.add(
+        this.presenteService.getListPresente().subscribe({
+          next: (response: Presente[]) => {
+            this.listPresentes = response;
+            this.listPresentes.forEach(presente => {
+              presente.eventoPresente = this._getPresenteEvento(presente);
+            });
+            const presentesArray = this.presentesFormGroup.get('presentes') as FormArray;
+
+            if (this.listPresentes) {
+              this.listPresentes.forEach(presente => {
+                presentesArray.push(this.formBuilder.group({
+                  idPresente: new FormControl<any>({ value: presente.id, disabled: this.isVisualizacao }),
+                  ativo: new FormControl<any>({ value: true, disabled: this.isVisualizacao }),
+                  quantidade: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+                  preco: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+                }));
+              });
+            }
+            this.presenteisReady = true;
+            this.cdRef.markForCheck();
+            this.cdRef.detectChanges();
+            this.downloadPresenteBase64Foto();
+
+
+          }
+        }),
+      );
+
+    }
+
+  }
+  _getPresenteEvento(presente: Presente): EventoPresente {
+    const presenteEventoPadrao: EventoPresente = {
+      id: 0,
+      idEvento: this.eventoSelecionado?.id ?? 0,
+      idPresente: presente.id,
+      ativo: true,
+      quantidade: 10,
+      preco: 10
+    }
+
+    return this.eventoSelecionado?.eventoPresente?.find(x => x.idPresente === presente.id) ?? presenteEventoPadrao;
+  }
+
+  downloadPresenteBase64Foto() {
+
+    if (this.listPresentes)
+      this.listPresentes.forEach(eventoArquivo => {
+        if (eventoArquivo?.arquivo?.nomeArmazenado && !eventoArquivo.base64) {
+
+          this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
+            next: (response: ArquivoBase64) => {
+              eventoArquivo.base64 = response.base64;
+
+
+              this.cdRef.markForCheck();
+              this.cdRef.detectChanges();
+            }
+          });
+        }
+
+      });
 
   }
 

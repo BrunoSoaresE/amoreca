@@ -1,0 +1,31 @@
+<form [formGroup]="formGroup">
+    <!-- AQUI, acessando o 'presentes' -->
+    <div formArrayName="presentes" class="lista-presentes">
+        <div class="item-presente" *ngFor="let presente of listPresentes; let i = index" [formGroupName]="i">
+            <div class="item-presente-conteudo">
+                <img *ngIf="presente.base64" [src]="presente.base64" alt="preview" class="preview-img" />
+
+                <div class="info">
+                    <p class="nome-presente">{{ presente.descricao }}</p>
+
+                    <div class="acoes">
+                        <label>
+                            <input type="checkbox" formControlName="ativo" (change)="onAtivoChange(i);" />
+                            Exibir na lista
+                        </label>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Quantidade</mat-label>
+                            <input matInput min="1" formControlName="quantidade" placeholder="Quantidade">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Preço (R$)</mat-label>
+                            <input matInput formControlName="preco" type="number" step="0.01" placeholder="Preço (R$)">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

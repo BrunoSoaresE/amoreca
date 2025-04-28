@@ -1,5 +1,6 @@
 import { Arquivo, ArquivoBase64 } from "./arquivo";
 import { Categoria } from "./categoria";
+import { EventoPresente } from "./evento-presente";
 
 export interface Presente {
   id: number;
@@ -12,8 +13,13 @@ export interface Presente {
   presenteCategoria?: PresenteCategoria[];
   listIdCategoria?: number[];
 
-}
+  quantidadeSugerida?: number;
+  precoSugerido?: number;
 
+
+  eventoPresente?: EventoPresente;
+
+}
 
 
 export interface PresenteCadastro {
