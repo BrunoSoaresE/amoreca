@@ -20,6 +20,8 @@ import { EventoDadosPresenteComponent } from '../evento-dados-presente/evento-da
 import { Presente } from '../../../../models/presente';
 import { PresenteService } from '../../../../services/presente/presente.service';
 import { EventoPresente } from '../../../../models/evento-presente';
+import { Categoria } from '../../../../models/categoria';
+import { ConsultaAuxiliaresService } from '../../../../services/consulta-auxiliares.service';
 
 
 @Component({
@@ -39,6 +41,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   @Output() output_fecharCadastroEdicao = new EventEmitter<{ houveAlteracao: boolean }>();
   habilitarSelecaoTema: boolean = false;
   temas?: Tema[];
+  categorias?: Categoria[];
   temaSelecionado?: Tema;
   backgroundImageUrl?: string;
   eventoArquivoCadastro?: EventoArquivoCadastro[];
@@ -53,7 +56,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     private arquivoService: ArquivoService,
     private temaService: TemaService,
     private eventoService: EventoService,
-    private presenteService: PresenteService
+    private presenteService: PresenteService,
+    private consultaAuxiliaresService: ConsultaAuxiliaresService
   ) {
     super(injector);
 
@@ -66,9 +70,10 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
   firstFormGroup = this._formBuilder.group({
     idTema: new FormControl<any>({ value: (null as number | null), disabled: this.isVisualizacao }, Validators.required),
+    idCategoria: new FormControl<any>({ value: (null as number | null), disabled: this.isVisualizacao }, Validators.required),
   });
   secondFormGroup = this._formBuilder.group({
-    linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
+    // linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
   });
 
   presentesFormGroup = this._formBuilder.group({
@@ -99,6 +104,11 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     complemento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
     textoRodape: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
   });
+
+  configuracoesFormGroup = this._formBuilder.group({
+    linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
+  });
+
 
 
   _setFornsControl() {
@@ -160,9 +170,11 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
   getConsultaAuxiliares() {
     const getListTema = this.temaService.getListTema();
+    const getCategoria = this.consultaAuxiliaresService.categoria$;
 
 
-    combineLatest([getListTema]).subscribe(([listTema]) => {
+    combineLatest([getListTema, getCategoria]).subscribe(([listTema, listCategoria]) => {
+      this.categorias = listCategoria;
       this.temas = listTema;
       this.cdRef.detectChanges();
       this.downloadBase64Foto_TemaSelecionado();

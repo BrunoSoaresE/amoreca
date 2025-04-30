@@ -47,8 +47,15 @@ p{
   align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
+  margin-top: auto; /* faz o botão ir para o final */ 
 }
 
 mat-stepper{
   background: transparent !important;
+}
+
+.matStepContainer{
+  min-height: 50vh !important;
+  display: flex;
+  flex-direction: column;
 }

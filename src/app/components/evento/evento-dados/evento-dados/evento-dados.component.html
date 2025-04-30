@@ -13,24 +13,43 @@
 
     <mat-stepper linear #stepper>
       <mat-step [stepControl]="firstFormGroup" [editable]="true">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>{{temaSelecionado ? 'Tema' : 'Selecione o tema'}}</ng-template>
+        <form [formGroup]="firstFormGroup" class="matStepContainer row" style="margin-top: 8px;">
+          <ng-template matStepLabel>Categoria e Tema</ng-template>
 
 
+          <div class="col-12">
+            <ul>
+              <li>Selecione a <b>categoria</b> do seu evento (como casamento, chá de bebê, aniversário...)</li>
+            </ul>
+          </div>
 
-          <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado"
-            *ngIf="habilitarSelecaoTema || !temaSelecionado"
+
+          <app-autocomplete class="col-12" [formGroup]="firstFormGroup" [listaOption]="categorias" labelName="Categoria"
+            _formControlName="idCategoria"></app-autocomplete>
+
+
+          <div class="col-12">
+            <ul *ngIf="firstFormGroup.get('idCategoria')?.value">
+              <li> Escolha um <b>tema</b> que será a <b>imagem de fundo</b> do seu site</li>
+            </ul>
+          </div>
+
+
+          <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado" class="col-12"
+            *ngIf="(habilitarSelecaoTema || !temaSelecionado) && firstFormGroup.get('idCategoria')?.value"
             (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
 
-          <div class="botao-centralizado" style="padding-top: 0 !important;margin: 0 !important;">
+
+          <div class="botao-centralizado" style="padding-top: 0 !important;margin: 0 !important;"
+            *ngIf="firstFormGroup.get('idCategoria')?.value">
             <button mat-raised-button color="primary" *ngIf="!habilitarSelecaoTema"
               (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
               <mat-icon>palette</mat-icon>
-              {{ eventoSelecionado?.tema ? 'Editar Tema' : 'Selecionar Tema' }}
+              Editar Tema
             </button>
-
-
           </div>
+
+
 
           <div class="tema-card" *ngIf="temaSelecionado && !habilitarSelecaoTema">
             <img [src]="temaSelecionado.arquivoBase64?.base64" class="tema-img" alt="Imagem do tema" />
@@ -43,71 +62,133 @@
               </div>
             </div>
           </div>
-          <div>
-            <div class="botao-centralizado">
-              <button mat-raised-button class="btn-vermelho-secundario" type="button"
-                (click)="output_fecharCadastroEdicao.emit()">
-                <mat-icon>close</mat-icon>
-                Cancelar edição
-              </button>
 
-              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
-                <mat-icon>arrow_forward</mat-icon>
-                Próximo
-              </button>
 
-              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
-                <mat-icon>add</mat-icon>
-                Salvar
-              </button>
+          <div class="botao-centralizado">
+            <button mat-raised-button class="btn-vermelho-secundario" type="button"
+              (click)="output_fecharCadastroEdicao.emit()">
+              <mat-icon>close</mat-icon>
+              Cancelar edição
+            </button>
 
-            </div>
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+              <mat-icon>arrow_forward</mat-icon>
+              Próximo
+            </button>
+
+            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+              <mat-icon>add</mat-icon>
+              Salvar
+            </button>
+
           </div>
         </form>
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup" [editable]="true">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Fotos e configurações</ng-template>
-          <mat-form-field appearance="outline" style="margin-top: 8px;">
-            <mat-label>Link/Url do site para visitantes</mat-label>
-            <input matInput formControlName="linkSite" placeholder="Link/Url do site para visitantes">
-          </mat-form-field>
+        <form [formGroup]="secondFormGroup" class="matStepContainer">
+          <ng-template matStepLabel>Fotos</ng-template>
+
+
+          <div>
+            <ul>
+              <li>Selecione as <b>fotos</b> que farão parte do seu site.</li>
+              <li>Lembre de selecionar uma foto para ser a <b>capa do site</b> — capriche na escolha!</li>
+              <li>Todas fotos serão exibidas para seus convidados.</li>
+            </ul>
+          </div>
+
           <app-evento-dados-foto (output_arquivos)="processArquivosCadastro($event)"
             (output_removeArquivos)="processRemoverArquivos($event)"
             [eventoSelecionado]="eventoSelecionado"></app-evento-dados-foto>
 
-          <div>
-            <div class="botao-centralizado">
-              <button mat-raised-button class="btn-vermelho-secundario" type="button"
-                (click)="output_fecharCadastroEdicao.emit()">
-                <mat-icon>close</mat-icon>
-                Cancelar edição
-              </button>
+          <div class="botao-centralizado">
+            <button mat-raised-button class="btn-vermelho-secundario" type="button"
+              (click)="output_fecharCadastroEdicao.emit()">
+              <mat-icon>close</mat-icon>
+              Cancelar edição
+            </button>
 
-              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
-                <mat-icon>arrow_back</mat-icon>
-                Voltar
-              </button>
-              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
-                <mat-icon>arrow_forward</mat-icon>
-                Próximo
-              </button>
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Voltar
+            </button>
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+              <mat-icon>arrow_forward</mat-icon>
+              Próximo
+            </button>
 
-              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
-                <mat-icon>add</mat-icon>
-                Salvar
-              </button>
-            </div>
+            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+              <mat-icon>add</mat-icon>
+              Salvar
+            </button>
+          </div>
 
+
+        </form>
+      </mat-step>
+
+
+
+
+      <mat-step [stepControl]="eventoDadosSite_FormGroup" [editable]="true">
+        <ng-template matStepLabel>Personalize seu site</ng-template>
+
+        <div>
+          <h3>Deixe seu site com a sua cara!</h3>
+          <ul>
+            <li>Nessa etapa, você pode editar os <b>textos</b> que aparecem no seu site.</li>
+            <li>A visualização abaixo é uma <b>prévia</b> para te mostrar como tudo ficará organizado.</li>
+            <li>Depois de finalizado, tudo será transformado em um <b>site lindo e funcional</b> para seus
+              convidados!</li>
+          </ul>
+        </div>
+
+        <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
+          [temaSelecionado]="temaSelecionado" [formGroup]="eventoDadosSite_FormGroup"></app-evento-dados-site>
+
+
+        <div>
+          <div class="botao-centralizado">
+
+
+            <button mat-raised-button class="btn-vermelho-secundario" type="button"
+              (click)="output_fecharCadastroEdicao.emit()">
+              <mat-icon>close</mat-icon>
+              Cancelar edição
+            </button>
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Voltar
+            </button>
+
+            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+              <mat-icon>add</mat-icon>
+              Salvar
+            </button>
 
           </div>
-        </form>
+
+        </div>
       </mat-step>
 
       <mat-step [stepControl]="presentesFormGroup" [editable]="true">
         <form [formGroup]="presentesFormGroup">
-          <ng-template matStepLabel>Lista de presentes</ng-template>
+          <ng-template matStepLabel>Configure sua lista de presentes</ng-template>
+
+
+          <div>
+            <ul>
+              <li>Escolha quais <b>presentes simbólicos</b> serão exibidos na sua lista.</li>
+              <li>Você pode ajustar os <b>valores</b> e a <b>quantidade</b> de cada item.</li>
+              <li>Os presentes são apenas ilustrativos — o valor pago será <b>transferido diretamente para sua
+                  conta</b>.</li>
+            </ul>
+          </div>
+
+
+
+
 
           <app-evento-dados-presente *ngIf="listPresentes?.length && presenteisReady" [listPresentes]="listPresentes"
             [formGroup]="presentesFormGroup"></app-evento-dados-presente>
@@ -142,35 +223,57 @@
 
 
 
-      <mat-step [stepControl]="eventoDadosSite_FormGroup" [editable]="true">
-        <ng-template matStepLabel>Customize seu site</ng-template>
-        <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
-          [temaSelecionado]="temaSelecionado" [formGroup]="eventoDadosSite_FormGroup"></app-evento-dados-site>
+      <mat-step [stepControl]="secondFormGroup" [editable]="true">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Configurações</ng-template>
 
+          <div>
+            <ul>
+              <h3>Último passo!</h3>
 
-        <div>
-          <div class="botao-centralizado">
-
-
-            <button mat-raised-button class="btn-vermelho-secundario" type="button"
-              (click)="output_fecharCadastroEdicao.emit()">
-              <mat-icon>close</mat-icon>
-              Cancelar edição
-            </button>
-            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
-              <mat-icon>arrow_back</mat-icon>
-              Voltar
-            </button>
-
-            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
-              <mat-icon>add</mat-icon>
-              Salvar
-            </button>
-
+              <li><b>Personalize o link</b> para compartilhar seu convite com quem você <b>ama</b></li>
+              <li>Você também pode acessar seu site finalizado clicando no botão abaixo!</li>
+            </ul>
           </div>
 
-        </div>
+
+
+          <mat-form-field appearance="outline" style="margin-top: 8px;">
+            <mat-label>Link/Url do site para visitantes</mat-label>
+            <input matInput formControlName="linkSite" placeholder="Link/Url do site para visitantes">
+          </mat-form-field>
+
+
+
+
+          <div>
+            <div class="botao-centralizado">
+              <button mat-raised-button class="btn-vermelho-secundario" type="button"
+                (click)="output_fecharCadastroEdicao.emit()">
+                <mat-icon>close</mat-icon>
+                Cancelar edição
+              </button>
+
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+                <mat-icon>arrow_back</mat-icon>
+                Voltar
+              </button>
+              <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+                <mat-icon>arrow_forward</mat-icon>
+                Próximo
+              </button>
+
+              <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+                <mat-icon>add</mat-icon>
+                Salvar
+              </button>
+            </div>
+
+
+          </div>
+        </form>
       </mat-step>
+
     </mat-stepper>
 
 
