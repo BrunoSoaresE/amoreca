@@ -45,7 +45,6 @@ export class TemaListaSelecionarComponent extends EditBaseComponent implements O
 
 
     this.formGroup?.get('filtro')?.valueChanges.subscribe((value) => {
-      console.log("🚀 ~ TemaListaSelecionarComponent ~ this.formGroup?.get ~ value:", value)
 
       this.listTemasFiltrado = value && this.listTemas ? this.listTemas.filter(t =>
         t.descricao.toLowerCase().includes(value.toLowerCase())

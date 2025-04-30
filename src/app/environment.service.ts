@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {map, tap} from 'rxjs';
-import {environment as RC} from '../environments/environment.RC';
-import {environment as STABLE} from '../environments/environment.STABLE';
-import {environment} from '../environments/environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs';
+import { environment as RC } from '../environments/environment.RC';
+import { environment as STABLE } from '../environments/environment.STABLE';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class EnvironmentService {
@@ -27,7 +27,7 @@ export class EnvironmentService {
 
 
 export const getSettings = (ambiente: string) => {
-  console.log(`#PJMT_AMBIENTE: ${ambiente}`);
+  console.log(`#AMBIENTE: ${ambiente}`);
   switch (ambiente) {
     case 'RC':
       return RC;

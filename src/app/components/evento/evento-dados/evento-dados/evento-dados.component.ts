@@ -254,7 +254,6 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       ...this.formGroup.value,
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
-      ...this.presentesFormGroup.value,
       ...this.eventoDadosSite_FormGroup.value
     } as EventoCadastro;
 
@@ -262,6 +261,9 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     eventoCadastro.dataFimEvento = this.unificarCampoDataHora('dataFimEvento', 'horaFimEvento');
     eventoCadastro.eventoArquivo = this.eventoArquivoCadastro?.filter(x => x.file);
     eventoCadastro.removerArquivos = this.removerArquivos;
+    eventoCadastro.eventoPresente = (this.presentesFormGroup.get('presentes') as FormArray).value;
+
+
 
 
     this.subscription.add(
@@ -269,7 +271,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
         next: (response: Evento) => {
           this.eventoSelecionado = response;
           // this._setFornsControl();
-          this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
+          //  this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
 
           this.toastr.success('Evento salvo com sucesso!');
 
@@ -338,6 +340,9 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.subscription.add(
         this.presenteService.getListPresente().subscribe({
           next: (response: Presente[]) => {
+
+
+
             this.listPresentes = response;
             this.listPresentes.forEach(presente => {
               presente.eventoPresente = this._getPresenteEvento(presente);
@@ -346,11 +351,18 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
             if (this.listPresentes) {
               this.listPresentes.forEach(presente => {
+
+                const presenteEvento = this.eventoSelecionado?.eventoPresente?.find(x => x.idPresente === presente.id);
+
+                const _quantidade = presenteEvento ? presenteEvento.quantidade : presente.quantidadeSugerida;
+                const _preco = presenteEvento ? presenteEvento.preco : presente.precoSugerido;
+                const _ativo = presenteEvento ? presenteEvento.ativo : true;
                 presentesArray.push(this.formBuilder.group({
+                  id: new FormControl<any>({ value: presenteEvento?.id, disabled: this.isVisualizacao }),
                   idPresente: new FormControl<any>({ value: presente.id, disabled: this.isVisualizacao }),
-                  ativo: new FormControl<any>({ value: true, disabled: this.isVisualizacao }),
-                  quantidade: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
-                  preco: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+                  ativo: new FormControl<any>({ value: _ativo, disabled: this.isVisualizacao }),
+                  quantidade: new FormControl<any>({ value: _quantidade, disabled: this.isVisualizacao }),
+                  preco: new FormControl<any>({ value: _preco, disabled: this.isVisualizacao }),
                 }));
               });
             }

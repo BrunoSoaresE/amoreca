@@ -39,6 +39,8 @@ export class PresenteDadosComponent extends EditBaseComponent implements OnInit 
       id: new FormControl({ value: null, disabled: this.isVisualizacao }),
 
       descricao: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
+      quantidadeSugerida: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
+      precoSugerido: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
       listIdCategoria: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
     });
 
@@ -80,7 +82,6 @@ export class PresenteDadosComponent extends EditBaseComponent implements OnInit 
     }
 
     let presenteCadastro = this.formGroup.getRawValue() as PresenteCadastro;
-    console.log("🚀 ~ PresenteDadosComponent ~ salvar ~ presenteCadastro:", presenteCadastro)
     presenteCadastro.file = this.arquivo;
 
 

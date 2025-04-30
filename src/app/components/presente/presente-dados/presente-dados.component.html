@@ -30,8 +30,18 @@
     <div class="col-12" *ngIf="categorias">
       <app-autocomplete [formGroup]="formGroup" [listaOption]="categorias" labelName="Categorias" [multiple]="true"
         _formControlName="listIdCategoria"></app-autocomplete>
-
-
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Quantidade sugerida</mat-label>
+        <input matInput type="text" formControlName="quantidadeSugerida" />
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Preço sugerido</mat-label>
+        <input matInput type="number" step="0.01" formControlName="precoSugerido" />
+      </mat-form-field>
     </div>
 
 

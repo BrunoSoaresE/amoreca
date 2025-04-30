@@ -56,8 +56,6 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
 
     if (isPlatformBrowser(this.platformId)) {
-      console.log("🚀 ~Executando no Navegador ngOnInit");
-
       this.formGroup = this.formBuilder.group({
 
       });
@@ -74,7 +72,6 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
 
     } else {
-      console.log("🚀 ~Executando no Servidor ngOnInit");
     }
 
   }
@@ -113,7 +110,6 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
       this.subscription.add(
         this.arquivoService.getArquivoByCaminho(this.evento.tema?.arquivo?.nomeArmazenado).subscribe({
           next: (response: Blob) => {
-            console.log("🚀 ~ PessoaComponent ~ this.arquivoService.getArquivoByCaminho ~ response:", response)
             const blobUrl = URL.createObjectURL(response);
             this.backgroundImageUrl = `linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('${blobUrl}')`;
             this.cdRef.detectChanges();

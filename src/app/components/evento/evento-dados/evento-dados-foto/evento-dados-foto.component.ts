@@ -113,10 +113,7 @@ export class EventoDadosFotoComponent extends EditBaseComponent implements OnIni
   }
 
   removerArquivo(index: number): void {
-    console.log("🚀 ~ EventoDadosFotoComponent ~ removerArquivo ~ removerArquivo:")
-
     if (this.arquivos[index].id) {
-      console.log("🚀 ~ EventoDadosFotoComponent ~ removerArquivo ~ removerArquivo:")
       this.removeArquivos.push(this.arquivos[index].id);
       this.output_removeArquivos.emit(this.removeArquivos);
 

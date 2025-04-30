@@ -51,6 +51,19 @@
         </ul>
       </td>
     </ng-container>
+    <ng-container matColumnDef="preco">
+      <th mat-header-cell *matHeaderCellDef> Preço Sugerido </th>
+      <td mat-cell *matCellDef="let presente">
+        R$ {{ presente?.precoSugerido }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="quantidade">
+      <th mat-header-cell *matHeaderCellDef> Quantidade Sugerida </th>
+      <td mat-cell *matCellDef="let presente">
+        {{ presente?.quantidadeSugerida }} und
+      </td>
+    </ng-container>
+
 
 
 

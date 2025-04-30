@@ -26,6 +26,8 @@ export interface PresenteCadastro {
   file?: any;
   id?: number;
   descricao: string;
+  quantidadeSugerida: number;
+  precoSugerido: number;
 
   listIdCategoria: number[];
 }

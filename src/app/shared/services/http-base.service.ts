@@ -24,8 +24,6 @@ export abstract class HttpBaseService {
   }
 
   baseGet(url: string, params?: HttpParams): Observable<any> {
-    console.log("🚀 ~ HttpBaseService ~ baseGet ~ url:", url)
-
     return this.httpClient.get<any>(url, { params }).pipe(
       prepare(() => this.isLoadingSubject.next(true)),
       finalize(() => this.isLoadingSubject.next(false)),

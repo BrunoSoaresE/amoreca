@@ -47,7 +47,7 @@ export class EventoService extends BaseService {
     Object.entries(evento).forEach(([key, value]) => {
       if (
         value &&
-        key !== 'eventoArquivo' && key !== 'removerArquivos' // Ignora os filhos para tratar separadamente
+        key !== 'eventoArquivo' && key !== 'removerArquivos' && key !== 'eventoPresente' // Ignora os filhos para tratar separadamente
       ) {
         // Converte datas para string
         if (value instanceof Date) {
@@ -68,6 +68,20 @@ export class EventoService extends BaseService {
       });
     }
 
+    // Campos filhos - eventoPresente
+    if (evento.eventoPresente && evento.eventoPresente.length > 0) {
+      evento.eventoPresente.forEach((presente, index) => {
+        if (presente.id)
+          formData.append(`eventoPresente[${index}].id`, `${presente.id}`);
+
+        formData.append(`eventoPresente[${index}].idPresente`, `${presente.idPresente}`);
+        formData.append(`eventoPresente[${index}].ativo`, presente.ativo ? 'True' : 'False');
+        formData.append(`eventoPresente[${index}].quantidade`, `${presente.quantidade}`);
+        formData.append(`eventoPresente[${index}].preco`, `${this.formatDecimalBR(presente.preco)}`);
+      });
+    }
+
+
     // Campos filhos - eventoArquivo
     if (evento.removerArquivos && evento.removerArquivos.length > 0) {
       evento.removerArquivos.forEach((arquivo, index) => {
@@ -76,8 +90,11 @@ export class EventoService extends BaseService {
       });
     }
 
-    console.log("🚀 ~ EventoService ~ _appendEventoToFormData ~ formData:", formData)
     return formData;
+  }
+
+  formatDecimalBR(value: number | string): string {
+    return `${value}`.replace(/,/g, '').replace('.', ',');
   }
 }
 

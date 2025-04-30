@@ -22,7 +22,7 @@ import { ArquivoBase64 } from '../../../models/arquivo';
 
 })
 export class PresenteListaComponent extends EditBaseComponent implements OnInit {
-    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'categoria', 'acao',];
+    displayedColumns: string[] = ['descricao', 'nomeArquivo', 'quantidade', 'preco', 'categoria', 'acao',];
     presenteSelecionado?: Presente;
     habilitarCadastroEdicao: boolean = false;
     listPresentes?: Presente[];

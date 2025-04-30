@@ -58,6 +58,7 @@ export interface EventoCadastro {
   complemento?: string;
   textoRodape?: string;
 
+  eventoPresente?: EventoPresente[];
   eventoArquivo?: EventoArquivoCadastro[];
   removerArquivos?: number[];
 }

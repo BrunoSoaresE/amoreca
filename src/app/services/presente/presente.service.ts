@@ -30,8 +30,9 @@ export class PresenteService extends BaseService {
 
     if (presente.id)
       formData.append('id', `${presente.id}`);
-    if (presente.descricao)
-      formData.append('descricao', `${presente.descricao}`);
+    formData.append('descricao', `${presente.descricao}`);
+    formData.append('quantidadeSugerida', `${presente.quantidadeSugerida}`);
+    formData.append('precoSugerido', `${this.formatDecimalBR(presente.precoSugerido)}`);
 
 
     if (presente.listIdCategoria && Array.isArray(presente.listIdCategoria)) {
@@ -47,6 +48,10 @@ export class PresenteService extends BaseService {
 
     let retorno = this.post(`salvar-presente`, formData);
     return retorno;
+  }
+
+  formatDecimalBR(value: number | string): string {
+    return `${value}`.replace(/,/g, '').replace('.', ',');
   }
 }
 

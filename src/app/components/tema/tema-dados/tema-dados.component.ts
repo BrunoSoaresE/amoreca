@@ -104,7 +104,6 @@ export class TemaDadosComponent extends EditBaseComponent implements OnInit {
     }
 
     let temaCadastro = this.formGroup.getRawValue() as TemaCadastro;
-    console.log("🚀 ~ TemaDadosComponent ~ salvar ~ temaCadastro:", temaCadastro)
     temaCadastro.file = this.arquivo;
 
 
