@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, ChangeDetectorRef, Input, Injector, ElementRef, OnInit } from "@angular/core";
+import { Injectable, OnDestroy, ChangeDetectorRef, Input, Injector, ElementRef, OnInit, HostListener } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import moment from "moment";
@@ -14,6 +14,13 @@ export abstract class EditBaseComponent implements OnDestroy {
   protected cdRef: ChangeDetectorRef;
   protected elementRef: ElementRef;
   //protected loaderService: LoaderService;
+
+
+  isSmallScreen: boolean = window.innerWidth <= 768;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isSmallScreen = window.innerWidth <= 768;
+  }
 
   @Input() formGroup: FormGroup = {} as FormGroup;
   @Input() isVisualizacao: boolean = false;
