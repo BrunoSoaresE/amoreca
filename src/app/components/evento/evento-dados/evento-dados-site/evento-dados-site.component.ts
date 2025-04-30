@@ -63,12 +63,12 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['backgroundImageUrl']) {
       this.definirTamanhoCampos();
-      this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
+      this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64 && x.ativo)?.map(x => x.base64 as string) ?? []
 
     }
   }
   ngOnInit(): void {
-    this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
+    this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64 && x.ativo)?.map(x => x.base64 as string) ?? []
 
     this.formGroup?.get('texto')?.valueChanges.pipe(
       distinctUntilChanged(),
@@ -128,7 +128,7 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
 
 
   getCapa(): EventoArquivo | undefined {
-    return this.eventoSelecionado?.eventoArquivo?.find(x => x.capa)
+    return this.eventoSelecionado?.eventoArquivo?.find(x => x.capa && x.ativo)
   }
 
 

@@ -65,6 +65,16 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   ngAfterViewInit(): void {
     this._setFornsControl();
 
+    if (this.stepper) {
+      this.stepper.steps.forEach((step, index) => {
+        if (index < 2) {
+          step.completed = true;
+        }
+      });
+      this.stepper.selectedIndex = 2;
+      this.cdRef.detectChanges();
+    }
+
   }
   private _formBuilder = inject(FormBuilder);
 
@@ -120,15 +130,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.eventoDadosSite_FormGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
       this.eventoDadosSite_FormGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
 
-      if (this.stepper) {
-        this.stepper.steps.forEach((step, index) => {
-          if (index < 2) {
-            step.completed = true;
-          }
-        });
-        this.stepper.selectedIndex = 2;
-        this.cdRef.detectChanges();
-      }
+
       this.downloadBase64Foto();
 
 
@@ -212,7 +214,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   downloadBase64Foto() {
 
     if (this.eventoSelecionado?.eventoArquivo)
-      this.eventoSelecionado?.eventoArquivo.forEach(eventoArquivo => {
+      this.eventoSelecionado?.eventoArquivo.filter(x => x.ativo).forEach(eventoArquivo => {
         if (eventoArquivo?.arquivo?.nomeArmazenado && !eventoArquivo.base64) {
 
           this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
@@ -233,12 +235,14 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   }
 
 
-  salvar(): void {
-    if (!this.formGroup.valid ||
+  salvar(validarForm: boolean = true): void {
+
+
+    if (validarForm && (!this.formGroup.valid ||
       !this.firstFormGroup.valid ||
       !this.secondFormGroup.valid ||
       !this.presentesFormGroup.valid
-      || !(this.presentesFormGroup.get('presentes') as FormArray).valid
+      || !(this.presentesFormGroup.get('presentes') as FormArray).valid)
     ) {
 
 
@@ -259,6 +263,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
 
       this.onInvalidForm();
+
       return;
     }
 
@@ -271,7 +276,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
     eventoCadastro.dataEvento = this.unificarCampoDataHora('dataEvento', 'horaEvento');
     eventoCadastro.dataFimEvento = this.unificarCampoDataHora('dataFimEvento', 'horaFimEvento');
-    eventoCadastro.eventoArquivo = this.eventoArquivoCadastro?.filter(x => x.file);
+    eventoCadastro.eventoArquivo = this.eventoArquivoCadastro;
+
     eventoCadastro.removerArquivos = this.removerArquivos;
     eventoCadastro.eventoPresente = (this.presentesFormGroup.get('presentes') as FormArray).value;
 
@@ -282,10 +288,10 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.eventoService.salvarEvento(eventoCadastro).subscribe({
         next: (response: Evento) => {
           this.eventoSelecionado = response;
-          // this._setFornsControl();
+          this._setFornsControl()
           //  this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
-
-          this.toastr.success('Evento salvo com sucesso!');
+          if (validarForm)
+            this.toastr.success('Evento salvo com sucesso!');
 
         }
       }),
@@ -336,12 +342,13 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
   processArquivosCadastro(eventoArquivoCadastro: EventoArquivoCadastro[]) {
     this.eventoArquivoCadastro = eventoArquivoCadastro;
+    this.salvar(false);
 
   }
 
   processRemoverArquivos(removerArquivos: number[]) {
     this.removerArquivos = removerArquivos;
-
+    this.salvar(false);
   }
 
   getFormArray(): FormArray {

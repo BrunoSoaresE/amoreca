@@ -8,19 +8,21 @@
     </div>
 
     <div class="lista-arquivos">
-        <div class="item-arquivo" *ngFor="let arquivo of arquivos; let i = index" [class.capa]="arquivo.capa">
-            <p>
-                <img *ngIf="arquivo.base64" [src]="arquivo.base64" alt="preview" class="preview-img" />
+        <ng-container *ngFor="let arquivo of arquivos; let i = index">
+            <div class="item-arquivo" *ngIf="arquivo.base64" [class.capa]="arquivo.capa">
+                <p>
+                    <img *ngIf="arquivo.base64" [src]="arquivo.base64" alt="preview" class="preview-img" />
 
-            <div class="info">
-                <p>{{ arquivo.arquivo?.nomeOriginal ? arquivo.arquivo?.nomeOriginal : arquivo.file?.name }}</p>
-                <button type="button" (click)="definirComoCapa(i)">
-                    {{ arquivo.capa ? '✅ Capa' : 'Definir como capa' }}
-                </button>
-                <button type="button" class="btn-remover" (click)="removerArquivo(i)">
-                    Remover
-                </button>
+                <div class="info">
+                    <p>{{ arquivo.arquivo?.nomeOriginal ? arquivo.arquivo?.nomeOriginal : arquivo.file?.name }}</p>
+                    <button type="button" (click)="definirComoCapa(i)">
+                        {{ arquivo.capa ? '✅ Capa' : 'Definir como capa' }}
+                    </button>
+                    <button type="button" class="btn-remover" (click)="removerArquivo(i)">
+                        Remover
+                    </button>
+                </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 </div>

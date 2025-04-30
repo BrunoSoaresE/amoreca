@@ -59,12 +59,16 @@ export class EventoService extends BaseService {
     });
 
     // Campos filhos - eventoArquivo
-    if (evento.eventoArquivo && evento.eventoArquivo.length > 0) {
+    if (evento.eventoArquivo) {
       evento.eventoArquivo.forEach((arquivo, index) => {
-        if (arquivo.file) {
+        if (arquivo.file)
           formData.append(`eventoArquivo[${index}].file`, arquivo.file);
-          formData.append(`eventoArquivo[${index}].capa`, arquivo.capa ? 'True' : 'False');
-        }
+
+        if (arquivo.id)
+          formData.append(`eventoArquivo[${index}].id`, `${arquivo.id}`);
+
+
+        formData.append(`eventoArquivo[${index}].capa`, arquivo.capa ? 'True' : 'False');
       });
     }
 

@@ -37,23 +37,21 @@ export class EventoDadosFotoComponent extends EditBaseComponent implements OnIni
       //   textoRodape: new FormControl({ value: null, disabled: this.isVisualizacao }),
     });
   }
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['eventoSelecionado']) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['eventoSelecionado']) {
+      setTimeout(() => {
+        this.formatarArquivos();
+      }, 50);
 
-  //     setTimeout(() => {
-  //       this.formatarArquivos();
-
-  //     }, 500);
-
-  //   }
-  // }
+    }
+  }
 
   formatarArquivos() {
     this.arquivos = [];
     let possuiArquivoNaoBaixado = false
 
     if (this.eventoSelecionado?.eventoArquivo)
-      this.eventoSelecionado.eventoArquivo.forEach(element => {
+      this.eventoSelecionado.eventoArquivo.filter(x => x.ativo).forEach(element => {
 
         var novoArquivo: EventoArquivoCadastro = {
           id: element.id,
@@ -88,28 +86,23 @@ export class EventoDadosFotoComponent extends EditBaseComponent implements OnIni
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
     Array.from(input.files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = () => {
-
-        var novoArquivo: EventoArquivoCadastro = {
-          file,
-          base64: reader.result as string,
-          capa: false
-        }
-        this.arquivos.push(novoArquivo);
-        this.toastr.success('Arquivo adicionado com sucesso')
-        this.cdRef.detectChanges();
-      };
-      reader.readAsDataURL(file);
-      this.cdRef.detectChanges();
+      var novoArquivo: EventoArquivoCadastro = {
+        file,
+        capa: false
+      }
+      this.arquivos.push(novoArquivo);
     });
 
-    this.output_arquivos.emit(this.arquivos);
     input.value = '';
+    this.output_arquivos.emit(this.arquivos);
+
+
   }
 
   definirComoCapa(index: number): void {
     this.arquivos.forEach((arquivo, i) => arquivo.capa = i === index);
+    this.output_arquivos.emit(this.arquivos);
+
   }
 
   removerArquivo(index: number): void {
