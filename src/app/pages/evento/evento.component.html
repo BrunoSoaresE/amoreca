@@ -1,7 +1,9 @@
-<div class="canvas-container" [style.background-image]="backgroundImageUrl" *ngIf="evento">
+<div class="canvas-container" [class.fixa]="fixarNavbar" [style.background-image]="backgroundImageUrl" *ngIf="evento">
   <h4 class="subtitulo" id="subtitulo">{{ evento.subNomeEvento }}</h4>
   <h1 class="titulo-principal">{{ evento.nomeEvento }}</h1>
-  <app-evento-nav> </app-evento-nav>
+  <div class="nav-wrapper" [class.fixa]="fixarNavbar">
+    <app-evento-nav></app-evento-nav>
+  </div>
 
   <router-outlet></router-outlet>
 </div>

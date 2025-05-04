@@ -41,9 +41,19 @@ export class EventoNavComponent extends EditBaseComponent implements OnInit {
 
     this.router.navigate([`${this.evento?.linkSite}`]).then(() => {
       setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+
+        if (id == 'subtitulo') {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        } else {
+
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          }
         }
       }, 100);
 

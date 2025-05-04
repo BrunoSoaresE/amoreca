@@ -25,3 +25,19 @@
 
   }
 
+
+
+  .nav-wrapper {
+    position: sticky;
+  background-color: transparent;
+  box-shadow: none;
+  }
+  
+  .nav-wrapper.fixa {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+  }
+  .canvas-container.fixa {
+    padding-top: 200px !important;
+  }

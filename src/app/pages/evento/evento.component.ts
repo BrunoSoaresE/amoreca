@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Inject, Injector, OnInit, PLATFORM_ID } from '@angular/core';
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Evento } from '../../models/evento';
 import { isPlatformBrowser } from '@angular/common';
@@ -61,6 +61,14 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
 
     });
+  }
+
+  fixarNavbar = false;
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const limite = 230; // ajuste esse valor conforme seu layout
+    this.fixarNavbar = window.pageYOffset >= limite;
+    console.log("🚀 ~ EventoComponent ~ onWindowScroll ~ window.pageYOffset:", window.pageYOffset)
   }
 
 
