@@ -1,0 +1,68 @@
+
+
+
+
+.carrossel-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    position: relative;
+
+  }
+  
+  .carrossel-slide {
+    position: relative;
+    width: 60vw;
+    height: 70vh; /* ou ajuste conforme seu layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .carrossel-slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .carrossel-slide-big {
+    position: relative;
+    width: 70vw;
+    height: 80vh; /* ou ajuste conforme seu layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .carrossel-slide img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+
+  
+  .nav-btn {
+    background-color: transparent;
+    color: var(--cor-primaria) !important;
+    border: none;
+    font-size: 3rem;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .nav-btn:hover {
+    transform: scale(1.2);
+  }
+  

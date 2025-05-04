@@ -7,7 +7,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatRippleModule } from "@angular/material/core";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-
+import { EventoRoutingModule } from "./evento-routing.module";
+import { EventoNavComponent } from "../../components/evento/evento-page/evento-nav/evento-nav.component";
 
 @NgModule({
   imports: [
@@ -20,6 +21,9 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     MatRippleModule
 
     , SharedModule
+    , EventoNavComponent
+    , EventoRoutingModule
+
   ],
   declarations: [
     EventoComponent

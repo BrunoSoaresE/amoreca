@@ -1,0 +1,52 @@
+
+.foto-capa-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+
+  .foto-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+  }
+  
+  .foto-wrapper img {
+    max-width: 100%;
+    max-height: 100vh;
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .foto-wrapper-big img {
+    max-width: 100%;
+    max-height: 100vh;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+  }
+   
+
+  
+  .contador-overlay {
+    position: absolute;
+    bottom: 10px; /* Ajustado para dar mais espaço */
+    right: 150px;  /* Ajustado para alinhar melhor */
+    background-color: rgba(255, 255, 255, 0.95);  /* Deixando o fundo mais suave */
+    padding: 12px 18px;  /* Aumentando o padding para um visual mais espaçoso */
+    border-radius: 15px;  /* Bordas mais arredondadas */
+    font-weight: bold;
+    font-size: 1.2rem;  /* Aumentando um pouco a fonte para destaque */
+    color: var(--cor-primaria);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombras mais suaves e fortes */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Adicionando transição suave */
+  }
+  
+  .contador-overlay:hover {
+    transform: translateY(-5px);  /* Efeito de elevação ao passar o mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Sombra mais intensa no hover */
+  }
+  

@@ -9,6 +9,8 @@ import { EventoArquivo } from '../../models/evento-arquivo';
 import { ArquivoService } from '../../services/arquivo/arquivo.service';
 import { EventoService } from '../../services/evento/evento.service';
 import { EditBaseComponent } from '../../shared/components/edit-base.component';
+import { EventoStore } from '../../services/evento/evento.store';
+import { catchError, combineLatest, finalize, forkJoin, map, take, tap } from 'rxjs';
 
 @Component({
   standalone: false,
@@ -16,97 +18,57 @@ import { EditBaseComponent } from '../../shared/components/edit-base.component';
   templateUrl: './evento.component.html',
   styleUrls: ['./evento.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fadeImage', [
-      transition(':enter', [
-        style({ opacity: 0 }),  // Iniciar com opacidade 0
-        animate('0.3s 0.2s ease-in', style({ opacity: 1 }))  // Animação para aparecer
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),  // Iniciar com opacidade 1
-        animate('0.3s ease-out', style({ opacity: 0 }))  // Animação para desaparecer
-      ])
-    ])
-  ]
+
 })
 export class EventoComponent extends EditBaseComponent implements OnInit {
   evento?: Evento;
   backgroundImageUrl: string = '';
-  listaImgs: string[] = [];
   urlEvento?: string | null;
 
 
 
-
-
-
   constructor(protected injector: Injector,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    protected formBuilder: FormBuilder,
-
-    private eventoService: EventoService,
     private arquivoService: ArquivoService,
     private route: ActivatedRoute,
+    private eventoStore: EventoStore,
 
   ) {
     super(injector);
   }
   ngOnInit(): void {
 
-
-
     if (isPlatformBrowser(this.platformId)) {
-      this.formGroup = this.formBuilder.group({
-
-      });
-
       this.route.paramMap.subscribe(params => {
         this.urlEvento = params.get('id-evento');
-        this.getEvento();
+        if (this.urlEvento)
+          this.eventoStore.atualizarEventoByUrlEvento(this.urlEvento);
       });
-
-
-      this.startCarrossel();
-
-
-
-
-    } else {
     }
 
+
+    this.eventoStore.evento$.subscribe(_evento => {
+      this.evento = _evento;
+      const el = this.elementRef.nativeElement;
+      el.style.setProperty('--cor-primaria', this.evento?.tema?.corPrimaria || '#fff');
+      el.style.setProperty('--cor-secundaria', this.evento?.tema?.corSecundaria || '#000');
+      el.style.setProperty('--cor-terciaria', this.evento?.tema?.corTerciaria || '#ccc');
+      this.cdRef.markForCheck();
+      this.cdRef.detectChanges();
+
+
+      this.download_BackgroundImage();
+      this.download_FotosVinculadas();
+
+
+    });
   }
 
-  getEndereco() {
-    return `${this.evento?.bairro ? this.evento.bairro : ''}
-   ${this.evento?.rua ? ', ' + this.evento.rua : ''}
-   ${this.evento?.numero ? ', ' + this.evento.numero : ''}
-   ${this.evento?.complemento ? ' - ' + this.evento.complemento : ''}`
-  }
 
 
-  getEvento(): void {
-    if (this.urlEvento)
-      this.subscription.add(
-        this.eventoService.getModelByLinkSite(this.urlEvento).subscribe({
-          next: (response: Evento) => {
-            this.evento = response;
-            this.listaImgs = this.evento?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
 
-            const el = this.elementRef.nativeElement;
-            el.style.setProperty('--cor-primaria', this.evento.tema?.corPrimaria || '#fff');
-            el.style.setProperty('--cor-secundaria', this.evento.tema?.corSecundaria || '#000');
-            el.style.setProperty('--cor-terciaria', this.evento.tema?.corTerciaria || '#ccc');
-            this.cdRef.detectChanges();
 
-            this.baixarArquivoTema();
-            this.downloadTodasFotosVinculadas();
-          }
-        }),
-      );
-  }
-
-  baixarArquivoTema() {
-    if (this.evento?.tema?.arquivo?.nomeArmazenado)
+  download_BackgroundImage() {
+    if (this.evento?.tema?.arquivo?.nomeArmazenado && !this.backgroundImageUrl)
       this.subscription.add(
         this.arquivoService.getArquivoByCaminho(this.evento.tema?.arquivo?.nomeArmazenado).subscribe({
           next: (response: Blob) => {
@@ -117,75 +79,33 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
         }),
       );
   }
-  downloadTodasFotosVinculadas() {
 
-    if (this.evento?.eventoArquivo)
-      this.evento?.eventoArquivo.forEach(eventoArquivo => {
-        if (eventoArquivo?.arquivo?.nomeArmazenado && !eventoArquivo.base64) {
 
-          this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
-            next: (response: ArquivoBase64) => {
-              eventoArquivo.base64 = response.base64;
-              this.listaImgs = this.evento?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
+  download_FotosVinculadas() {
+    if (!this.evento?.eventoArquivo) return;
 
-              this.cdRef.detectChanges();
-            }
-          });
-        }
+    const requests = this.evento.eventoArquivo
+      .filter(ea => ea?.arquivo?.nomeArmazenado && !ea.base64)
+      .map(ea => {
+
+        return this.arquivoService.getArquivoBase64ByCaminho(ea.arquivo!.nomeArmazenado + 'x').pipe(
+          map(response => ({ ea, base64: response.base64 }))
+
+        );
       });
 
-  }
 
 
-  getCapa(): EventoArquivo | undefined {
-    return this.evento?.eventoArquivo?.find(x => x.capa)
-  }
+    if (requests.length === 0) return;
 
 
-
-
-
-
-
-
-  intervalId: any; // ID do intervalo
-  tempoCarrossel = 8000; // 8 segundos
-
-  startCarrossel() {
-    // Iniciar o intervalo automático
-    this.intervalId = setInterval(() => {
-      this.proximo_ImagemCarrossel(null);
-    }, this.tempoCarrossel);
-  }
-  stopCarrossel() {
-    // Parar o intervalo automático
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-  }
-  resetInterval() {
-    // Limpar e reiniciar o intervalo sempre que o usuário interagir
-    this.stopCarrossel();
-    this.startCarrossel();
-  }
-
-
-  imagemAtualCarrossel = 0;
-  anterior_ImagemCarrossel(event: MouseEvent | null) {
-    if (event)
-      event.stopPropagation();
-    this.imagemAtualCarrossel = (this.imagemAtualCarrossel - 1 + this.listaImgs.length) % this.listaImgs.length;
-    this.cdRef.detectChanges();
-    this.resetInterval(); // Reiniciar o intervalo após interação
-  }
-
-  proximo_ImagemCarrossel(event: MouseEvent | null) {
-    if (event)
-      event.stopPropagation();
-    this.imagemAtualCarrossel = (this.imagemAtualCarrossel + 1) % this.listaImgs.length;
-    this.cdRef.detectChanges();
-    this.resetInterval(); // Reiniciar o intervalo após interação
-
+    combineLatest(requests)
+      .subscribe((results) => {
+        results.forEach(({ ea, base64 }) => {
+          ea.base64 = base64;
+        });
+        this.eventoStore.setEvento(this.evento);
+      });
   }
 
 
@@ -197,21 +117,7 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
 
 
-  modalAberto = false;
-  modalCapaAberto = false;
 
-  abrirModal() {
-    this.modalAberto = true;
-    this.cdRef.detectChanges();
-  }
-  abrirCapaModal() {
-    this.modalCapaAberto = true;
-  }
-
-  fecharModal() {
-    this.modalAberto = false;
-    this.modalCapaAberto = false;
-  }
 
 
 }

@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy, ChangeDetectorRef, Input, Injector, ElementRef, OnInit, HostListener } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Injectable, OnDestroy, ChangeDetectorRef, Input, Injector, ElementRef, OnInit, HostListener, Inject, PLATFORM_ID, inject } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import moment from "moment";
@@ -13,14 +14,9 @@ export abstract class EditBaseComponent implements OnDestroy {
   protected toastr: ToastrService
   protected cdRef: ChangeDetectorRef;
   protected elementRef: ElementRef;
+  protected platformId = inject(PLATFORM_ID);
   //protected loaderService: LoaderService;
 
-
-  isSmallScreen: boolean = window.innerWidth <= 768;
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.isSmallScreen = window.innerWidth <= 768;
-  }
 
   @Input() formGroup: FormGroup = {} as FormGroup;
   @Input() isVisualizacao: boolean = false;
@@ -28,19 +24,33 @@ export abstract class EditBaseComponent implements OnDestroy {
   subscription: Subscription = new Subscription();
   //mensagemLoader: string;
 
+  isSmallScreen: boolean = isPlatformBrowser(this.platformId) ? window?.innerWidth <= 768 : false;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.isSmallScreen = window?.innerWidth <= 768;
+  }
 
-  constructor(injector: Injector) {
+  constructor(injector: Injector,
+  ) {
+
     this.router = injector.get(Router);
     this.toastr = injector.get(ToastrService);
     this.cdRef = injector.get(ChangeDetectorRef);
     this.elementRef = injector.get(ElementRef);
+
+    if (isPlatformBrowser(this.platformId)) {
+    }
     // this.loaderService = injector.get(LoaderService);
     //  this.mensagemLoader = this.loaderService.getMensagem();
 
 
 
 
+
   }
+
+
+
   // onLoadForm(): void {
   //   this.subscription.add(this.colaboradorStore.desabilitarEdicao$.subscribe(desabilitarEdicao => {
 

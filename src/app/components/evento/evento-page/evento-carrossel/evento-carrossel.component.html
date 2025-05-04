@@ -1,0 +1,13 @@
+<div class="carrossel-container" *ngIf="listaImgCarrossel && listaImgCarrossel.length > 0">
+    <button class="nav-btn" (click)="anterior_ImagemCarrossel($event)">‹</button>
+
+    <div class="carrossel-slide" [ngClass]="click_abrirModal ? '' : 'carrossel-slide-big'">
+        <ng-container *ngFor="let img of listaImgCarrossel; let i = index">
+            <img *ngIf="i === imagemAtualCarrossel" [@fadeImage] [src]="img" class="imagem-carrossel"
+                (click)="_abrirModal($event)" />
+        </ng-container>
+
+    </div>
+
+    <button class="nav-btn" (click)="proximo_ImagemCarrossel($event)">›</button>
+</div>

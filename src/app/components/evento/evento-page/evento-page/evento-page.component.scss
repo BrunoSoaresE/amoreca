@@ -1,0 +1,131 @@
+.subtitulo {
+  font-size: 1.8rem;
+  color: var(--cor-secundaria)  !important;
+  text-align: center;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+.titulo-principal {
+  font-size: 3.5rem;
+  color: var(--cor-primaria)  !important;
+  text-align: center;
+  margin: 0.5rem 0 1.5rem 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.mensagem-evento {
+  background: rgba(255, 255, 255, 0.4); /* efeito glass suave */
+  backdrop-filter: blur(3px);
+  padding: 24px;
+  margin: 24px auto;
+  max-width: 700px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mensagem-evento h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  color:  var(--cor-primaria)  !important;
+}
+
+.mensagem-evento p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color:  var(--cor-terciaria)  !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rodape {
+  // background: rgba(255, 255, 255, 0.4); /* efeito glass */
+  // backdrop-filter: blur(3px);
+  // border-top: 1px solid rgba(0, 0, 0, 0.05);
+  // border-radius: 12px 12px 0 0;
+  // box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1rem;
+  color: var(--cor-terciaria)  !important;
+  width: 100%;
+
+  span {
+    color: var(--cor-primaria)  !important;
+    font-weight: bold;
+
+  }
+}
+
+.rodape p {
+  margin: 0;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5); /* Escurecer o fundo */
+  backdrop-filter: blur(10px); /* Aplica o blur ao fundo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.50);
+  transition: opacity 200ms ease, transform 200ms ease;
+  pointer-events: none;
+}
+
+
+.modal.ativo {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.fechar-modal {
+  position: absolute;
+  top: 0px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 5em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+
+

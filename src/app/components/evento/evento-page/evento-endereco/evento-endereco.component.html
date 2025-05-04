@@ -1,0 +1,10 @@
+<section class="info-evento" *ngIf="evento?.dataEvento || evento?.dataFimEvento || getEndereco() || evento?.infoEvento">
+
+    <p *ngIf="evento?.dataEvento"><strong>Data:</strong> {{ alterarDataHoraGrid(evento?.dataEvento) }}</p>
+    <p *ngIf="evento?.dataFimEvento"><strong>Data final:</strong> {{ alterarDataHoraGrid(evento?.dataFimEvento) }}
+    </p>
+    <p *ngIf="getEndereco()"><strong>Local:</strong> {{getEndereco()}}</p>
+
+    <p *ngIf="evento?.infoEvento"><strong>Informações:</strong> {{ evento?.infoEvento }}</p>
+
+</section>

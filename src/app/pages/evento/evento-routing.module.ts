@@ -4,32 +4,28 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component: EventoComponent,
-    // children: [
-    //   {
-    //     path: '',
-    //     redirectTo: 'pessoa',
-    //     pathMatch: 'full'
-    //   },
-    //   {
-    //     path: 'dashboard',
-    //     loadChildren: () => import('../../components/dashboard/dashboard.module').then(m => m.DashboardModule),
-    //     component: DashboardComponent,
-    //   },
-    //   {
-    //     path: 'pessoa',
-    //     loadChildren: () => import('../../components/pessoa/pessoa.module').then(m => m.PessoaModule),
-    //     component: PessoaComponent,
-    //   },
-    //   {
-    //     path: 'tema',
-    //     loadComponent: () => import('../../components/tema/tema-lista/tema-lista.component').then(m => m.TemaListaComponent)
-    //   },
-    //   {
-    //     path: 'evento',
-    //     loadComponent: () => import('../../components/evento/evento-lista/evento-lista.component').then(m => m.EventoListaComponent)
-    //   },
-    // ]
+    path: '',
+    //component: EventoComponent,
+    children: [
+      // A rota padrão que carrega o EventoPageComponent
+      {
+        path: '',
+        loadComponent: () => import('../../components/evento/evento-page/evento-page/evento-page.component').then((m) => m.EventoPageComponent)
+      },
+      {
+        path: 'presentes',
+        loadComponent: () => import('../../components/evento/evento-page/evento-presente/evento-presente.component').then((m) => m.EventoPresenteComponent)
+      },
+      {
+        path: 'recados',
+        loadComponent: () => import('../../components/evento/evento-page/evento-recados/evento-recados.component').then((m) => m.EventoRecadosComponent)
+      },
+      {
+        path: 'presenca',
+        loadComponent: () => import('../../components/evento/evento-page/evento-presenca/evento-presenca.component').then((m) => m.EventoPresencaComponent)
+      },
+      { path: '**', redirectTo: '' } // Rota curinga que redireciona para a rota principal
+    ]
   }
 ];
 
