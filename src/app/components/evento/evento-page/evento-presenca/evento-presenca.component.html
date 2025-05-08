@@ -26,8 +26,15 @@
 
 
         </div>
-        <button type="button" (click)="adicionarAcompanhante()" class="btn-adicionar"> + Adicionar Acompanhante</button>
 
-        <button type="button" (click)="onSubmit()" class="btn-enviar">Confirmar Presença</button>
+        <button mat-raised-button class="btn-azul-secundario" type="button" (click)="adicionarAcompanhante()">
+            + Adicionar Acompanhante
+        </button>
+
+        <button mat-raised-button class="btn-verde" type="button" (click)="onSubmit()"
+            style="margin-top: 8px !important;">
+            Confirmar Presença
+        </button>
+
     </form>
 </div>

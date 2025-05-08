@@ -31,11 +31,16 @@ export class EventoRecadosComponent extends EditBaseComponent implements OnInit 
   }
 
   enviarRecado() {
+
+
+
     if (this.formGroup.valid) {
       alert('Recado enviado com sucesso!');
 
       this.recados.push(this.formGroup.value);
       this.formGroup.reset();
+    } else {
+      this.formGroup.markAllAsTouched();
     }
   }
 

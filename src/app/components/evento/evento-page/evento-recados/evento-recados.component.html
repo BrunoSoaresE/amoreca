@@ -12,7 +12,7 @@
 
 
 
-    <form [formGroup]="formGroup" (ngSubmit)="enviarRecado()" class="row">
+    <form [formGroup]="formGroup" class="row">
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Seu nome</mat-label>
@@ -24,8 +24,11 @@
             <textarea matInput rows="3" formControlName="mensagem"></textarea>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
+        <button mat-raised-button class="btn-verde" type="button" (click)="enviarRecado()"
+            style="margin-top: 8px !important;">
             Enviar Recado
         </button>
+
+
     </form>
 </div>
