@@ -48,17 +48,20 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
 
     this.eventoStore.evento$.subscribe(_evento => {
       this.evento = _evento;
+
       const el = this.elementRef.nativeElement;
       el.style.setProperty('--cor-primaria', this.evento?.tema?.corPrimaria || '#fff');
       el.style.setProperty('--cor-secundaria', this.evento?.tema?.corSecundaria || '#000');
       el.style.setProperty('--cor-terciaria', this.evento?.tema?.corTerciaria || '#ccc');
-      this.cdRef.markForCheck();
-      this.cdRef.detectChanges();
+
 
 
       this.download_BackgroundImage();
       this.download_FotosVinculadas();
+      this.download_FotosPresentesVinculadas();
 
+      this.cdRef.markForCheck();
+      this.cdRef.detectChanges();
 
     });
   }
@@ -96,7 +99,7 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
       .filter(ea => ea?.arquivo?.nomeArmazenado && !ea.base64)
       .map(ea => {
 
-        return this.arquivoService.getArquivoBase64ByCaminho(ea.arquivo!.nomeArmazenado + 'x').pipe(
+        return this.arquivoService.getArquivoBase64ByCaminho(ea.arquivo!.nomeArmazenado).pipe(
           map(response => ({ ea, base64: response.base64 }))
 
         );
@@ -115,6 +118,35 @@ export class EventoComponent extends EditBaseComponent implements OnInit {
         this.eventoStore.setEvento(this.evento);
       });
   }
+
+  download_FotosPresentesVinculadas() {
+    if (!this.evento?.eventoPresente) return;
+
+    const requests = this.evento.eventoPresente
+      .filter(ea => ea.presente?.arquivo?.nomeArmazenado && !ea.presente?.base64)
+      .map(ea => {
+
+        return this.arquivoService.getArquivoBase64ByCaminho(ea.presente!.arquivo!.nomeArmazenado).pipe(
+          map(response => ({ ea, base64: response.base64 }))
+
+        );
+      });
+
+
+
+    if (requests.length === 0) return;
+
+
+    combineLatest(requests)
+      .subscribe((results) => {
+        results.forEach(({ ea, base64 }) => {
+          if (ea.presente)
+            ea.presente.base64 = base64;
+        });
+        this.eventoStore.setEvento(this.evento);
+      });
+  }
+
 
 
 

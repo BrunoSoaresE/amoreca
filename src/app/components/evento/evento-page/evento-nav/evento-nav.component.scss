@@ -34,6 +34,7 @@
     color: var(--cor-primaria)  !important;
     border-radius: 8px;
     transition: background 0.3s ease, color 0.3s ease;
+    cursor: pointer;
   }
   
   .navbar li a:hover {

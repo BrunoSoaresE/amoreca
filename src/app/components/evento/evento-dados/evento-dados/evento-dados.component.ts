@@ -129,6 +129,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.eventoDadosSite_FormGroup.patchValue(this.eventoSelecionado);
       this.eventoDadosSite_FormGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
       this.eventoDadosSite_FormGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
+      this.configuracoesFormGroup.patchValue(this.eventoSelecionado);
 
 
       this.downloadBase64Foto();

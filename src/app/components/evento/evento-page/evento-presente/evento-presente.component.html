@@ -1,6 +1,19 @@
-<div>
-    <div>
-        <h1>Lista de Presentes</h1>
-        <p>Em breve...</p>
+<div class="lista-presentes">
+    <div class="item-presente" *ngFor="let eventoPresente of evento?.eventoPresente; let i = index">
+        <div class="item-presente-conteudo">
+            <img *ngIf="eventoPresente.presente?.base64" [src]="eventoPresente.presente!.base64" alt="preview"
+                class="preview-img" />
+
+            <div class="info">
+                <p class="nome-presente">{{ eventoPresente.presente?.descricao }}</p>
+
+                <div class="acoes">
+                    <p><strong>Quantidade:</strong> {{ eventoPresente.quantidade }}</p>
+                    <p><strong>Preço:</strong> R$ {{ eventoPresente.preco }}</p>
+                </div>
+
+                <button class="btn-comprar">Comprar</button>
+            </div>
+        </div>
     </div>
 </div>

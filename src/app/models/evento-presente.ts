@@ -1,3 +1,4 @@
+import { Presente } from "./presente";
 
 
 export interface EventoPresente {
@@ -8,6 +9,8 @@ export interface EventoPresente {
   ativo: boolean;
   quantidade: number;
   preco: number;
+
+  presente?: Presente;
 }
 
 
