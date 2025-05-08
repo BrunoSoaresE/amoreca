@@ -33,7 +33,7 @@ export class EventoCarrosselComponent extends EditBaseComponent {
   listaImgCarrossel: string[] = [];
   imagemAtualCarrossel = 0;
   intervalId: any; // ID do intervalo
-  tempoCarrossel = 8000; // 8 segundos
+  tempoCarrossel = 6000; // 8 segundos
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
@@ -61,6 +61,7 @@ export class EventoCarrosselComponent extends EditBaseComponent {
     this.eventoStore.evento$.subscribe(_evento => {
       this.listaImgCarrossel = _evento?.eventoArquivo?.filter(x => x.base64)?.map(x => x.base64 as string) ?? []
     });
+    this.startCarrossel();
   }
 
 

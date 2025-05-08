@@ -65,15 +65,15 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   ngAfterViewInit(): void {
     this._setFornsControl();
 
-    if (this.stepper) {
-      this.stepper.steps.forEach((step, index) => {
-        if (index < 2) {
-          step.completed = true;
-        }
-      });
-      this.stepper.selectedIndex = 2;
-      this.cdRef.detectChanges();
-    }
+    // if (this.stepper) {
+    //   this.stepper.steps.forEach((step, index) => {
+    //     if (index < 2) {
+    //       step.completed = true;
+    //     }
+    //   });
+    //   this.stepper.selectedIndex = 2;
+    //   this.cdRef.detectChanges();
+    // }
 
   }
   private _formBuilder = inject(FormBuilder);
@@ -202,6 +202,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
           novoTemaSelecionado.arquivoBase64 = response;
           this.backgroundImageUrl = `linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('${response.base64}')`;
           this.temaSelecionado = novoTemaSelecionado;
+          this.cdRef.markForCheck();
           this.cdRef.detectChanges();
         }
       });

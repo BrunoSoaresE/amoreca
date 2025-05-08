@@ -1,6 +1,33 @@
-<div>
-    <div>
-        <h1>Confirmar Presença</h1>
-        <p>Em breve...</p>
-    </div>
+<div class="container-confirmacao">
+    <h2>Confirmação de Presença</h2>
+
+    <form [formGroup]="formGroup" class="row">
+        <div class="col-12">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Seu Nome</mat-label>
+                <input matInput type="text" formControlName="nome" />
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="form-group">
+            <h4>Acompanhantes</h4>
+
+
+            <div class="acompanhantes" *ngFor="let control of acompanhantesControls; let i = index">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Nome do acompanhante</mat-label>
+                    <input matInput type="text" [formControl]="control" />
+                </mat-form-field>
+                <button type="button" (click)="removerAcompanhante(i)" class="btn-remover">Remover</button>
+            </div>
+
+
+
+        </div>
+        <button type="button" (click)="adicionarAcompanhante()" class="btn-adicionar"> + Adicionar Acompanhante</button>
+
+        <button type="button" (click)="onSubmit()" class="btn-enviar">Confirmar Presença</button>
+    </form>
 </div>

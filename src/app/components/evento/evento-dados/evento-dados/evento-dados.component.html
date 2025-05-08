@@ -11,11 +11,15 @@
         <ng-template matStepLabel>Categoria e Tema</ng-template>
 
 
-        <div class="col-12">
+        <div>
+          <h3>Primeiro passo!</h3>
           <ul>
             <li>Selecione a <b>categoria</b> do seu evento (como casamento, chá de bebê, aniversário...)</li>
+
           </ul>
         </div>
+
+
 
 
         <app-autocomplete class="col-12" [formGroup]="firstFormGroup" [listaOption]="categorias" labelName="Categoria"
@@ -155,11 +159,17 @@
             <mat-icon>arrow_back</mat-icon>
             Voltar
           </button>
+          <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
+            <mat-icon>arrow_forward</mat-icon>
+            Próximo
+          </button>
+
 
           <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
             <mat-icon>add</mat-icon>
             Salvar
           </button>
+
 
         </div>
 
@@ -205,6 +215,7 @@
               <mat-icon>arrow_forward</mat-icon>
               Próximo
             </button>
+
 
             <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
               <mat-icon>add</mat-icon>
@@ -252,15 +263,14 @@
               <mat-icon>arrow_back</mat-icon>
               Voltar
             </button>
-            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperNext>
-              <mat-icon>arrow_forward</mat-icon>
-              Próximo
-            </button>
+
 
             <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
               <mat-icon>add</mat-icon>
               Salvar
             </button>
+
+
           </div>
 
 
