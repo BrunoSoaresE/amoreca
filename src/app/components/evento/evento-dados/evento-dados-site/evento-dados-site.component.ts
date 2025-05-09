@@ -63,9 +63,12 @@ export class EventoDadosSiteComponent extends EditBaseComponent implements OnIni
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['backgroundImageUrl']) {
       this.definirTamanhoCampos();
-      this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64 && x.ativo)?.map(x => x.base64 as string) ?? []
-
     }
+
+
+    this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64 && x.ativo)?.map(x => x.base64 as string) ?? [];
+    this.imagemAtualCarrossel = 0;
+
   }
   ngOnInit(): void {
     this.listaImgs = this.eventoSelecionado?.eventoArquivo?.filter(x => x.base64 && x.ativo)?.map(x => x.base64 as string) ?? []

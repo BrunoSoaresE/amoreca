@@ -175,8 +175,7 @@
         </section>
 
 
-
-        <div class="carrossel-container">
+        <div class="carrossel-container" *ngIf="listaImgs && listaImgs.length > 0">
           <button class="nav-btn" (click)="anterior_ImagemCarrossel(null)">‹</button>
 
           <div class="carrossel-slide">

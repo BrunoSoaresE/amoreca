@@ -222,6 +222,10 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
           this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
             next: (response: ArquivoBase64) => {
               eventoArquivo.base64 = response.base64;
+
+              if (this.eventoSelecionado)
+                this.eventoSelecionado = { ...this.eventoSelecionado };
+              this.cdRef.markForCheck();
               this.cdRef.detectChanges();
             }
           });
@@ -273,7 +277,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       ...this.formGroup.value,
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
-      ...this.eventoDadosSite_FormGroup.value
+      ...this.eventoDadosSite_FormGroup.value,
+      ...this.configuracoesFormGroup.value
     } as EventoCadastro;
 
     eventoCadastro.dataEvento = this.unificarCampoDataHora('dataEvento', 'horaEvento');
@@ -281,7 +286,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     eventoCadastro.eventoArquivo = this.eventoArquivoCadastro;
 
     eventoCadastro.removerArquivos = this.removerArquivos;
-    eventoCadastro.eventoPresente = (this.presentesFormGroup.get('presentes') as FormArray).value;
+    eventoCadastro.eventoPresente = ((this.presentesFormGroup.get('presentes') as FormArray).value as EventoPresente[]).filter(x => x.ativo);
 
 
 
@@ -290,10 +295,16 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.eventoService.salvarEvento(eventoCadastro).subscribe({
         next: (response: Evento) => {
           this.eventoSelecionado = response;
+          this.eventoArquivoCadastro = undefined;
+
+
+
           this._setFornsControl()
           //  this.output_fecharCadastroEdicao.emit({ houveAlteracao: true });
           if (validarForm)
             this.toastr.success('Evento salvo com sucesso!');
+
+          this.cdRef.detectChanges;
 
         }
       }),
