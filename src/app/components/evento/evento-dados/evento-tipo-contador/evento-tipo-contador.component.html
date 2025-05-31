@@ -1,0 +1,31 @@
+<form [formGroup]="formGroup">
+
+  <div class="contador-container" title="É possível visualizar o contador ao lado inferior da foto de capa abaixo">
+    <h3>Escolha o tipo de contador</h3>
+    <div class="opcoes">
+      <label *ngFor="let tipo of tipos" class="opcao">
+        <input type="radio" name="idTipoContador" formControlName="idTipoContador" [value]="tipo.id" />
+        {{ tipo.descricao }}
+      </label>
+
+    </div>
+
+    <div class="preview" *ngIf="formGroup.get('idTipoContador')?.value == 'gravidez'">
+
+
+      <div class="col-12" style="max-width: 100% !important;">
+        <mat-form-field appearance="outline">
+          <mat-label>Semanas de gravidez</mat-label>
+          <input matInput type="number" formControlName="semanaGravidezAtual" />
+        </mat-form-field>
+      </div>
+
+      <app-autocomplete class="col-12" [formGroup]="formGroup" [listaOption]="diaSemana" labelName="Dia da semana"
+        _formControlName="idDiaSemana"></app-autocomplete>
+
+      <p>A semana de gavidez será atualizada todo o dia da semana informado</p>
+
+
+    </div>
+  </div>
+</form>

@@ -28,20 +28,40 @@
 
         <nav class="navbar">
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#presentes">Lista de Presentes</a></li>
-            <li><a href="#mural">Mural de Recados</a></li>
-            <li><a href="#album">Álbum de Fotos</a></li>
-            <li><a href="#confirmar">Confirmar Presença</a></li>
+            <li title="Só sera possível clicar na versão final"><a>Home</a></li>
+            <li title="Só sera possível clicar na versão final"><a>Lista de Presentes</a></li>
+            <li title="Só sera possível clicar na versão final"><a>Mural de Recados</a></li>
+            <li title="Só sera possível clicar na versão final"><a>Álbum de Fotos</a></li>
+            <li title="Só sera possível clicar na versão final"><a>Confirmar Presença</a></li>
           </ul>
         </nav>
+        <app-evento-tipo-contador [formGroup]="formGroup"></app-evento-tipo-contador>
+
 
         <div class="foto-capa-container">
           <div class="foto-wrapper">
-            <img [src]="getCapa()?.base64" alt="Foto de Capa" />
+            <img [src]="getCapa()?.base64" alt="Foto de Capa"
+              title="A capa pode ser alterada a qualquer momento no passo 2 'Fotos'" />
+
+            <div class="contador-overlay" [ngSwitch]="formGroup.get('idTipoContador')?.value">
+              <div *ngSwitchCase="'gravidez'">
+                🤰 Mamãe está de
+                <p><strong>{{ formGroup.get('semanaGravidezAtual')?.value }}</strong></p>
+                semanas!
+              </div>
+              <div *ngSwitchCase="'evento'">
+                📅 Faltam
+                <p><strong>10</strong></p>
+                dias para o evento!
+              </div>
+            </div>
 
           </div>
+
+
+
         </div>
+
 
 
         <section class="mensagem-evento">
@@ -178,7 +198,7 @@
         <div class="carrossel-container" *ngIf="listaImgs && listaImgs.length > 0">
           <button class="nav-btn" (click)="anterior_ImagemCarrossel(null)">‹</button>
 
-          <div class="carrossel-slide">
+          <div class="carrossel-slide" title="As fotos podem ser alteradas a qualquer momento no passo 2 'Fotos'">
             <ng-container *ngFor="let img of listaImgs; let i = index">
               <img *ngIf="i === imagemAtualCarrossel" [@fadeImage] [src]="img" class="imagem-carrossel" />
             </ng-container>

@@ -2,12 +2,12 @@
 .info-evento {
     background: rgba(255, 255, 255, 0.4); /* efeito glass */
     backdrop-filter: blur(3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     padding: 20px;
     margin: 20px auto;
     max-width: 600px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
     font-size: 1.1rem;
     color: var(--cor-terciaria)  !important;
   }

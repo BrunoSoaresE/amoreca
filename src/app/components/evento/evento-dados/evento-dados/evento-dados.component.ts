@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, inject, Injector, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -65,15 +65,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   ngAfterViewInit(): void {
     this._setFornsControl();
 
-    // if (this.stepper) {
-    //   this.stepper.steps.forEach((step, index) => {
-    //     if (index < 2) {
-    //       step.completed = true;
-    //     }
-    //   });
-    //   this.stepper.selectedIndex = 2;
-    //   this.cdRef.detectChanges();
-    // }
+
 
   }
   private _formBuilder = inject(FormBuilder);
@@ -93,6 +85,9 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
   eventoDadosSite_FormGroup = this._formBuilder.group({
     subNomeEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     nomeEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
+    idTipoContador: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
+    semanaGravidezAtual: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+    idDiaSemana: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
 
     titulo: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     texto: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
@@ -132,6 +127,26 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.configuracoesFormGroup.patchValue(this.eventoSelecionado);
 
 
+      if (this.stepper) {
+        this.stepper.steps.forEach((step, index) => {
+          let currentFormValid: boolean = false;
+          if (index === 0) currentFormValid = this.firstFormGroup.valid;
+          else if (index === 1) currentFormValid = this.secondFormGroup.valid;
+          else if (index === 2) currentFormValid = !(this.presentesFormGroup.get('presentes') as FormArray).valid;
+          else if (index === 3) currentFormValid = this.eventoDadosSite_FormGroup.valid;
+          else if (index === 4) currentFormValid = this.configuracoesFormGroup.valid;
+
+          if (step && currentFormValid) {
+            step.completed = true;
+          }
+
+        });
+
+        this.cdRef.detectChanges();
+      }
+
+
+
       this.downloadBase64Foto();
 
 
@@ -152,14 +167,15 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       this.downloadBase64Foto_TemaSelecionado();
 
       setTimeout(() => {
+
         if (!this.firstFormGroup.valid) {
           this.stepper.selectedIndex = 0;
         } else if (!this.secondFormGroup.valid) {
           this.stepper.selectedIndex = 1;
-        } else if (!this.presentesFormGroup.valid) {
-          this.stepper.selectedIndex = 2;
-        } else if (!this.eventoDadosSite_FormGroup.valid) {
+        } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
           this.stepper.selectedIndex = 3;
+        } else if (!this.eventoDadosSite_FormGroup.valid) {
+          this.stepper.selectedIndex = 2;
         }
       }, 10);
 
@@ -245,6 +261,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
 
     if (validarForm && (!this.formGroup.valid ||
+      !this.eventoDadosSite_FormGroup.valid ||
       !this.firstFormGroup.valid ||
       !this.secondFormGroup.valid ||
       !this.presentesFormGroup.valid
@@ -252,15 +269,24 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     ) {
 
 
+
+
+
       if (!this.firstFormGroup.valid) {
         this.stepper.selectedIndex = 0;
       } else if (!this.secondFormGroup.valid) {
         this.stepper.selectedIndex = 1;
       } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
-        this.stepper.selectedIndex = 2;
-      } else if (!this.eventoDadosSite_FormGroup.valid) {
         this.stepper.selectedIndex = 3;
+      } else if (!this.eventoDadosSite_FormGroup.valid) {
+        this.stepper.selectedIndex = 2;
       }
+
+
+
+
+
+
 
       this.firstFormGroup.markAllAsTouched();
       this.secondFormGroup.markAllAsTouched();

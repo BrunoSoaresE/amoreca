@@ -1,0 +1,47 @@
+.contador-container {
+  max-width: 500px;
+  margin: -8px auto 8px auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.4); /* efeito glass */
+  backdrop-filter: blur(3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  .opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .opcao {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color:  var(--cor-primaria)  !important;
+    }
+  }
+
+  .preview {
+    margin-top: 8px;
+    text-align: center;
+
+
+
+
+    p{
+      margin: 0;
+      padding: 0;
+            color:  var(--cor-primaria)  !important;
+
+    }
+  }
+}
+
+

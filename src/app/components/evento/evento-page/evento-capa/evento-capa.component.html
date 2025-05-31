@@ -2,7 +2,7 @@
     <div class="foto-wrapper" [ngClass]="click_abrirModal ? '' : 'foto-wrapper-big'">
         <img [src]="eventoCapa?.base64" alt="Foto de Capa" (click)="_abrirModal($event)" />
         <div class="contador-overlay" *ngIf="click_abrirModal">
-            <p>Faltam {{ 10 }} dias!</p>
+            <p>📅 Faltam {{ 10 }} dias!</p>
         </div>
     </div>
 </div>

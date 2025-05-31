@@ -13,11 +13,12 @@ import { SharedModule } from "../../../../shared/shared.module";
 import { EventoArquivo } from "../../../../models/evento-arquivo";
 //import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { animate, style, transition, trigger, } from '@angular/animations';
+import { EventoTipoContadorComponent } from "../evento-tipo-contador/evento-tipo-contador.component";
 @Component({
   standalone: true,
   selector: 'app-evento-dados-site',
   imports: [CommonModule, SharedModule, MatInputModule, MatDatepickerModule, MatTimepickerModule//, BrowserAnimationsModule
-
+    , EventoTipoContadorComponent
   ],
   templateUrl: './evento-dados-site.component.html',
   styleUrls: ['./evento-dados-site.component.scss'],
