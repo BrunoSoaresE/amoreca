@@ -34,8 +34,8 @@
   .contador-overlay {
     position: absolute;
     bottom: 10px; /* Ajustado para dar mais espaço */
-    right: 150px;  /* Ajustado para alinhar melhor */
-    background-color: rgba(255, 255, 255, 0.95);  /* Deixando o fundo mais suave */
+   // right: 150px;  /* Ajustado para alinhar melhor */
+    background-color: rgba(255, 255, 255, 0.96);  /* Deixando o fundo mais suave */
     padding: 12px 18px;  /* Aumentando o padding para um visual mais espaçoso */
     border-radius: 15px;  /* Bordas mais arredondadas */
     font-weight: bold;
@@ -46,7 +46,7 @@
   }
   
   .contador-overlay:hover {
-    transform: translateY(-5px);  /* Efeito de elevação ao passar o mouse */
+    transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Sombra mais intensa no hover */
   }
   

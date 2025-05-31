@@ -1,0 +1,18 @@
+<div *ngIf="listaImgCarrossel && listaImgCarrossel.length > 0">
+
+    <ng-container *ngFor="let img of listaImgCarrossel;">
+        <img [src]="img" class="imagem" (click)="abrirModal(img)" />
+    </ng-container>
+
+
+</div>
+
+
+<div class="modal" (click)="fecharModal()" [class.ativo]="imagemModal">
+
+
+    <img class="foto-wrapper-big" [src]="imagemModal" alt="Foto" />
+
+
+    <button class="fechar-modal" (click)="fecharModal()">×</button>
+</div>

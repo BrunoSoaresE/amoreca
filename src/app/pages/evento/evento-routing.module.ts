@@ -24,6 +24,10 @@ const routes: Routes = [
         path: 'presenca',
         loadComponent: () => import('../../components/evento/evento-page/evento-presenca/evento-presenca.component').then((m) => m.EventoPresencaComponent)
       },
+      {
+        path: 'fotos',
+        loadComponent: () => import('../../components/evento/evento-page/evento-album-fotos/evento-album-fotos.component').then((m) => m.EventoAlbumFotosComponent)
+      },
       { path: '**', redirectTo: '' } // Rota curinga que redireciona para a rota principal
     ]
   }

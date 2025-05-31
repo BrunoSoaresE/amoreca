@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import moment from "moment";
 import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
+import { BusStore } from "../../services/bus.store";
 
 
 
@@ -13,6 +14,7 @@ export abstract class EditBaseComponent implements OnDestroy {
   protected router: Router;
   protected toastr: ToastrService
   protected cdRef: ChangeDetectorRef;
+  protected busStore: BusStore;
   protected elementRef: ElementRef;
   protected platformId = inject(PLATFORM_ID);
   //protected loaderService: LoaderService;
@@ -37,6 +39,7 @@ export abstract class EditBaseComponent implements OnDestroy {
     this.toastr = injector.get(ToastrService);
     this.cdRef = injector.get(ChangeDetectorRef);
     this.elementRef = injector.get(ElementRef);
+    this.busStore = injector.get(BusStore);
 
     if (isPlatformBrowser(this.platformId)) {
     }
