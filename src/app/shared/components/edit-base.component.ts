@@ -101,24 +101,24 @@ export abstract class EditBaseComponent implements OnDestroy {
     history.back();
   }
 
-  updateValueAndValidityControl() {
+  updateValueAndValidityControl(_formGroup: FormGroup) {
 
-    if (!this.formGroup?.controls) {
+    if (!_formGroup?.controls) {
       return;
     }
 
-    Object.keys(this.formGroup.controls).forEach(key => {
-      const control = this.formGroup.get(key);
+    Object.keys(_formGroup.controls).forEach(key => {
+      const control = _formGroup.get(key);
       if (control?.invalid) {
         console.log('invalid - ' + key)
-        this.formGroup?.get(key)?.updateValueAndValidity();
+        _formGroup?.get(key)?.updateValueAndValidity();
       }
     });
 
   }
 
-  getFirstInvalidControl(): string | null {
-    const controls = this.formGroup.controls;
+  getFirstInvalidControl(_formGroup: FormGroup): string | null {
+    const controls = _formGroup.controls;
     for (const controlName in controls) {
       if (controls[controlName].invalid) {
         return controlName;
@@ -127,28 +127,35 @@ export abstract class EditBaseComponent implements OnDestroy {
     return null;
   }
 
-  scrollToInvalidControl() {
-    let controlName = this.getFirstInvalidControl();
+  scrollToInvalidControl(_formGroup: FormGroup) {
+    let controlName = this.getFirstInvalidControl(_formGroup);
     const invalidControlElement = this.elementRef.nativeElement.querySelector(`[formControlName="${controlName}"]`) ?? this.elementRef.nativeElement.querySelector(`.${controlName}`);
     const containerPrincipalElement = this.elementRef.nativeElement.querySelector(`.containerPrincipal`);
 
 
     if (invalidControlElement) {
-      const elementPosition = invalidControlElement.getBoundingClientRect().top - containerPrincipalElement.getBoundingClientRect().top;
+      if (containerPrincipalElement) {
+        const elementPosition = invalidControlElement.getBoundingClientRect().top - containerPrincipalElement.getBoundingClientRect().top;
 
 
-      containerPrincipalElement.scrollTo({
-        top: (containerPrincipalElement.scrollTop + elementPosition) - 140,
-        behavior: 'smooth'
 
-      });
+        containerPrincipalElement.scrollTo({
+          top: (containerPrincipalElement.scrollTop + elementPosition) - 140,
+          behavior: 'smooth'
+
+        });
+      }
+      else {
+        invalidControlElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      }
     }
   }
 
-  onInvalidForm(mensagem?: string) {
-    this.formGroup.markAllAsTouched();
-    this.updateValueAndValidityControl();
-    this.scrollToInvalidControl();
+  onInvalidForm(mensagem?: string, _formGroup: FormGroup = this.formGroup) {
+    _formGroup.markAllAsTouched();
+    this.updateValueAndValidityControl(_formGroup);
+    this.scrollToInvalidControl(_formGroup);
 
     this.toastr.warning(mensagem ? mensagem : 'Favor preencher todos os campos obrigatórios!');
   }

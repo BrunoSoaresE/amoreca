@@ -269,32 +269,29 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     ) {
 
 
-
-
-
       if (!this.firstFormGroup.valid) {
         this.stepper.selectedIndex = 0;
+        this.onInvalidForm(undefined, this.firstFormGroup);
       } else if (!this.secondFormGroup.valid) {
         this.stepper.selectedIndex = 1;
+        this.onInvalidForm(undefined, this.secondFormGroup);
       } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
         this.stepper.selectedIndex = 3;
+        this.onInvalidForm(undefined, this.presentesFormGroup);
       } else if (!this.eventoDadosSite_FormGroup.valid) {
         this.stepper.selectedIndex = 2;
+        this.onInvalidForm(undefined, this.eventoDadosSite_FormGroup);
       }
 
 
 
+      // this.firstFormGroup.markAllAsTouched();
+      // this.secondFormGroup.markAllAsTouched();
+      // this.presentesFormGroup.markAllAsTouched();
+      // this.eventoDadosSite_FormGroup.markAllAsTouched();
 
 
 
-
-      this.firstFormGroup.markAllAsTouched();
-      this.secondFormGroup.markAllAsTouched();
-      this.presentesFormGroup.markAllAsTouched();
-      this.eventoDadosSite_FormGroup.markAllAsTouched();
-
-
-      this.onInvalidForm();
 
       return;
     }
