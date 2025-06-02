@@ -5,11 +5,10 @@ import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EventoStore } from '../../../../services/evento/evento.store';
-import { Evento } from '../../../../models/evento';
 import { EventoCarrosselComponent } from '../evento-carrossel/evento-carrossel.component';
 import { EventoCapaComponent } from '../evento-capa/evento-capa.component';
 import { EventoEnderecoComponent } from '../evento-endereco/evento-endereco.component';
-import { EventoNavComponent } from '../evento-nav/evento-nav.component';
+import { Evento } from '../../../../models/evento/evento';
 
 @Component({
   standalone: true,

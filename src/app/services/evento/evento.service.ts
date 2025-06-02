@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { EnvironmentService } from '../../environment.service';
 import { BaseService } from '../../shared/services/base.service';
 import { Observable } from 'rxjs';
-import { Evento, EventoCadastro } from '../../models/evento';
+import { Evento, EventoCadastro } from '../../models/evento/evento';
+import { EventoRecado } from '../../models/evento/evento-recado';
 
 
 @Injectable({ providedIn: 'root' })
@@ -38,6 +39,11 @@ export class EventoService extends BaseService {
     return retorno;
   }
 
+
+  salvarEvento_Recados(eventoRecado: EventoRecado): Observable<Evento> {
+    let retorno = this.post(`salvar-evento-recado`, eventoRecado);
+    return retorno;
+  }
 
 
   _appendEventoToFormData(evento: EventoCadastro): FormData {

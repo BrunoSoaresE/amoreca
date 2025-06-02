@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { Evento } from '../../../../models/evento';
-import { EventoArquivoCadastro } from '../../../../models/evento-arquivo';
+import { Component, EventEmitter, Injector, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { ArquivoService } from '../../../../services/arquivo/arquivo.service';
-import { ArquivoBase64 } from '../../../../models/arquivo';
+import { Evento } from '../../../../models/evento/evento';
+import { EventoArquivoCadastro } from '../../../../models/evento/evento-arquivo';
 
 @Component({
   standalone: true,

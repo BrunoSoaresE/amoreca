@@ -5,15 +5,15 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatTimepickerModule, MAT_TIMEPICKER_CONFIG } from "@angular/material/timepicker";
 import { distinctUntilChanged } from "rxjs";
-import { Evento } from "../../../../models/evento";
 import { Tema } from "../../../../models/tema";
 import { EventoService } from "../../../../services/evento/evento.service";
 import { EditBaseComponent } from "../../../../shared/components/edit-base.component";
 import { SharedModule } from "../../../../shared/shared.module";
-import { EventoArquivo } from "../../../../models/evento-arquivo";
 //import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { animate, style, transition, trigger, } from '@angular/animations';
 import { EventoTipoContadorComponent } from "../evento-tipo-contador/evento-tipo-contador.component";
+import { EventoArquivo } from "../../../../models/evento/evento-arquivo";
+import { Evento } from "../../../../models/evento/evento";
 @Component({
   standalone: true,
   selector: 'app-evento-dados-site',

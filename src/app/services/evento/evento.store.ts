@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription, } from 'rxjs';
-import { Evento } from '../../models/evento';
 import { EventoService } from './evento.service';
+import { Evento } from '../../models/evento/evento';
 
 
 @Injectable({ providedIn: 'root' })

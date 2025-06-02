@@ -1,6 +1,7 @@
+import { Tema } from "../tema";
 import { EventoArquivo, EventoArquivoCadastro } from "./evento-arquivo";
 import { EventoPresente } from "./evento-presente";
-import { Tema } from "./tema";
+import { EventoRecado } from "./evento-recado";
 
 export interface Evento {
   id: number;
@@ -31,7 +32,7 @@ export interface Evento {
   tema?: Tema;
   eventoArquivo?: EventoArquivo[];
   eventoPresente?: EventoPresente[];
-
+  eventoRecado?: EventoRecado[];
 }
 
 

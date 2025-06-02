@@ -1,4 +1,4 @@
-import { Presente } from "./presente";
+import { Presente } from "../presente";
 
 
 export interface EventoPresente {

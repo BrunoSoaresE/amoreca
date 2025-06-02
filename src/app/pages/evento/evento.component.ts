@@ -1,16 +1,11 @@
-import { ChangeDetectionStrategy, Component, HostListener, Inject, Injector, OnInit, PLATFORM_ID } from '@angular/core';
-import { trigger, style, transition, animate } from '@angular/animations';
-import { Evento } from '../../models/evento';
+import { ChangeDetectionStrategy, Component, HostListener, Injector, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ArquivoBase64 } from '../../models/arquivo';
-import { EventoArquivo } from '../../models/evento-arquivo';
 import { ArquivoService } from '../../services/arquivo/arquivo.service';
-import { EventoService } from '../../services/evento/evento.service';
 import { EditBaseComponent } from '../../shared/components/edit-base.component';
 import { EventoStore } from '../../services/evento/evento.store';
-import { catchError, combineLatest, finalize, forkJoin, map, take, tap } from 'rxjs';
+import { combineLatest, map, } from 'rxjs';
+import { Evento } from '../../models/evento/evento';
 
 @Component({
   standalone: false,

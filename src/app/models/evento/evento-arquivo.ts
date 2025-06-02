@@ -1,4 +1,5 @@
-import { Arquivo } from "./arquivo";
+import { Arquivo } from "../arquivo";
+
 
 export interface EventoArquivo {
   id: number;

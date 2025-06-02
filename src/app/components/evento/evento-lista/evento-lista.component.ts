@@ -6,8 +6,8 @@ import { EditBaseComponent } from '../../../shared/components/edit-base.componen
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedModule } from '../../../shared/shared.module';
-import { Evento } from '../../../models/evento';
 import { EventoService } from '../../../services/evento/evento.service';
+import { Evento } from '../../../models/evento/evento';
 
 @Component({
     standalone: true,

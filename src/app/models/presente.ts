@@ -1,6 +1,6 @@
-import { Arquivo, ArquivoBase64 } from "./arquivo";
+import { Arquivo } from "./arquivo";
 import { Categoria } from "./categoria";
-import { EventoPresente } from "./evento-presente";
+import { EventoPresente } from "./evento/evento-presente";
 
 export interface Presente {
   id: number;

@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EventoStore } from '../../../../services/evento/evento.store';
-import { EventoArquivo } from '../../../../models/evento-arquivo';
+import { EventoArquivo } from '../../../../models/evento/evento-arquivo';
 
 @Component({
   standalone: true,

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Injector, Input, OnInit, } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators, } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { ArquivoService } from '../../../../services/arquivo/arquivo.service';
 import { Presente } from '../../../../models/presente';
-import { Evento } from '../../../../models/evento';
 import { MatInputModule } from '@angular/material/input';
+import { Evento } from '../../../../models/evento/evento';
 
 @Component({
   standalone: true,

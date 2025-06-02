@@ -4,7 +4,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
-import { Evento, EventoCadastro, } from '../../../../models/evento';
 import { EventoService } from '../../../../services/evento/evento.service';
 import { Tema } from '../../../../models/tema';
 import { TemaService } from '../../../../services/tema/tema.service';
@@ -15,13 +14,14 @@ import { TemaListaSelecionarComponent } from '../../../tema/tema-lista-seleciona
 import { combineLatest, distinctUntilChanged, timeout } from 'rxjs';
 import { ArquivoBase64 } from '../../../../models/arquivo';
 import { EventoDadosFotoComponent } from '../evento-dados-foto/evento-dados-foto.component';
-import { EventoArquivoCadastro } from '../../../../models/evento-arquivo';
 import { EventoDadosPresenteComponent } from '../evento-dados-presente/evento-dados-presente.component';
 import { Presente } from '../../../../models/presente';
 import { PresenteService } from '../../../../services/presente/presente.service';
-import { EventoPresente } from '../../../../models/evento-presente';
 import { Categoria } from '../../../../models/categoria';
 import { ConsultaAuxiliaresService } from '../../../../services/consulta-auxiliares.service';
+import { Evento, EventoCadastro } from '../../../../models/evento/evento';
+import { EventoArquivoCadastro } from '../../../../models/evento/evento-arquivo';
+import { EventoPresente } from '../../../../models/evento/evento-presente';
 
 
 @Component({
@@ -410,6 +410,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
             if (this.listPresentes) {
               this.listPresentes.forEach(presente => {
 
+
+
                 const presenteEvento = this.eventoSelecionado?.eventoPresente?.find(x => x.idPresente === presente.id);
 
                 const _quantidade = presenteEvento ? presenteEvento.quantidade : presente.quantidadeSugerida;
@@ -422,6 +424,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
                   quantidade: new FormControl<any>({ value: _quantidade, disabled: this.isVisualizacao }),
                   preco: new FormControl<any>({ value: _preco, disabled: this.isVisualizacao }),
                 }));
+
+
               });
             }
             this.presenteisReady = true;

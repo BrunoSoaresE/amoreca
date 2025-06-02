@@ -1,6 +1,6 @@
-<div class="lista-recados">
-    <h2 style="text-align: center;" *ngIf="recados && recados.length > 0">Recados dos Convidados</h2>
-    <div class="recado" *ngFor="let recado of recados">
+<div class="lista-recados" *ngIf="evento && evento.eventoRecado && evento.eventoRecado.length > 0">
+    <h2 style="text-align: center;">Recados dos Convidados</h2>
+    <div class="recado" *ngFor="let recado of evento.eventoRecado">
         <p class="nome">{{ recado.nome }}</p>
         <p class="mensagem">{{ recado.mensagem }}</p>
     </div>

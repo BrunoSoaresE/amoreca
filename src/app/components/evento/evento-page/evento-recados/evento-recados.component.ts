@@ -4,6 +4,10 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { EventoRecado } from '../../../../models/evento/evento-recado';
+import { EventoService } from '../../../../services/evento/evento.service';
+import { Evento, EventoCadastro } from '../../../../models/evento/evento';
+import { EventoStore } from '../../../../services/evento/evento.store';
 
 @Component({
   standalone: true,
@@ -13,10 +17,14 @@ import { SharedModule } from '../../../../shared/shared.module';
   styleUrls: ['./evento-recados.component.scss'],
 })
 export class EventoRecadosComponent extends EditBaseComponent implements OnInit {
-  recados: { nome: string; mensagem: string }[] = [];
+  evento?: Evento;
+
+
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
+    protected eventoService: EventoService,
+    protected eventoStore: EventoStore,
 
   ) {
     super(injector);
@@ -28,6 +36,10 @@ export class EventoRecadosComponent extends EditBaseComponent implements OnInit 
       nome: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
       mensagem: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
     });
+
+    this.eventoStore.evento$.subscribe(_evento => {
+      this.evento = _evento;
+    });
   }
 
   enviarRecado() {
@@ -35,9 +47,32 @@ export class EventoRecadosComponent extends EditBaseComponent implements OnInit 
 
 
     if (this.formGroup.valid) {
-      alert('Recado enviado com sucesso!');
 
-      this.recados.push(this.formGroup.value);
+      let eventoRecado: EventoRecado = {
+        idEvento: this.evento?.id,
+        ...this.formGroup.value,
+      } as EventoRecado;
+
+
+      this.subscription.add(
+        this.eventoService.salvarEvento_Recados(eventoRecado).subscribe({
+          next: (response: any) => {
+
+            if (this.evento) {
+              if (!this.evento.eventoRecado)
+                this.evento.eventoRecado = [];
+
+              this.evento.eventoRecado.push(eventoRecado);
+              this.cdRef.detectChanges();
+            }
+
+
+          }
+        }),
+      );
+
+
+
       this.formGroup.reset();
     } else {
       this.formGroup.markAllAsTouched();

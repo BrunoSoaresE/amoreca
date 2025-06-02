@@ -4,9 +4,9 @@ import { FormBuilder } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
-import { ActivatedRoute, Route } from '@angular/router';
-import { Evento } from '../../../../models/evento';
+import { ActivatedRoute } from '@angular/router';
 import { EventoStore } from '../../../../services/evento/evento.store';
+import { Evento } from '../../../../models/evento/evento';
 
 @Component({
   standalone: true,
