@@ -57,6 +57,7 @@ export class EventoRecadosComponent extends EditBaseComponent implements OnInit 
       this.subscription.add(
         this.eventoService.salvarEvento_Recados(eventoRecado).subscribe({
           next: (response: any) => {
+            this.toastr.success('Recado enviado com sucesso!');
 
             if (this.evento) {
               if (!this.evento.eventoRecado)

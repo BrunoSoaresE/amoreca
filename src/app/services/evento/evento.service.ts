@@ -6,6 +6,7 @@ import { BaseService } from '../../shared/services/base.service';
 import { Observable } from 'rxjs';
 import { Evento, EventoCadastro } from '../../models/evento/evento';
 import { EventoRecado } from '../../models/evento/evento-recado';
+import { EventoConfirmacaoPresenca } from '../../models/evento/evento-confirmacao-presenca';
 
 
 @Injectable({ providedIn: 'root' })
@@ -42,6 +43,11 @@ export class EventoService extends BaseService {
 
   salvarEvento_Recados(eventoRecado: EventoRecado): Observable<Evento> {
     let retorno = this.post(`salvar-evento-recado`, eventoRecado);
+    return retorno;
+  }
+
+  salvarEvento_Confirmacao(eventoRecado: EventoConfirmacaoPresenca): Observable<Evento> {
+    let retorno = this.post(`salvar-evento-confirmacao-presenca`, eventoRecado);
     return retorno;
   }
 

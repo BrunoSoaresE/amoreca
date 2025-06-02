@@ -4,6 +4,10 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input';
 import { EditBaseComponent } from '../../../../shared/components/edit-base.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { EventoService } from '../../../../services/evento/evento.service';
+import { EventoStore } from '../../../../services/evento/evento.store';
+import { Evento } from '../../../../models/evento/evento';
+import { EventoConfirmacaoPresenca } from '../../../../models/evento/evento-confirmacao-presenca';
 
 @Component({
   standalone: true,
@@ -13,9 +17,13 @@ import { SharedModule } from '../../../../shared/shared.module';
   styleUrls: ['./evento-presenca.component.scss'],
 })
 export class EventoPresencaComponent extends EditBaseComponent implements OnInit {
+  evento?: Evento;
+
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
+    protected eventoService: EventoService,
+    protected eventoStore: EventoStore,
 
   ) {
     super(injector);
@@ -27,6 +35,11 @@ export class EventoPresencaComponent extends EditBaseComponent implements OnInit
       nome: new FormControl({ value: null, disabled: this.isVisualizacao }, Validators.required),
       acompanhantes: this.formBuilder.array([])
     });
+
+    this.eventoStore.evento$.subscribe(_evento => {
+      this.evento = _evento;
+    });
+
   }
 
   get acompanhantes() {
@@ -50,8 +63,23 @@ export class EventoPresencaComponent extends EditBaseComponent implements OnInit
     console.log('onSubmitDados enviados:', this.formGroup.value);
 
     if (this.formGroup.valid) {
-      console.log('Dados enviados:', this.formGroup.value);
-      alert('Confirmação enviada com sucesso!');
+
+      let eventoRecado: EventoConfirmacaoPresenca = {
+        idEvento: this.evento?.id,
+        ...this.formGroup.value,
+      } as EventoConfirmacaoPresenca;
+
+
+      this.subscription.add(
+        this.eventoService.salvarEvento_Confirmacao(eventoRecado).subscribe({
+          next: (response: any) => {
+            this.toastr.success('Confirmação enviada com sucesso!');
+          }
+        }),
+      );
+
+
+
       this.formGroup.reset();
       this.acompanhantes.clear();
     } else {
