@@ -1,8 +1,8 @@
 <form [formGroup]="formGroup">
-
   <div class="contador-container" title="É possível visualizar o contador ao lado inferior da foto de capa abaixo">
-    <h3>Escolha o tipo de contador</h3>
-    <div class="opcoes">
+    <div class="opcoes"
+      [ngClass]="{'invalid-field': !formGroup.get('idTipoContador')?.valid && formGroup.get('idTipoContador')?.touched}">
+      <h3 style="margin: 0; padding: 0;">Escolha o tipo de contador</h3>
       <label *ngFor="let tipo of tipos" class="opcao">
         <input type="radio" name="idTipoContador" formControlName="idTipoContador" [value]="tipo.id" />
         {{ tipo.descricao }}
@@ -10,7 +10,7 @@
 
     </div>
 
-    <div class="preview" *ngIf="formGroup.get('idTipoContador')?.value == 'gravidez'">
+    <div class="preview" *ngIf="formGroup.get('idTipoContador')?.value == '1'">
 
 
       <div class="col-12" style="max-width: 100% !important;">

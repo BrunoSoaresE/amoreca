@@ -59,6 +59,10 @@ export interface EventoCadastro {
   complemento?: string;
   textoRodape?: string;
 
+  idTipoContador?: number;
+  semanaGravidezAtual?: number;
+  idDiaSemana?: number;
+
   eventoPresente?: EventoPresente[];
   eventoArquivo?: EventoArquivoCadastro[];
   removerArquivos?: number[];

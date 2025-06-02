@@ -130,10 +130,11 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       if (this.stepper) {
         this.stepper.steps.forEach((step, index) => {
           let currentFormValid: boolean = false;
+
           if (index === 0) currentFormValid = this.firstFormGroup.valid;
           else if (index === 1) currentFormValid = this.secondFormGroup.valid;
-          else if (index === 2) currentFormValid = !(this.presentesFormGroup.get('presentes') as FormArray).valid;
-          else if (index === 3) currentFormValid = this.eventoDadosSite_FormGroup.valid;
+          else if (index === 2) currentFormValid = this.eventoDadosSite_FormGroup.valid;
+          else if (index === 3) currentFormValid = this.presentesFormGroup.valid;
           else if (index === 4) currentFormValid = this.configuracoesFormGroup.valid;
 
           if (step && currentFormValid) {
@@ -312,8 +313,6 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     eventoCadastro.eventoPresente = ((this.presentesFormGroup.get('presentes') as FormArray).value as EventoPresente[]).filter(x => x.ativo);
 
 
-
-
     this.subscription.add(
       this.eventoService.salvarEvento(eventoCadastro).subscribe({
         next: (response: Evento) => {
@@ -418,8 +417,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
                   id: new FormControl<any>({ value: presenteEvento?.id, disabled: this.isVisualizacao }),
                   idPresente: new FormControl<any>({ value: presente.id, disabled: this.isVisualizacao }),
                   ativo: new FormControl<any>({ value: _ativo, disabled: this.isVisualizacao }),
-                  quantidade: new FormControl<any>({ value: _quantidade, disabled: this.isVisualizacao }),
-                  preco: new FormControl<any>({ value: _preco, disabled: this.isVisualizacao }),
+                  quantidade: new FormControl<any>({ value: _quantidade, disabled: this.isVisualizacao }, Validators.required),
+                  preco: new FormControl<any>({ value: _preco, disabled: this.isVisualizacao }, Validators.required),
                 }));
 
 

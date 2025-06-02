@@ -19,7 +19,7 @@ export class BusStore {
 
 
   set(evento: BusEvent | undefined) {
-    alert('b')
+
     this.busSubject$.next(evento);
   }
 

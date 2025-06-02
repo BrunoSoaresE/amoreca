@@ -42,6 +42,7 @@ export class EventoDadosPresenteComponent extends EditBaseComponent implements O
 
 
 
+
   onAtivoChange(index: number) {
     const presenteForm = (this.formGroup.get('presentes') as FormArray).at(index) as FormGroup;
 

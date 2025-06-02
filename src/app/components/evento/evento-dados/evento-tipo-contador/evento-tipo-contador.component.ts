@@ -17,18 +17,18 @@ export class EventoTipoContadorComponent extends EditBaseComponent implements On
   @Input() override formGroup: FormGroup = {} as FormGroup;
 
   tipos = [
-    { id: 'gravidez', descricao: 'Contador semana Gravidez' },
-    { id: 'evento', descricao: 'Contador para data do Evento' },
+    { id: 1, descricao: 'Contador semana Gravidez' },
+    { id: 2, descricao: 'Contador para data do Evento' },
   ];
 
   diaSemana = [
-    { id: '1', descricao: 'Domingo' },
-    { id: '2', descricao: 'Segunda-feira' },
-    { id: '3', descricao: 'Terça-feira' },
-    { id: '4', descricao: 'Quarta-feira' },
-    { id: '5', descricao: 'Quinta-feira' },
-    { id: '6', descricao: 'Sexta-feira' },
-    { id: '7', descricao: 'Sabado' },
+    { id: 1, descricao: 'Domingo' },
+    { id: 2, descricao: 'Segunda-feira' },
+    { id: 3, descricao: 'Terça-feira' },
+    { id: 4, descricao: 'Quarta-feira' },
+    { id: 5, descricao: 'Quinta-feira' },
+    { id: 6, descricao: 'Sexta-feira' },
+    { id: 7, descricao: 'Sabado' },
   ];
 
   constructor(protected injector: Injector,
@@ -44,7 +44,7 @@ export class EventoTipoContadorComponent extends EditBaseComponent implements On
       const semanaCtrl = this.formGroup.get('semanaGravidezAtual');
       const diaSemanaCtrl = this.formGroup.get('idDiaSemana');
 
-      if (_idTipoContador == 'gravidez') {
+      if (_idTipoContador == 1) {
         semanaCtrl?.setValidators([Validators.required]);
         diaSemanaCtrl?.setValidators([Validators.required]);
       } else {

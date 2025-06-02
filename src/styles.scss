@@ -97,3 +97,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   mat-option{
     background-color: white !important;
   }
+
+
+
+.invalid-field {
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #bd362f;
+}
