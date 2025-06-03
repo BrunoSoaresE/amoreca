@@ -7,7 +7,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { EventoService } from '../../../../services/evento/evento.service';
 import { EventoStore } from '../../../../services/evento/evento.store';
 import { Evento } from '../../../../models/evento/evento';
-import { EventoConfirmacaoPresenca } from '../../../../models/evento/evento-confirmacao-presenca';
+import { EventoConfirmacaoPresencaCadastro } from '../../../../models/evento/evento-confirmacao-presenca';
 
 @Component({
   standalone: true,
@@ -42,6 +42,8 @@ export class EventoPresencaComponent extends EditBaseComponent implements OnInit
 
   }
 
+
+
   get acompanhantes() {
     return this.formGroup.get('acompanhantes') as FormArray;
   }
@@ -64,10 +66,10 @@ export class EventoPresencaComponent extends EditBaseComponent implements OnInit
 
     if (this.formGroup.valid) {
 
-      let eventoRecado: EventoConfirmacaoPresenca = {
+      let eventoRecado: EventoConfirmacaoPresencaCadastro = {
         idEvento: this.evento?.id,
         ...this.formGroup.value,
-      } as EventoConfirmacaoPresenca;
+      } as EventoConfirmacaoPresencaCadastro;
 
 
       this.subscription.add(

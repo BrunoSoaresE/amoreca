@@ -1,0 +1,27 @@
+<mat-accordion>
+
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title> Confirmação de presença </mat-panel-title>
+            <mat-panel-description> Click para gerenciar/visualisar sua lista de presença </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <app-gerenciar-evento-presenca [formGroup]="formGroup" [lista]="lista"></app-gerenciar-evento-presenca>
+
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title> Histórico de presentes </mat-panel-title>
+            <mat-panel-description> Click para visualisar todos os presentes recebidos </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <h2>Em breve</h2>
+
+    </mat-expansion-panel>
+
+
+
+</mat-accordion>

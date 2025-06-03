@@ -278,6 +278,54 @@
       </form>
     </mat-step>
 
+
+    <mat-step [stepControl]="gerenciarFormGroup" [editable]="true">
+      <form [formGroup]="gerenciarFormGroup">
+        <ng-template matStepLabel>Gerenciar</ng-template>
+
+        <div>
+          <ul>
+            <!-- <h3>Gerenciar!</h3> -->
+            <li>Confira e/ou edite sua lista de presença!</li>
+            <li>Visualize todos os presentes que recebeu!</li>
+          </ul>
+        </div>
+
+
+        <app-gerenciar-evento [formGroup]="gerenciarFormGroup"></app-gerenciar-evento>
+
+
+
+
+
+
+        <div>
+          <div class="botao-centralizado">
+            <button mat-raised-button class="btn-vermelho-secundario" type="button"
+              (click)="output_fecharCadastroEdicao.emit()">
+              <mat-icon>close</mat-icon>
+              Cancelar edição
+            </button>
+
+            <button mat-raised-button class="btn-azul-secundario" type="button" matStepperPrevious>
+              <mat-icon>arrow_back</mat-icon>
+              Voltar
+            </button>
+
+
+            <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
+              <mat-icon>add</mat-icon>
+              Salvar
+            </button>
+
+
+          </div>
+
+
+        </div>
+      </form>
+    </mat-step>
+
   </mat-stepper>
 
 

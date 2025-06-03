@@ -22,13 +22,14 @@ import { ConsultaAuxiliaresService } from '../../../../services/consulta-auxilia
 import { Evento, EventoCadastro } from '../../../../models/evento/evento';
 import { EventoArquivoCadastro } from '../../../../models/evento/evento-arquivo';
 import { EventoPresente } from '../../../../models/evento/evento-presente';
+import { GerenciarEventoComponent } from '../../gerenciar-evento/gerenciar-evento/gerenciar-evento.component';
 
 
 @Component({
   standalone: true,
   selector: 'app-evento-dados',
   imports: [CommonModule, SharedModule, MatInputModule, EventoDadosSiteComponent, MatStepperModule, TemaListaSelecionarComponent
-    , EventoDadosFotoComponent, EventoDadosPresenteComponent
+    , EventoDadosFotoComponent, EventoDadosPresenteComponent, GerenciarEventoComponent
   ],
   templateUrl: './evento-dados.component.html',
   styleUrls: ['./evento-dados.component.scss'],
@@ -114,6 +115,14 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
     linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
   });
 
+  //     this.formGroup = this.formBuilder.group({
+  //   presencas: this.formBuilder.array(this.lista.map(p => this.createPresencaForm(p)))
+  // });
+
+
+  gerenciarFormGroup = this._formBuilder.group({
+    presencas: this._formBuilder.array([])
+  });
 
 
   _setFornsControl() {
@@ -136,6 +145,7 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
           else if (index === 2) currentFormValid = this.eventoDadosSite_FormGroup.valid;
           else if (index === 3) currentFormValid = this.presentesFormGroup.valid;
           else if (index === 4) currentFormValid = this.configuracoesFormGroup.valid;
+          else if (index === 5) currentFormValid = this.gerenciarFormGroup.valid;
 
           if (step && currentFormValid) {
             step.completed = true;
@@ -169,15 +179,21 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
       setTimeout(() => {
 
+
         if (!this.firstFormGroup.valid) {
           this.stepper.selectedIndex = 0;
         } else if (!this.secondFormGroup.valid) {
           this.stepper.selectedIndex = 1;
-        } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
-          this.stepper.selectedIndex = 3;
         } else if (!this.eventoDadosSite_FormGroup.valid) {
           this.stepper.selectedIndex = 2;
+        } else if (!this.presentesFormGroup.valid) {
+          this.stepper.selectedIndex = 3;
+        } else if (!this.configuracoesFormGroup.valid) {
+          this.stepper.selectedIndex = 4;
+        } else {
+          this.stepper.selectedIndex = 5;
         }
+
       }, 10);
 
 
@@ -266,7 +282,8 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       !this.firstFormGroup.valid ||
       !this.secondFormGroup.valid ||
       !this.presentesFormGroup.valid
-      || !(this.presentesFormGroup.get('presentes') as FormArray).valid)
+      || !(this.presentesFormGroup.get('presentes') as FormArray).valid
+      || !this.gerenciarFormGroup.valid)
     ) {
 
 
@@ -282,6 +299,9 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
       } else if (!this.eventoDadosSite_FormGroup.valid) {
         this.stepper.selectedIndex = 2;
         this.onInvalidForm(undefined, this.eventoDadosSite_FormGroup);
+      } else if (!this.gerenciarFormGroup.valid) {
+        this.stepper.selectedIndex = 5;
+        this.onInvalidForm(undefined, this.gerenciarFormGroup);
       }
 
 
@@ -296,13 +316,16 @@ export class EventoDadosComponent extends EditBaseComponent implements OnInit, A
 
       return;
     }
+    let teste = this.gerenciarFormGroup.value;
+    console.log("🚀 ~ EventoDadosComponent ~ salvar ~ teste:", teste)
 
     let eventoCadastro: EventoCadastro = {
       ...this.formGroup.value,
       ...this.firstFormGroup.value,
       ...this.secondFormGroup.value,
       ...this.eventoDadosSite_FormGroup.value,
-      ...this.configuracoesFormGroup.value
+      ...this.configuracoesFormGroup.value,
+      ...this.gerenciarFormGroup.value,
     } as EventoCadastro;
 
     eventoCadastro.dataEvento = this.unificarCampoDataHora('dataEvento', 'horaEvento');
