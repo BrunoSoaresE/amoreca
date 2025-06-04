@@ -120,10 +120,16 @@ export class GerenciarEventoPresencaComponent extends EditBaseComponent implemen
         acompanhantes: [],
         criadoEm: new Date()
       }
-      // this.presencas.push(this.createPresencaForm(teste));
-      this.presencas.controls = [this.createPresencaForm(teste), ...this.presencas.controls];
-      this.expandedPanelIndex = this.presencas.length - 1; // abre o último painel adicionado
+      this.presencas.push(this.createPresencaForm(teste));
+      this.presencas.controls = [...this.presencas.controls].sort((a, b) => {
+        const nomeA = a.get('nome')?.value?.toLowerCase() || '';
+        const nomeB = b.get('nome')?.value?.toLowerCase() || '';
+        return nomeA.localeCompare(nomeB);
+      });
+      this.expandedPanelIndex = 0; // abre o último painel adicionado
+      //  const invalidControlElement =  this.elementRef.nativeElement.querySelector(`.${controlName}`);
 
+      //  invalidControlElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     } else {
       this.onInvalidForm(undefined, this.formGroup);
