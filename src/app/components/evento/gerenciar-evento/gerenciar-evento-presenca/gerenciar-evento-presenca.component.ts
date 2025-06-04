@@ -9,12 +9,13 @@ import { EventoConfirmacaoPresenca } from '../../../../models/evento/evento-conf
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 
 @Component({
   standalone: true,
   selector: 'app-gerenciar-evento-presenca',
-  imports: [CommonModule, SharedModule, MatInputModule, MatExpansionModule, MatDividerModule
+  imports: [CommonModule, SharedModule, MatInputModule, MatExpansionModule, MatDividerModule, MatTableModule
     , MatCardModule, MatButtonModule
   ],
   templateUrl: './gerenciar-evento-presenca.component.html',
@@ -24,6 +25,17 @@ export class GerenciarEventoPresencaComponent extends EditBaseComponent implemen
   @Input() override formGroup: FormGroup = {} as FormGroup;
   @Input() lista: EventoConfirmacaoPresenca[] = [];
   expandedPanelIndex: number | null = null;
+  // displayedColumns: string[] = ['nome', 'acompanhantes', 'acoes'];
+
+  displayedColumns: string[] = ['nome'];
+  expandedIndex: number | null = null;
+
+
+  toggleExpand(i: number) {
+    alert(i)
+    this.expandedIndex = this.expandedIndex === i ? null : i;
+  }
+
 
 
   constructor(protected injector: Injector,
@@ -72,16 +84,29 @@ export class GerenciarEventoPresencaComponent extends EditBaseComponent implemen
   }
 
   addAcompanhante(presencaIndex: number) {
-    const acompanhantes = this.getAcompanhantes(presencaIndex);
-    acompanhantes.push(this.createAcompanhanteForm({ id: 0, nome: '', idConfirmacaoPresenca: this.presencas.at(presencaIndex).value.id }));
+
+
+    if (this.formGroup.valid) {
+      const acompanhantes = this.getAcompanhantes(presencaIndex);
+      acompanhantes.push(this.createAcompanhanteForm({ id: 0, nome: '', idConfirmacaoPresenca: this.presencas.at(presencaIndex).value.id }));
+    } else {
+      this.onInvalidForm(undefined, this.formGroup);
+    }
+
+    this.presencas.controls = [...this.presencas.controls];
+
   }
 
   removeAcompanhante(presencaIndex: number, acompanhanteIndex: number) {
     this.getAcompanhantes(presencaIndex).removeAt(acompanhanteIndex);
+    this.presencas.controls = [...this.presencas.controls];
+
   }
 
   removePresenca(index: number) {
     this.presencas.removeAt(index);
+    this.presencas.controls = [...this.presencas.controls];
+
   }
 
   salvar() {
@@ -95,8 +120,11 @@ export class GerenciarEventoPresencaComponent extends EditBaseComponent implemen
         acompanhantes: [],
         criadoEm: new Date()
       }
-      this.presencas.push(this.createPresencaForm(teste));
+      // this.presencas.push(this.createPresencaForm(teste));
+      this.presencas.controls = [this.createPresencaForm(teste), ...this.presencas.controls];
       this.expandedPanelIndex = this.presencas.length - 1; // abre o último painel adicionado
+
+
     } else {
       this.onInvalidForm(undefined, this.formGroup);
     }

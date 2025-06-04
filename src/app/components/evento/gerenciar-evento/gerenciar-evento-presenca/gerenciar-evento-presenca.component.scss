@@ -1,8 +1,4 @@
 
-.row {
-  margin: 0 -0.5rem; // reset padding das colunas
-}
-
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
@@ -20,121 +16,20 @@
       }
     
 }
-mat-card.example-card {
-  margin-bottom:4px;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.25s ease;
-  padding: 0;
-  
 
-  &:hover {
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
-  }
-  
-}
-
-mat-card-header {
-  background: #f9fafb; /* fundo quase branco, bem claro */
-  color: #333; /* texto escuro, legível */
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 1rem 1.25rem;
-
-  mat-card-title-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-
-    mat-card-title {
-      font-weight: 700;
-      font-size: 1.3rem;
-      flex: 1 1 auto;
-      margin: 0;
-
-      &.row {
-        margin-bottom: 0.5rem;
-
-        mat-card-title.col-12 {
-          padding: 0;
-
-          mat-form-field {
-            width: 100%;
-
-            input {
-              font-size: 1.15rem;
-              font-weight: 600;
-              color: #222;
-              caret-color: #1976d2; /* cursor azul para destaque */
-            }
-
-            mat-label {
-              color: #666; /* label cinza médio */
-              font-weight: 500;
-            }
-
-            .mat-form-field-outline {
-              border-color: #ccc; /* borda cinza clara */
-            }
-          }
-        }
-      }
-    }
-
-    mat-card-subtitle {
-      font-size: 1rem;
-      color: #888; /* cinza mais claro */
-      margin-left: 1rem;
-      flex: 0 0 auto;
-      user-select: none;
-        margin-top: -10px;
-        margin-bottom: -20px;
-
-    }
-
-
-  }
-}
 
 mat-card-content {
-  padding: 1.5rem;
-  background: #f5f7fa;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  margin-bottom: -50px;
-
+  padding: 0.5rem;
   div[formArrayName="acompanhantes"] {
-    margin-left: 0.75rem;
+  margin-left: 0.75rem;
     border-left: 4px solid #1976d2;
     padding-left: 1rem;
 
-    .row {
-      margin-bottom: 1rem;
-
-      mat-form-field {
-        width: 100%;
-
-        input {
-          font-size: 1rem;
-          font-weight: 500;
-          color: #34495e;
-        }
-
-        mat-label {
-          color: #5d6d7e;
-          font-weight: 500;
-        }
-      }
-    }
-
     button[mat-icon-button] {
       margin-top: 0.4rem;
-      color: #c62828;
       transition: color 0.25s ease;
 
       &:hover {
-        color: #b71c1c;
         background-color: transparent;
       }
     }
@@ -142,7 +37,6 @@ mat-card-content {
 }
 
 mat-card-actions {
-  padding: 0.75rem 1.5rem 1.25rem;
   background: #f5f7fa;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -160,3 +54,4 @@ mat-card-actions {
     }
   }
 }
+

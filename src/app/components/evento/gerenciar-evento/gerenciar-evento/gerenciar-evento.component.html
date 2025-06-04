@@ -3,7 +3,11 @@
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title> Confirmação de presença </mat-panel-title>
-            <mat-panel-description> Click para gerenciar/visualisar sua lista de presença </mat-panel-description>
+            <mat-panel-description> Gerenciar/visualisar a lista de presença
+                <span style="position: absolute; right: 16px;">Total de pessoas confirmadas
+                    {{contarTotalPessoas()}}</span>
+
+            </mat-panel-description>
         </mat-expansion-panel-header>
 
 
@@ -14,7 +18,10 @@
     <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
             <mat-panel-title> Histórico de presentes </mat-panel-title>
-            <mat-panel-description> Click para visualisar todos os presentes recebidos </mat-panel-description>
+            <mat-panel-description> Visualisar todos os presentes recebidos
+                <span style="position: absolute; right: 16px;">Total de presentes recebidos
+                    {{contarTotalPessoas()}}</span>
+            </mat-panel-description>
         </mat-expansion-panel-header>
 
 

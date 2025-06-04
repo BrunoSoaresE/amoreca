@@ -32,6 +32,9 @@ export class GerenciarEventoComponent extends EditBaseComponent implements OnIni
 
 
   ngOnInit() {
+
+
+
     this.lista = [
       {
         id: 1,
@@ -61,6 +64,11 @@ export class GerenciarEventoComponent extends EditBaseComponent implements OnIni
 
   }
 
-
+  contarTotalPessoas(): number {
+    return this.lista.reduce((total, convidado) => {
+      // Soma 1 para o convidado principal + o número de acompanhantes
+      return total + 1 + convidado.acompanhantes.length;
+    }, 0);
+  }
 
 }

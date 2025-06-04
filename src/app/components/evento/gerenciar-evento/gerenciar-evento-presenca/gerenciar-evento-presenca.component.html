@@ -2,7 +2,7 @@
 
     <div style="width: 100%; display: flex; justify-content: center; margin: 16px 0;">
         <button mat-raised-button color="primary" (click)="addPresenca()" type="button">
-            + Adicionar Nova Presença
+            + Adicionar Nova Presença/Grupo
         </button>
     </div>
 
@@ -17,7 +17,7 @@
                     <mat-panel-title> {{presenca.get("nome")?.value}} </mat-panel-title>
                     <mat-panel-description> Acompanhantes {{getAcompanhantes(i).controls.length}}
                         <button mat-button color="warn" class="btnRemoverPresenca" (click)="removePresenca(i)">
-                            <mat-icon>delete</mat-icon>Remover Presença
+                            <mat-icon>delete</mat-icon>Remover Grupo
                         </button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
@@ -75,5 +75,8 @@
 
 
     </div>
+
+
+
 
 </form>
