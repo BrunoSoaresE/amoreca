@@ -19,6 +19,13 @@
       Adicionar novo evento
     </button>
 
+    <button *ngIf="!habilitarCadastroEdicao" (click)="abrirCadastroEdicaoNovoLayout()" class="btn-azul-secundario"
+      mat-raised-button type="button">
+      <mat-icon>add</mat-icon>
+      Adicionar novo evento novo layout
+    </button>
+
+
   </div>
 
 
@@ -59,7 +66,7 @@
 
         <mat-menu #menu="matMenu">
 
-          <button mat-menu-item (click)="abrirCadastroEdicao(evento)">
+          <button mat-menu-item (click)="abrirCadastroEdicaoNovoLayout(evento)">
             <mat-icon>edit</mat-icon> Editar
           </button>
 

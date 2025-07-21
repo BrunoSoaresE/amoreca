@@ -50,6 +50,9 @@ export class EventoListaComponent extends EditBaseComponent implements OnInit {
         this.habilitarCadastroEdicao = true;
         this.eventoSelecionado = evento;
     }
+    abrirCadastroEdicaoNovoLayout(evento?: Evento): void {
+        this.router.navigate([evento ? `home/evento/${evento?.id}` : `home/evento`]);
+    }
 
 
     fecharCadastroEdicao(event?: any): void {

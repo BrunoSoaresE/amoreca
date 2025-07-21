@@ -1,25 +1,25 @@
-.sticky-search-option {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: white; /* importante para evitar que o fundo fique transparente */
-  }
+// .sticky-search-option {
+//     position: sticky;
+//     top: 0;
+//     z-index: 2;
+//     background: white; /* importante para evitar que o fundo fique transparente */
+//   }
 
 /* Garante que a barra de pesquisa fique sempre visível no topo */
- mat-select-panel {
-  position: relative;
-}
+//  mat-select-panel {
+//   position: relative;
+// }
 
- ngx-mat-select-search {
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 1;
-  padding: 12px 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+//  ngx-mat-select-search {
+//   position: sticky;
+//   top: 0;
+//   background: white;
+//   z-index: 1;
+//   padding: 12px 0;
+//   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+// }
 
 /* Opcional: melhora a visualização das opções */
- mat-option {
-  z-index: 0 !important;
-}
+//  mat-option {
+//   z-index: 0 !important;
+// }

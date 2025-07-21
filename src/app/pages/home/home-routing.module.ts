@@ -32,8 +32,16 @@ const routes: Routes = [
         data: { roles: ['adm_sistema'] },
       },
       {
-        path: 'evento',
+        path: 'eventos',
         loadComponent: () => import('../../components/evento/evento-lista/evento-lista.component').then(m => m.EventoListaComponent)
+      },
+      {
+        path: 'evento',
+        loadComponent: () => import('../../components/evento/evento-cadastro/evento-dados/evento-dados.component').then(m => m.EventoDadosNewComponent)
+      },
+      {
+        path: 'evento/:idEvento',
+        loadComponent: () => import('../../components/evento/evento-cadastro/evento-dados/evento-dados.component').then(m => m.EventoDadosNewComponent)
       },
     ]
   }
