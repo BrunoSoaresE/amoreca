@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, inject, Injector, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, } from '@angular/core';
+import { AfterViewInit, Component, inject, Injector, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -14,10 +14,8 @@ import { Categoria } from '../../../../models/categoria';
 import { Evento, EventoCadastro } from '../../../../models/evento/evento';
 import { EventoArquivoCadastro } from '../../../../models/evento/evento-arquivo';
 import { EventoPresente } from '../../../../models/evento/evento-presente';
-import { Presente } from '../../../../models/presente';
 import { ConsultaAuxiliaresService } from '../../../../services/consulta-auxiliares.service';
 import { PresenteService } from '../../../../services/presente/presente.service';
-import { EventoDadosPresenteComponent } from '../../evento-dados/evento-dados-presente/evento-dados-presente.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { EventoConfirmacaoPresenca } from '../../../../models/evento/evento-confirmacao-presenca';
 import { GerenciarEventoPresencaComponent } from '../../gerenciar-evento/gerenciar-evento-presenca/gerenciar-evento-presenca.component';
@@ -53,8 +51,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   lista: EventoConfirmacaoPresenca[] = [];
 
 
-  habilitar_ListaPresente?: boolean;
-  habilitar_Gerenciar?: boolean;
 
 
 
@@ -119,9 +115,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
   });
 
-  //     this.formGroup = this.formBuilder.group({
-  //   presencas: this.formBuilder.array(this.lista.map(p => this.createPresencaForm(p)))
-  // });
 
 
   gerenciarFormGroup = this._formBuilder.group({
@@ -139,32 +132,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
       this.formGroup_editeSeuSite.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
       this.formGroup_Link.patchValue(this.eventoSelecionado);
 
-      //todo
-      // if (this.stepper) {
-      //   this.stepper.steps.forEach((step, index) => {
-      //     let currentFormValid: boolean = false;
-
-      //     if (index === 0) currentFormValid = this.formGroup_categoriaTema.valid;
-      //     else if (index === 1) currentFormValid = this.formGroup_fotos.valid;
-      //     else if (index === 2) currentFormValid = this.formGroup_editeSeuSite.valid;
-      //     else if (index === 3) currentFormValid = this.presentesFormGroup.valid;
-      //     else if (index === 4) currentFormValid = this.formGroup_Link.valid;
-      //     else if (index === 5) currentFormValid = this.gerenciarFormGroup.valid;
-
-      //     if (step && currentFormValid) {
-      //       step.completed = true;
-      //     }
-
-      //   });
-
-      //   this.cdRef.detectChanges();
-      // }
-
-
-
       this.downloadBase64Foto();
-
-
     }
   }
 
@@ -180,52 +148,11 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     ).subscribe(novoValor => {
       this.downloadBase64Foto_TemaSelecionado();
 
-      //  setTimeout(() => {
-
-      //todo
-      // if (!this.formGroup_categoriaTema.valid) {
-      //   this.stepper.selectedIndex = 0;
-      // } else if (!this.formGroup_fotos.valid) {
-      //   this.stepper.selectedIndex = 1;
-      // } else if (!this.formGroup_editeSeuSite.valid) {
-      //   this.stepper.selectedIndex = 2;
-      // } else if (!this.presentesFormGroup.valid) {
-      //   this.stepper.selectedIndex = 3;
-      // } else if (!this.formGroup_Link.valid) {
-      //   this.stepper.selectedIndex = 4;
-      // } else {
-      //   this.stepper.selectedIndex = 5;
-      // }
-
-      //}, 10);
-
 
     });
 
     this.getConsultaAuxiliares();
 
-
-    const formGroup_categoriaTema$ = this.formGroup_categoriaTema!.valueChanges.pipe(
-      debounceTime(100),
-      startWith(this.formGroup_categoriaTema!.value)
-    );
-
-    const formGroup_editeSeuSite$ = this.formGroup_editeSeuSite!.valueChanges.pipe(
-      debounceTime(600),
-      startWith(this.formGroup_editeSeuSite!.value)
-    );
-
-    const formGroup_Link$ = this.formGroup_Link!.valueChanges.pipe(
-      debounceTime(600),
-      startWith(this.formGroup_Link!.value)
-    );
-
-    combineLatest([formGroup_categoriaTema$, formGroup_editeSeuSite$, formGroup_Link$]).subscribe(([status1, status2, status3]) => {
-      this.habilitar_ListaPresente = this.formGroup_categoriaTema.valid && this.existeFotoAnexada() && this.formGroup_editeSeuSite.valid && this.formGroup_Link.valid;
-      this.habilitar_Gerenciar = this.formGroup_categoriaTema.valid && this.existeFotoAnexada() && this.formGroup_editeSeuSite.valid && this.formGroup_Link.valid;
-      this.cdRef.detectChanges();
-
-    });
 
     this.subscription.add(
       this.route.params.subscribe((params) => {
@@ -430,12 +357,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
 
 
-
-
-  getFormArray(): FormArray {
-    return this.presentesFormGroup.get('presentes') as FormArray;
-  }
-
   buscarEventoById(): void {
     if (this.idEvento) {
       this.subscription.add(
@@ -466,9 +387,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     }, 0);
   }
 
-  existeFotoAnexada(): boolean {
-    return this.eventoSelecionado?.eventoArquivo?.length ?? 0 > 0 ? true : false;
-  }
+
 
 
 }
