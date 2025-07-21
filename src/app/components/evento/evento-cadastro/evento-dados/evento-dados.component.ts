@@ -8,7 +8,6 @@ import { EventoService } from '../../../../services/evento/evento.service';
 import { Tema } from '../../../../models/tema';
 import { TemaService } from '../../../../services/tema/tema.service';
 import { ArquivoService } from '../../../../services/arquivo/arquivo.service';
-import { MatStepperModule, MatStepper } from '@angular/material/stepper';
 import { distinctUntilChanged, combineLatest, debounceTime, startWith } from 'rxjs';
 import { ArquivoBase64 } from '../../../../models/arquivo';
 import { Categoria } from '../../../../models/categoria';
@@ -18,21 +17,20 @@ import { EventoPresente } from '../../../../models/evento/evento-presente';
 import { Presente } from '../../../../models/presente';
 import { ConsultaAuxiliaresService } from '../../../../services/consulta-auxiliares.service';
 import { PresenteService } from '../../../../services/presente/presente.service';
-import { TemaListaSelecionarComponent } from '../../../tema/tema-lista-selecionar/tema-lista-selecionar.component';
-import { EventoDadosFotoComponent } from '../../evento-dados/evento-dados-foto/evento-dados-foto.component';
 import { EventoDadosPresenteComponent } from '../../evento-dados/evento-dados-presente/evento-dados-presente.component';
-import { EventoDadosSiteComponent } from '../../evento-dados/evento-dados-site/evento-dados-site.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { EventoConfirmacaoPresenca } from '../../../../models/evento/evento-confirmacao-presenca';
 import { GerenciarEventoPresencaComponent } from '../../gerenciar-evento/gerenciar-evento-presenca/gerenciar-evento-presenca.component';
 import { ActivatedRoute } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TabPersonaliseComponent } from './tabs/tab-personalise/tab-personalise.component';
+import { TabListaPresenteComponent } from './tabs/tab-lista-presente/tab-lista-presente.component';
 
 @Component({
   standalone: true,
   selector: 'app-evento-dados',
-  imports: [CommonModule, SharedModule, MatInputModule, EventoDadosSiteComponent, TemaListaSelecionarComponent
-    , EventoDadosFotoComponent, EventoDadosPresenteComponent, MatExpansionModule, GerenciarEventoPresencaComponent
-  ],
+  imports: [CommonModule, SharedModule, MatInputModule, MatExpansionModule, GerenciarEventoPresencaComponent, MatTabsModule, TabPersonaliseComponent
+    , TabListaPresenteComponent],
   templateUrl: './evento-dados.component.html',
   styleUrls: ['./evento-dados.component.scss'],
 })
@@ -43,7 +41,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   eventoSelecionado?: Evento;
 
 
-  habilitarSelecaoTema: boolean = false;
   temas?: Tema[];
   categorias?: Categoria[];
   temaSelecionado?: Tema;
@@ -52,16 +49,10 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   removerArquivos?: number[]
 
 
-  listPresentes?: Presente[];
-  presenteisReady: boolean = false;
+
   lista: EventoConfirmacaoPresenca[] = [];
 
 
-
-  habilitar_CategoriaTema?: boolean;
-  habilitar_Fotos?: boolean;
-  habilitar_Previa?: boolean;
-  habilitar_Link?: boolean;
   habilitar_ListaPresente?: boolean;
   habilitar_Gerenciar?: boolean;
 
@@ -84,11 +75,11 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   }
   private _formBuilder = inject(FormBuilder);
 
-  firstFormGroup = this._formBuilder.group({
+  formGroup_categoriaTema = this._formBuilder.group({
     idTema: new FormControl<any>({ value: (null as number | null), disabled: this.isVisualizacao }, Validators.required),
     idCategoria: new FormControl<any>({ value: (null as number | null), disabled: this.isVisualizacao }, Validators.required),
   });
-  secondFormGroup = this._formBuilder.group({
+  formGroup_fotos = this._formBuilder.group({
     // linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
   });
 
@@ -96,7 +87,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     presentes: this._formBuilder.array([])
   });
 
-  eventoDadosSite_FormGroup = this._formBuilder.group({
+  formGroup_editeSeuSite = this._formBuilder.group({
     subNomeEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     nomeEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     idTipoContador: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
@@ -124,7 +115,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     textoRodape: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
   });
 
-  configuracoesFormGroup = this._formBuilder.group({
+  formGroup_Link = this._formBuilder.group({
     linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
   });
 
@@ -141,23 +132,23 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   _setFornsControl() {
     if (this.eventoSelecionado) {
       this.formGroup.patchValue(this.eventoSelecionado);
-      this.firstFormGroup.patchValue(this.eventoSelecionado);
-      this.secondFormGroup.patchValue(this.eventoSelecionado);
-      this.eventoDadosSite_FormGroup.patchValue(this.eventoSelecionado);
-      this.eventoDadosSite_FormGroup.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
-      this.eventoDadosSite_FormGroup.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
-      this.configuracoesFormGroup.patchValue(this.eventoSelecionado);
+      this.formGroup_categoriaTema.patchValue(this.eventoSelecionado);
+      this.formGroup_fotos.patchValue(this.eventoSelecionado);
+      this.formGroup_editeSeuSite.patchValue(this.eventoSelecionado);
+      this.formGroup_editeSeuSite.get('horaEvento')?.setValue(this.eventoSelecionado.dataEvento);
+      this.formGroup_editeSeuSite.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
+      this.formGroup_Link.patchValue(this.eventoSelecionado);
 
       //todo
       // if (this.stepper) {
       //   this.stepper.steps.forEach((step, index) => {
       //     let currentFormValid: boolean = false;
 
-      //     if (index === 0) currentFormValid = this.firstFormGroup.valid;
-      //     else if (index === 1) currentFormValid = this.secondFormGroup.valid;
-      //     else if (index === 2) currentFormValid = this.eventoDadosSite_FormGroup.valid;
+      //     if (index === 0) currentFormValid = this.formGroup_categoriaTema.valid;
+      //     else if (index === 1) currentFormValid = this.formGroup_fotos.valid;
+      //     else if (index === 2) currentFormValid = this.formGroup_editeSeuSite.valid;
       //     else if (index === 3) currentFormValid = this.presentesFormGroup.valid;
-      //     else if (index === 4) currentFormValid = this.configuracoesFormGroup.valid;
+      //     else if (index === 4) currentFormValid = this.formGroup_Link.valid;
       //     else if (index === 5) currentFormValid = this.gerenciarFormGroup.valid;
 
       //     if (step && currentFormValid) {
@@ -178,14 +169,13 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.buscarListaPresentes();
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
     });
 
 
-    this.firstFormGroup?.get('idTema')?.valueChanges.pipe(
+    this.formGroup_categoriaTema?.get('idTema')?.valueChanges.pipe(
       distinctUntilChanged(), // Evita requisições desnecessárias
     ).subscribe(novoValor => {
       this.downloadBase64Foto_TemaSelecionado();
@@ -193,15 +183,15 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
       //  setTimeout(() => {
 
       //todo
-      // if (!this.firstFormGroup.valid) {
+      // if (!this.formGroup_categoriaTema.valid) {
       //   this.stepper.selectedIndex = 0;
-      // } else if (!this.secondFormGroup.valid) {
+      // } else if (!this.formGroup_fotos.valid) {
       //   this.stepper.selectedIndex = 1;
-      // } else if (!this.eventoDadosSite_FormGroup.valid) {
+      // } else if (!this.formGroup_editeSeuSite.valid) {
       //   this.stepper.selectedIndex = 2;
       // } else if (!this.presentesFormGroup.valid) {
       //   this.stepper.selectedIndex = 3;
-      // } else if (!this.configuracoesFormGroup.valid) {
+      // } else if (!this.formGroup_Link.valid) {
       //   this.stepper.selectedIndex = 4;
       // } else {
       //   this.stepper.selectedIndex = 5;
@@ -215,27 +205,24 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     this.getConsultaAuxiliares();
 
 
-    const firstFormGroup$ = this.firstFormGroup!.valueChanges.pipe(
+    const formGroup_categoriaTema$ = this.formGroup_categoriaTema!.valueChanges.pipe(
       debounceTime(100),
-      startWith(this.firstFormGroup!.value)
+      startWith(this.formGroup_categoriaTema!.value)
     );
 
-    const eventoDadosSite_FormGroup$ = this.eventoDadosSite_FormGroup!.valueChanges.pipe(
+    const formGroup_editeSeuSite$ = this.formGroup_editeSeuSite!.valueChanges.pipe(
       debounceTime(600),
-      startWith(this.eventoDadosSite_FormGroup!.value)
+      startWith(this.formGroup_editeSeuSite!.value)
     );
 
-    const configuracoesFormGroup$ = this.configuracoesFormGroup!.valueChanges.pipe(
+    const formGroup_Link$ = this.formGroup_Link!.valueChanges.pipe(
       debounceTime(600),
-      startWith(this.configuracoesFormGroup!.value)
+      startWith(this.formGroup_Link!.value)
     );
 
-    combineLatest([firstFormGroup$, eventoDadosSite_FormGroup$, configuracoesFormGroup$]).subscribe(([status1, status2, status3]) => {
-      this.habilitar_Fotos = this.firstFormGroup.valid;
-      this.habilitar_Previa = this.firstFormGroup.valid && this.existeFotoAnexada();
-      this.habilitar_Link = this.firstFormGroup.valid && this.existeFotoAnexada() && this.eventoDadosSite_FormGroup.valid;
-      this.habilitar_ListaPresente = this.firstFormGroup.valid && this.existeFotoAnexada() && this.eventoDadosSite_FormGroup.valid && this.configuracoesFormGroup.valid;
-      this.habilitar_Gerenciar = this.firstFormGroup.valid && this.existeFotoAnexada() && this.eventoDadosSite_FormGroup.valid && this.configuracoesFormGroup.valid;
+    combineLatest([formGroup_categoriaTema$, formGroup_editeSeuSite$, formGroup_Link$]).subscribe(([status1, status2, status3]) => {
+      this.habilitar_ListaPresente = this.formGroup_categoriaTema.valid && this.existeFotoAnexada() && this.formGroup_editeSeuSite.valid && this.formGroup_Link.valid;
+      this.habilitar_Gerenciar = this.formGroup_categoriaTema.valid && this.existeFotoAnexada() && this.formGroup_editeSeuSite.valid && this.formGroup_Link.valid;
       this.cdRef.detectChanges();
 
     });
@@ -270,7 +257,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   downloadBase64Foto_TemaSelecionado() {
 
 
-    const novoTemaSelecionado = this.temas?.find(x => x.id == this.firstFormGroup?.get('idTema')?.value);
+    const novoTemaSelecionado = this.temas?.find(x => x.id == this.formGroup_categoriaTema?.get('idTema')?.value);
 
 
     if (novoTemaSelecionado?.arquivo && novoTemaSelecionado.id != this.temaSelecionado?.id) {
@@ -316,38 +303,34 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
   }
 
-  onTemaSelecionado(tema?: Tema) {
-    if (tema)
-      this.firstFormGroup.get('idTema')?.setValue(tema?.id);
-    this.habilitarSelecaoTema = false;
-  }
+
 
 
   salvar(validarForm: boolean = true): void {
 
 
     if (validarForm && (!this.formGroup.valid ||
-      !this.eventoDadosSite_FormGroup.valid ||
-      !this.firstFormGroup.valid ||
-      !this.secondFormGroup.valid ||
+      !this.formGroup_editeSeuSite.valid ||
+      !this.formGroup_categoriaTema.valid ||
+      !this.formGroup_fotos.valid ||
       !this.presentesFormGroup.valid
       || !(this.presentesFormGroup.get('presentes') as FormArray).valid
       || !this.gerenciarFormGroup.valid)
     ) {
 
       //todo
-      if (!this.firstFormGroup.valid) {
+      if (!this.formGroup_categoriaTema.valid) {
         // this.stepper.selectedIndex = 0;
-        this.onInvalidForm(undefined, this.firstFormGroup);
-      } else if (!this.secondFormGroup.valid) {
+        this.onInvalidForm(undefined, this.formGroup_categoriaTema);
+      } else if (!this.formGroup_fotos.valid) {
         // this.stepper.selectedIndex = 1;
-        this.onInvalidForm(undefined, this.secondFormGroup);
+        this.onInvalidForm(undefined, this.formGroup_fotos);
       } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
         //this.stepper.selectedIndex = 3;
         this.onInvalidForm(undefined, this.presentesFormGroup);
-      } else if (!this.eventoDadosSite_FormGroup.valid) {
+      } else if (!this.formGroup_editeSeuSite.valid) {
         // this.stepper.selectedIndex = 2;
-        this.onInvalidForm(undefined, this.eventoDadosSite_FormGroup);
+        this.onInvalidForm(undefined, this.formGroup_editeSeuSite);
       } else if (!this.gerenciarFormGroup.valid) {
         // this.stepper.selectedIndex = 5;
         this.onInvalidForm(undefined, this.gerenciarFormGroup);
@@ -355,10 +338,10 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
 
 
-      // this.firstFormGroup.markAllAsTouched();
-      // this.secondFormGroup.markAllAsTouched();
+      // this.formGroup_categoriaTema.markAllAsTouched();
+      // this.formGroup_fotos.markAllAsTouched();
       // this.presentesFormGroup.markAllAsTouched();
-      // this.eventoDadosSite_FormGroup.markAllAsTouched();
+      // this.formGroup_editeSeuSite.markAllAsTouched();
 
 
 
@@ -370,10 +353,10 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
     let eventoCadastro: EventoCadastro = {
       ...this.formGroup.value,
-      ...this.firstFormGroup.value,
-      ...this.secondFormGroup.value,
-      ...this.eventoDadosSite_FormGroup.value,
-      ...this.configuracoesFormGroup.value,
+      ...this.formGroup_categoriaTema.value,
+      ...this.formGroup_fotos.value,
+      ...this.formGroup_editeSeuSite.value,
+      ...this.formGroup_Link.value,
       ...this.gerenciarFormGroup.value,
     } as EventoCadastro;
 
@@ -408,8 +391,8 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
 
   unificarCampoDataHora(dataControl: string, horaControl: string): Date | undefined {
-    const data = this.eventoDadosSite_FormGroup.get(dataControl)?.value;
-    const hora = this.eventoDadosSite_FormGroup.get(horaControl)?.value;
+    const data = this.formGroup_editeSeuSite.get(dataControl)?.value;
+    const hora = this.formGroup_editeSeuSite.get(horaControl)?.value;
 
     if (!data || !hora) return undefined;
 
@@ -447,16 +430,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
 
 
-  processArquivosCadastro(eventoArquivoCadastro: EventoArquivoCadastro[]) {
-    this.eventoArquivoCadastro = eventoArquivoCadastro;
-    this.salvar(false);
 
-  }
-
-  processRemoverArquivos(removerArquivos: number[]) {
-    this.removerArquivos = removerArquivos;
-    this.salvar(false);
-  }
 
   getFormArray(): FormArray {
     return this.presentesFormGroup.get('presentes') as FormArray;
@@ -482,87 +456,8 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
   }
 
-  buscarListaPresentes(): void {
-    if (!this.listPresentes) {
-      this.subscription.add(
-        this.presenteService.getListPresente().subscribe({
-          next: (response: Presente[]) => {
 
 
-
-            this.listPresentes = response;
-            this.listPresentes.forEach(presente => {
-              presente.eventoPresente = this._getPresenteEvento(presente);
-            });
-            const presentesArray = this.presentesFormGroup.get('presentes') as FormArray;
-
-            if (this.listPresentes) {
-              this.listPresentes.forEach(presente => {
-
-
-
-                const presenteEvento = this.eventoSelecionado?.eventoPresente?.find(x => x.idPresente === presente.id);
-
-                const _quantidade = presenteEvento ? presenteEvento.quantidade : presente.quantidadeSugerida;
-                const _preco = presenteEvento ? presenteEvento.preco : presente.precoSugerido;
-                const _ativo = presenteEvento ? presenteEvento.ativo : true;
-                presentesArray.push(this.formBuilder.group({
-                  id: new FormControl<any>({ value: presenteEvento?.id, disabled: this.isVisualizacao }),
-                  idPresente: new FormControl<any>({ value: presente.id, disabled: this.isVisualizacao }),
-                  ativo: new FormControl<any>({ value: _ativo, disabled: this.isVisualizacao }),
-                  quantidade: new FormControl<any>({ value: _quantidade, disabled: this.isVisualizacao }, Validators.required),
-                  preco: new FormControl<any>({ value: _preco, disabled: this.isVisualizacao }, Validators.required),
-                }));
-
-
-              });
-            }
-            this.presenteisReady = true;
-            this.cdRef.markForCheck();
-            this.cdRef.detectChanges();
-            this.downloadPresenteBase64Foto();
-
-
-          }
-        }),
-      );
-
-    }
-
-  }
-  _getPresenteEvento(presente: Presente): EventoPresente {
-    const presenteEventoPadrao: EventoPresente = {
-      id: 0,
-      idEvento: this.eventoSelecionado?.id ?? 0,
-      idPresente: presente.id,
-      ativo: true,
-      quantidade: 10,
-      preco: 10
-    }
-
-    return this.eventoSelecionado?.eventoPresente?.find(x => x.idPresente === presente.id) ?? presenteEventoPadrao;
-  }
-
-  downloadPresenteBase64Foto() {
-
-    if (this.listPresentes)
-      this.listPresentes.forEach(eventoArquivo => {
-        if (eventoArquivo?.arquivo?.nomeArmazenado && !eventoArquivo.base64) {
-
-          this.arquivoService.getArquivoBase64ByCaminho(eventoArquivo?.arquivo?.nomeArmazenado).subscribe({
-            next: (response: ArquivoBase64) => {
-              eventoArquivo.base64 = response.base64;
-
-
-              this.cdRef.markForCheck();
-              this.cdRef.detectChanges();
-            }
-          });
-        }
-
-      });
-
-  }
 
   contarTotalPessoas(): number {
     return this.lista.reduce((total, convidado) => {

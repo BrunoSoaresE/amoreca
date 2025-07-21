@@ -1,0 +1,138 @@
+<mat-accordion>
+
+  <mat-expansion-panel hideToggle [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Categoria e Tema </mat-panel-title>
+      <!-- <mat-panel-description> Gerenciar/visualisar a lista de presença </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup_categoriaTema" class="configuracaoAcordionTamanhoMaximo">
+      <div>
+        <!-- <h3>Primeiro passo!</h3> -->
+        <ul>
+          <li>Selecione a <b>categoria</b> do seu evento (como casamento, chá de bebê, aniversário...)</li>
+
+        </ul>
+      </div>
+
+
+
+
+      <app-autocomplete class="col-12" [formGroup]="formGroup_categoriaTema" [listaOption]="categorias"
+        labelName="Categoria" _formControlName="idCategoria"></app-autocomplete>
+
+
+      <div class="col-12">
+        <ul *ngIf="formGroup_categoriaTema.get('idCategoria')?.value">
+          <li> Escolha um <b>tema</b> que será a <b>imagem de fundo</b> do seu site</li>
+        </ul>
+      </div>
+
+
+      <app-tema-lista-selecionar [temaSelecionado]="temaSelecionado" class="col-12"
+        *ngIf="(habilitarSelecaoTema || !temaSelecionado) && formGroup_categoriaTema.get('idCategoria')?.value"
+        (temaSelecionadoChange)="onTemaSelecionado($event)"></app-tema-lista-selecionar>
+
+
+      <div class="botao-centralizado" style="padding-top: 0 !important;margin: 0 !important;"
+        *ngIf="formGroup_categoriaTema.get('idCategoria')?.value">
+        <button mat-raised-button color="primary" *ngIf="!habilitarSelecaoTema"
+          (click)="habilitarSelecaoTema = !habilitarSelecaoTema">
+          <mat-icon>palette</mat-icon>
+          Editar Tema
+        </button>
+      </div>
+
+
+
+      <div class="tema-card" *ngIf="temaSelecionado && !habilitarSelecaoTema">
+        <img [src]="temaSelecionado.arquivoBase64?.base64" class="tema-img" alt="Imagem do tema" />
+        <div class="tema-info">
+          <h4>{{ temaSelecionado.descricao }}</h4>
+          <div class="cores">
+            <div class="cor" [style.backgroundColor]="temaSelecionado.corPrimaria"></div>
+            <div class="cor" [style.backgroundColor]="temaSelecionado.corSecundaria"></div>
+            <div class="cor" [style.backgroundColor]="temaSelecionado.corTerciaria"></div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  </mat-expansion-panel>
+
+
+  <mat-expansion-panel hideToggle *ngIf="habilitar_Fotos" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Fotos </mat-panel-title>
+      <!-- <mat-panel-description> Gerenciar/visualisar a lista de presença </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup_fotos" class="configuracaoAcordionTamanhoMaximo">
+
+      <div>
+        <ul>
+          <li>Selecione as <b>fotos</b> que farão parte do seu site.</li>
+          <li>Lembre de selecionar uma foto para ser a <b>capa do site</b> — capriche na escolha!</li>
+          <li>Todas fotos serão exibidas para seus convidados.</li>
+        </ul>
+      </div>
+
+      <app-evento-dados-foto (output_arquivos)="processArquivosCadastro($event)"
+        (output_removeArquivos)="processRemoverArquivos($event)"
+        [eventoSelecionado]="eventoSelecionado"></app-evento-dados-foto>
+
+    </form>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel hideToggle *ngIf="habilitar_Previa" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Edite seu site (Prévia)</mat-panel-title>
+      <!-- <mat-panel-description> Gerenciar/visualisar a lista de presença </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup_editeSeuSite" class="configuracaoAcordionTamanhoMaximo">
+      <div>
+
+        <ul>
+          <li> Deixe seu site com a sua cara!</li>
+          <li>Nessa etapa, você pode editar os <b>textos</b> que aparecem no seu site.</li>
+          <li>A visualização abaixo é uma <b>prévia</b> para te mostrar como tudo ficará organizado.</li>
+          <li>Depois de finalizado, tudo será transformado em um <b>site lindo e funcional</b> para seus
+            convidados!</li>
+        </ul>
+      </div>
+
+      <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
+        [temaSelecionado]="temaSelecionado" [formGroup]="formGroup_editeSeuSite"></app-evento-dados-site>
+
+    </form>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel hideToggle *ngIf="habilitar_Link" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Personalize o link</mat-panel-title>
+      <!-- <mat-panel-description> Gerenciar/visualisar a lista de presença </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <form [formGroup]="formGroup_Link" class="configuracaoAcordionTamanhoMaximo">
+      <div>
+        <ul>
+
+          <li><b>Personalize o link</b> para compartilhar seu convite com quem você <b>ama</b></li>
+          <li>Você também pode acessar seu site finalizado clicando no botão abaixo!</li>
+        </ul>
+      </div>
+
+      <mat-form-field appearance="outline" style="margin-top: 8px;">
+        <mat-label>Link/Url do site para visitantes</mat-label>
+        <input matInput formControlName="linkSite" placeholder="Link/Url do site para visitantes">
+      </mat-form-field>
+
+    </form>
+
+
+
+
+  </mat-expansion-panel>
+
+
+</mat-accordion>

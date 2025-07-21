@@ -1,0 +1,17 @@
+<form [formGroup]="presentesFormGroup" class="configuracaoAcordionTamanhoMaximo">
+  <div>
+    <ul>
+      <li>Escolha quais <b>presentes</b> serão exibidos na sua lista.</li>
+      <li>Você pode ajustar os <b>valores</b> e a <b>quantidade</b> de cada item.</li>
+      <li>Os presentes são apenas ilustrativos — o valor pago será <b>transferido diretamente para sua
+          conta</b>.</li>
+    </ul>
+  </div>
+
+
+
+
+
+  <app-evento-dados-presente *ngIf="listPresentes?.length && presenteisReady" [listPresentes]="listPresentes"
+    [formGroup]="presentesFormGroup"></app-evento-dados-presente>
+</form>
