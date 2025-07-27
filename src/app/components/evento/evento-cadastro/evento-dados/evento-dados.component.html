@@ -1,7 +1,9 @@
 <form [formGroup]="formGroup" class="formPrincial">
 
 
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" (selectedIndexChange)="selected.setValue($event)"
+    [(selectedIndex)]="selected.value">
+
 
     <mat-tab>
       <ng-template mat-tab-label>
@@ -12,25 +14,55 @@
       <app-tab-personalise [formGroup_categoriaTema]="formGroup_categoriaTema" [formGroup_fotos]="formGroup_fotos"
         [formGroup_editeSeuSite]="formGroup_editeSeuSite" [formGroup_Link]="formGroup_Link" [categorias]="categorias"
         [temaSelecionado]="temaSelecionado" [eventoSelecionado]="eventoSelecionado"
-        [backgroundImageUrl]="backgroundImageUrl">
+        [backgroundImageUrl]="backgroundImageUrl" *ngIf="selected.value == 0"
+        (output_arquivos)="processArquivosCadastro($event)" (output_removeArquivos)="processRemoverArquivos($event)">
+
+
       </app-tab-personalise>
 
 
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab *ngIf="validarTodosCampos()">
+      <ng-template mat-tab-label>
+        <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+        Previa
+      </ng-template>
+
+      <form [formGroup]="formGroup_editeSeuSite" class="configuracaoAcordionTamanhoMaximo" *ngIf="selected.value == 1 ">
+        <div>
+
+          <ul>
+            <li> Deixe seu site com a sua cara!</li>
+            <li>Nessa etapa, você pode editar os <b>textos</b> que aparecem no seu site.</li>
+            <li>A visualização abaixo é uma <b>prévia</b> para te mostrar como tudo ficará organizado.</li>
+            <li>Depois de finalizado, tudo será transformado em um <b>site lindo e funcional</b> para seus
+              convidados!</li>
+          </ul>
+        </div>
+
+        <app-evento-dados-site [backgroundImageUrl]="backgroundImageUrl" [eventoSelecionado]="eventoSelecionado"
+          [temaSelecionado]="temaSelecionado" [formGroup]="formGroup_editeSeuSite"></app-evento-dados-site>
+
+      </form>
+
+
+    </mat-tab>
+
+    <mat-tab *ngIf="validarTodosCampos()">
       <ng-template mat-tab-label>
         <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
         Lista de presentes
       </ng-template>
-      <app-tab-lista-presente [presentesFormGroup]="presentesFormGroup" [eventoSelecionado]="eventoSelecionado">
+      <app-tab-lista-presente [presentesFormGroup]="presentesFormGroup" [eventoSelecionado]="eventoSelecionado"
+        *ngIf="selected.value == 2">
       </app-tab-lista-presente>
 
 
 
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab *ngIf="validarTodosCampos()">
       <ng-template mat-tab-label>
         <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
         Gerenciar
@@ -60,7 +92,7 @@
 
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div class="configuracaoAcordionTamanhoMaximo">
+            <div class="configuracaoAcordionTamanhoMaximo" *ngIf="selected.value == 3">
 
               <app-gerenciar-evento-presenca [formGroup]="gerenciarFormGroup"
                 [lista]="lista"></app-gerenciar-evento-presenca>
@@ -89,19 +121,37 @@
 
 
 
+
+
         </mat-accordion>
 
+        <div class="botao-centralizado">
+
+          <button mat-raised-button class="btn-verde" type="button" (click)="irParaSite()" *ngIf="validarTodosCampos()">
+            <!-- <mat-icon>add</mat-icon> -->
+            Ir para site gerado
+          </button>
+
+        </div>
       </form>
     </mat-tab>
 
 
   </mat-tab-group>
 
+  <div class="botao-centralizado">
+    <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()"
+      *ngIf="validarTodosCampos()">
+      <mat-icon>add</mat-icon>
+      Salvar
+    </button>
 
-  <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()">
-    <mat-icon>add</mat-icon>
-    Salvar
-  </button>
+    <button mat-raised-button class="btn-verde-secundario " type="button" (click)="chamarFuncaoDoFilho()"
+      *ngIf="!validarTodosCampos()">
+      <mat-icon>add</mat-icon>
+      Proximo
+    </button>
+  </div>
 
 
 

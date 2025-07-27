@@ -17,6 +17,7 @@ export class EventoTipoContadorComponent extends EditBaseComponent implements On
   @Input() override formGroup: FormGroup = {} as FormGroup;
 
   tipos = [
+    { id: 0, descricao: 'Nenhum contador' },
     { id: 1, descricao: 'Contador semana Gravidez' },
     { id: 2, descricao: 'Contador para data do Evento' },
   ];
@@ -38,7 +39,6 @@ export class EventoTipoContadorComponent extends EditBaseComponent implements On
 
   }
   ngOnInit(): void {
-
 
     this.formGroup?.get('idTipoContador')?.valueChanges.subscribe(_idTipoContador => {
       const semanaCtrl = this.formGroup.get('semanaGravidezAtual');

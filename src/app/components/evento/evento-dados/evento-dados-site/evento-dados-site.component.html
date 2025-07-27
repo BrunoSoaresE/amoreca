@@ -35,7 +35,6 @@
             <li title="Só sera possível clicar na versão final"><a>Confirmar Presença</a></li>
           </ul>
         </nav>
-        <app-evento-tipo-contador [formGroup]="formGroup"></app-evento-tipo-contador>
 
 
         <div class="foto-capa-container">
@@ -49,7 +48,7 @@
                 <p><strong>{{ formGroup.get('semanaGravidezAtual')?.value }}</strong></p>
                 semanas!
               </div>
-              <div *ngSwitchCase="'evento'">
+              <div *ngSwitchCase="2">
                 📅 Faltam
                 <p><strong>10</strong></p>
                 dias para o evento!

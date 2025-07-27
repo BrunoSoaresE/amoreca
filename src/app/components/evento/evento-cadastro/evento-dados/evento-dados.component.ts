@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, Injector, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -23,16 +23,18 @@ import { ActivatedRoute } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabPersonaliseComponent } from './tabs/tab-personalise/tab-personalise.component';
 import { TabListaPresenteComponent } from './tabs/tab-lista-presente/tab-lista-presente.component';
+import { EventoDadosSiteComponent } from '../../evento-dados/evento-dados-site/evento-dados-site.component';
 
 @Component({
   standalone: true,
   selector: 'app-evento-dados',
   imports: [CommonModule, SharedModule, MatInputModule, MatExpansionModule, GerenciarEventoPresencaComponent, MatTabsModule, TabPersonaliseComponent
-    , TabListaPresenteComponent],
+    , TabListaPresenteComponent, EventoDadosSiteComponent],
   templateUrl: './evento-dados.component.html',
   styleUrls: ['./evento-dados.component.scss'],
 })
 export class EventoDadosNewComponent extends EditBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild(TabPersonaliseComponent) tabPersonaliseComponent!: TabPersonaliseComponent;
 
 
   idEvento?: number;
@@ -51,7 +53,11 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   lista: EventoConfirmacaoPresenca[] = [];
 
 
+  selected = new FormControl(0);
 
+  chamarFuncaoDoFilho() {
+    this.tabPersonaliseComponent.proximo();
+  }
 
 
   constructor(protected injector: Injector,
@@ -93,7 +99,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     titulo: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     texto: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
 
-    dataEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+    dataEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
     dataFimEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
     horaEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
     horaFimEvento: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
@@ -132,6 +138,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
       this.formGroup_editeSeuSite.get('horaFimEvento')?.setValue(this.eventoSelecionado.dataFimEvento);
       this.formGroup_Link.patchValue(this.eventoSelecionado);
 
+      this.selected.setValue(this.validarTodosCampos() ? 3 : 0);
       this.downloadBase64Foto();
     }
   }
@@ -148,8 +155,12 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     ).subscribe(novoValor => {
       this.downloadBase64Foto_TemaSelecionado();
 
-
     });
+
+
+
+
+
 
     this.getConsultaAuxiliares();
 
@@ -163,6 +174,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
         this.buscarEventoById();
       })
     );
+
 
 
   }
@@ -231,52 +243,65 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   }
 
 
-
-
-  salvar(validarForm: boolean = true): void {
-
-
-    if (validarForm && (!this.formGroup.valid ||
+  validarTodosCampos(exibirMsg: boolean = false): boolean {
+    if (!this.formGroup.valid ||
       !this.formGroup_editeSeuSite.valid ||
       !this.formGroup_categoriaTema.valid ||
-      !this.formGroup_fotos.valid ||
+      (!this.formGroup_fotos.valid || !this.existeFotoAnexada()) ||
       !this.presentesFormGroup.valid
       || !(this.presentesFormGroup.get('presentes') as FormArray).valid
-      || !this.gerenciarFormGroup.valid)
+      || !this.gerenciarFormGroup.valid
+      || !this.formGroup_Link.valid
     ) {
 
       //todo
       if (!this.formGroup_categoriaTema.valid) {
-        // this.stepper.selectedIndex = 0;
-        this.onInvalidForm(undefined, this.formGroup_categoriaTema);
-      } else if (!this.formGroup_fotos.valid) {
-        // this.stepper.selectedIndex = 1;
-        this.onInvalidForm(undefined, this.formGroup_fotos);
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.formGroup_categoriaTema);
+        }
+      } else if (!this.formGroup_fotos.valid || !this.existeFotoAnexada()) {
+
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.formGroup_fotos);
+        }
       } else if (!(this.presentesFormGroup.get('presentes') as FormArray).valid) {
-        //this.stepper.selectedIndex = 3;
-        this.onInvalidForm(undefined, this.presentesFormGroup);
+
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.presentesFormGroup);
+        }
       } else if (!this.formGroup_editeSeuSite.valid) {
-        // this.stepper.selectedIndex = 2;
-        this.onInvalidForm(undefined, this.formGroup_editeSeuSite);
+
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.formGroup_editeSeuSite);
+        }
       } else if (!this.gerenciarFormGroup.valid) {
-        // this.stepper.selectedIndex = 5;
-        this.onInvalidForm(undefined, this.gerenciarFormGroup);
+
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.gerenciarFormGroup);
+        }
+      } else if (!this.formGroup_Link.valid) {
+
+        if (exibirMsg) {
+          this.onInvalidForm(undefined, this.formGroup_Link);
+        }
+      } else {
       }
 
 
+      return false;
+    }
 
-      // this.formGroup_categoriaTema.markAllAsTouched();
-      // this.formGroup_fotos.markAllAsTouched();
-      // this.presentesFormGroup.markAllAsTouched();
-      // this.formGroup_editeSeuSite.markAllAsTouched();
+    return true;
+  }
+
+  salvar(validarForm: boolean = true): void {
 
 
-
-
+    if (validarForm && !this.validarTodosCampos(true)) {
       return;
     }
+
     let teste = this.gerenciarFormGroup.value;
-    console.log("🚀 ~ EventoDadosComponent ~ salvar ~ teste:", teste)
 
     let eventoCadastro: EventoCadastro = {
       ...this.formGroup.value,
@@ -316,7 +341,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
   }
 
-
   unificarCampoDataHora(dataControl: string, horaControl: string): Date | undefined {
     const data = this.formGroup_editeSeuSite.get(dataControl)?.value;
     const hora = this.formGroup_editeSeuSite.get(horaControl)?.value;
@@ -355,8 +379,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     }
   }
 
-
-
   buscarEventoById(): void {
     if (this.idEvento) {
       this.subscription.add(
@@ -377,14 +399,34 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
 
   }
 
-
-
-
   contarTotalPessoas(): number {
     return this.lista.reduce((total, convidado) => {
       // Soma 1 para o convidado principal + o número de acompanhantes
       return total + 1 + convidado.acompanhantes.length;
     }, 0);
+  }
+
+  processArquivosCadastro(eventoArquivoCadastro: EventoArquivoCadastro[]) {
+    this.eventoArquivoCadastro = eventoArquivoCadastro;
+    this.salvar(false);
+  }
+
+
+  processRemoverArquivos(removerArquivos: number[]) {
+    this.removerArquivos = removerArquivos;
+    this.salvar(false);
+  }
+
+  existeFotoAnexada(): boolean {
+    return this.eventoSelecionado?.eventoArquivo?.length ?? 0 > 0 ? true : false;
+  }
+
+
+  irParaSite() {
+    if (this.eventoSelecionado?.linkSite)
+      window.open(this.eventoSelecionado.linkSite, '_blank');
+    else
+      this.toastr.warning("Link não configurado!")
   }
 
 

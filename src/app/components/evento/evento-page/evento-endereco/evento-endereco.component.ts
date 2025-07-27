@@ -33,10 +33,10 @@ export class EventoEnderecoComponent extends EditBaseComponent implements OnInit
   }
 
   getEndereco() {
-    return `${this.evento?.bairro ? this.evento.bairro : ''}
+    return (`${this.evento?.bairro ? this.evento.bairro : ''}
    ${this.evento?.rua ? ', ' + this.evento.rua : ''}
    ${this.evento?.numero ? ', ' + this.evento.numero : ''}
-   ${this.evento?.complemento ? ' - ' + this.evento.complemento : ''}`
+   ${this.evento?.complemento ? ' - ' + this.evento.complemento : ''}`).trim();
   }
 
 
