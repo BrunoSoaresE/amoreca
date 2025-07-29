@@ -125,23 +125,16 @@
 
         </mat-accordion>
 
-        <div class="botao-centralizado">
 
-          <button mat-raised-button class="btn-verde" type="button" (click)="irParaSite()" *ngIf="validarTodosCampos()">
-            <!-- <mat-icon>add</mat-icon> -->
-            Ir para site gerado
-          </button>
-
-        </div>
       </form>
     </mat-tab>
 
 
   </mat-tab-group>
 
-  <div class="botao-centralizado">
+  <div class="botao-centralizado" style="margin-top: 8px;">
     <button mat-raised-button class="btn-verde-secundario" type="button" (click)="salvar()"
-      *ngIf="validarTodosCampos()">
+      *ngIf="validarTodosCampos() && selected.value != 3">
       <mat-icon>add</mat-icon>
       Salvar
     </button>
@@ -150,6 +143,12 @@
       *ngIf="!validarTodosCampos()">
       <mat-icon>add</mat-icon>
       Proximo
+    </button>
+
+    <button mat-raised-button class="btn-verde" type="button" (click)="irParaSite()"
+      *ngIf="validarTodosCampos()  && selected.value == 3">
+      <!-- <mat-icon>add</mat-icon> -->
+      Ir para site gerado
     </button>
   </div>
 

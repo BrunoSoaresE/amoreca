@@ -301,7 +301,6 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
       return;
     }
 
-    let teste = this.gerenciarFormGroup.value;
 
     let eventoCadastro: EventoCadastro = {
       ...this.formGroup.value,
@@ -345,7 +344,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     const data = this.formGroup_editeSeuSite.get(dataControl)?.value;
     const hora = this.formGroup_editeSeuSite.get(horaControl)?.value;
 
-    if (!data || !hora) return undefined;
+    if (!data || !hora) return data;
 
     try {
       const dataHoraUnificada = new Date(data);
@@ -368,14 +367,14 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
           horas = hora.getHours();
           minutos = hora.getMinutes();
         } else {
-          return undefined;
+          return data;
         }
 
       dataHoraUnificada.setUTCHours(horas, minutos, 0);
 
       return dataHoraUnificada;
     } catch (error) {
-      return undefined;
+      return data;
     }
   }
 

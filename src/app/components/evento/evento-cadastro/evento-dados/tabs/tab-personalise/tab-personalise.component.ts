@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, Injector, Input, EventEmitter, Output, ElementRef, QueryList, ViewChildren } from "@angular/core";
+import { Component, OnInit, Injector, Input, EventEmitter, Output, ElementRef, QueryList, ViewChildren, AfterViewInit, OnChanges, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatInputModule } from "@angular/material/input";
@@ -32,7 +32,7 @@ import { EventoTipoContadorComponent } from "../../../../evento-dados/evento-tip
   templateUrl: './tab-personalise.component.html',
   styleUrls: ['./tab-personalise.component.scss'],
 })
-export class TabPersonaliseComponent extends EditBaseComponent implements OnInit {
+export class TabPersonaliseComponent extends EditBaseComponent implements OnInit, OnChanges {
   @ViewChildren('textarea') textAreas: QueryList<ElementRef<HTMLTextAreaElement>> | undefined;
 
   @Input() formGroup_categoriaTema: FormGroup = {} as FormGroup;
@@ -62,9 +62,7 @@ export class TabPersonaliseComponent extends EditBaseComponent implements OnInit
 
 
 
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
-  }
+
 
   constructor(protected injector: Injector,
     protected formBuilder: FormBuilder,
@@ -75,8 +73,14 @@ export class TabPersonaliseComponent extends EditBaseComponent implements OnInit
 
   }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['eventoSelecionado']) {
+      this.controlarExibicao();
+
+    }
+  }
   ngOnInit(): void {
-    this.controlarExibicao();
 
     this.formGroup_editeSeuSite?.get('texto')?.valueChanges.pipe(
       distinctUntilChanged(),
@@ -93,6 +97,7 @@ export class TabPersonaliseComponent extends EditBaseComponent implements OnInit
 
 
     this.definirTamanhoCampos();
+    this.controlarExibicao();
 
   }
 
@@ -100,13 +105,33 @@ export class TabPersonaliseComponent extends EditBaseComponent implements OnInit
 
 
     this.habilitar_NomeEvento = true;
-    this.habilitar_CategoriaTema = this.abaValid_NomeEvento();
-    this.habilitar_MsgBoaVindas = this.habilitar_CategoriaTema && this.formGroup_categoriaTema.valid;
-    this.habilitar_DataHora = this.habilitar_MsgBoaVindas && this.abaValid_MsgBoaVindas();
-    this.habilitar_Fotos = this.habilitar_DataHora && this.abaValid_DataHora();
-    this.habilitar_Link = this.habilitar_Fotos && this.existeFotoAnexada();
-    this.habilitar_Endereco = this.habilitar_DataHora && this.formGroup_Link.valid;
+    if (this.habilitar_NomeEvento)
+      this.painelAberto = 'nomeEvento';
 
+    this.habilitar_CategoriaTema = this.abaValid_NomeEvento();
+    if (this.habilitar_CategoriaTema)
+      this.painelAberto = 'categoriaTema';
+
+    this.habilitar_MsgBoaVindas = this.habilitar_CategoriaTema && this.formGroup_categoriaTema.valid;
+    if (this.habilitar_MsgBoaVindas)
+      this.painelAberto = 'msgBoaVindas';
+
+    this.habilitar_DataHora = this.habilitar_MsgBoaVindas && this.abaValid_MsgBoaVindas();
+    if (this.habilitar_DataHora)
+      this.painelAberto = 'dataHora';
+
+    this.habilitar_Fotos = this.habilitar_DataHora && this.abaValid_DataHora();
+    if (this.habilitar_Fotos)
+      this.painelAberto = 'fotos';
+
+    this.habilitar_Link = this.habilitar_Fotos && this.existeFotoAnexada();
+    if (this.habilitar_Link)
+      this.painelAberto = 'link';
+
+    this.habilitar_Endereco = this.habilitar_DataHora && this.abaValid_DataHora() && this.existeFotoAnexada() && this.formGroup_Link.valid;
+
+    if (this.habilitar_Endereco)
+      this.painelAberto = 'endereco';
 
   }
 
