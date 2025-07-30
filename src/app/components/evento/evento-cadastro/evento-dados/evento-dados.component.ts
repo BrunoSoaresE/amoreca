@@ -24,6 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TabPersonaliseComponent } from './tabs/tab-personalise/tab-personalise.component';
 import { TabListaPresenteComponent } from './tabs/tab-lista-presente/tab-lista-presente.component';
 import { EventoDadosSiteComponent } from '../../evento-dados/evento-dados-site/evento-dados-site.component';
+import { linkDuplicadoValidator } from '../../../../shared/functions/validator';
 
 @Component({
   standalone: true,
@@ -117,9 +118,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     textoRodape: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
   });
 
-  formGroup_Link = this._formBuilder.group({
-    linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao }, Validators.required),
-  });
+  formGroup_Link: any;
 
 
 
@@ -144,9 +143,30 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
   }
 
   ngOnInit(): void {
+    this.subscription.add(
+      this.route.params.subscribe((params) => {
+        if (!params['idEvento']) {
+          return;
+        }
+        this.idEvento = parseInt(params['idEvento']);
+        this.buscarEventoById();
+      })
+    );
+
 
     this.formGroup = this.formBuilder.group({
       id: new FormControl<any>({ value: null, disabled: this.isVisualizacao }),
+    });
+
+    this.formGroup_Link = this._formBuilder.group({
+      linkSite: new FormControl<any>({ value: null, disabled: this.isVisualizacao },
+
+        {
+          validators: [Validators.required],
+          asyncValidators: this.isVisualizacao ? [] : [linkDuplicadoValidator(this.eventoService, this.idEvento ?? 0)],
+          updateOn: 'blur'
+        }
+      ),
     });
 
 
@@ -165,15 +185,7 @@ export class EventoDadosNewComponent extends EditBaseComponent implements OnInit
     this.getConsultaAuxiliares();
 
 
-    this.subscription.add(
-      this.route.params.subscribe((params) => {
-        if (!params['idEvento']) {
-          return;
-        }
-        this.idEvento = parseInt(params['idEvento']);
-        this.buscarEventoById();
-      })
-    );
+
 
 
 

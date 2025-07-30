@@ -22,6 +22,10 @@ export class EventoService extends BaseService {
     let retorno = this.get(`link-site/${linkEvento}`)
     return retorno;
   }
+  existeEventoByLink(linkEvento: string, idEvento: number): Observable<boolean> {
+    let retorno = this.get(`validar-link-site/${linkEvento}/${idEvento}`)
+    return retorno;
+  }
 
   getEventoById(id: number): Observable<Evento> {
     let retorno = this.get(`${id}`)

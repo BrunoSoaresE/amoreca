@@ -252,6 +252,10 @@
       <mat-form-field appearance="outline" style="margin-top: 8px;">
         <mat-label>Link/Url do site para visitantes</mat-label>
         <input matInput formControlName="linkSite" placeholder="Link/Url do site para visitantes">
+
+        <mat-error *ngIf="formGroup_Link.get('linkSite')?.hasError('linkDuplicado')">
+          Já existe um evento com esse link.
+        </mat-error>
       </mat-form-field>
 
     </form>
